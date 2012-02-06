@@ -44,6 +44,15 @@ body,pre{font-family:Verdana,Helvetica,san-serif,Arial;font-size:.6em}*{padding:
 	margin: 15px;
 }
 
+.over{
+	opacity: .7;
+}
+
+.over:hover{
+	opacity: 1 !important;
+
+}
+
 </style>
 
 <link rel="stylesheet" type="text/css" href="css/base.css" />
@@ -352,41 +361,7 @@ $q = @mysql_query("SELECT manual_function_name AS 'FUNCTION'
 	</table>
 	<table id="header-fixed"></table>
 	</div>
-<!--
-<div id='graph-all'>
-<div id='graph-controls'>
-<form action='' method='GET' name='f1' id='f1'>
-<input type='text' name='ddstartdate' id='startdateinput' value='' >
 
-<script>
-                new tcal ({
-                                // form name
-                                'formname': 'f1',
-                                // input name
-                                'controlname': 'ddstartdate'
-                });
-
-</script>
-
-<input type='text' name='ddenddate' id='enddateinput' value='' >
-<script>
-
-                new tcal ({
-                                // form name
-                                'formname': 'f1',
-                                // input name
-                                'controlname': 'ddenddate'
-                });
-
-</script>
-</form>	
-<button id='up'>Update</button>	
-</div><!--end graph-controls -->
-
-<!--
-<iframe id='graph'></iframe>
-</div>
--->
 
 </div><!-- end main container -->
 
@@ -1557,9 +1532,9 @@ function editAjax(par){
 				
 					
 				$("#welcome").html("Welcome, <?php echo $_SESSION['fname']; ?>");
-				//$("#menu").css(");
 				$('#switcher').themeswitcher();
-	
+				
+
 
 			
 	}); //DOM Ready
