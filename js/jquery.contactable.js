@@ -35,7 +35,7 @@
 		return this.each(function() {
 			//construct the form
 			var this_id_prefix = '#'+this.id+' ';
-			$(this).html('<div id="contactable_inner" class="view over"></div><div id="box" style="z-index:200000;position:absolute;height:400px;width:295px;background-color:#ddd;margin-left:-300px;top:80px;border:1px solid #000;"><div id="menu" style="padding:15px;"><span id="welcome"></span><div id="switcher"></div><div class="menu-icons"><img id="reports" src="img/reports_icon.jpg" /><img id="pdf" src="img/pdf.jpg" /></div></div></div>');
+			$(this).html('<div id="contactable_inner" class="view over"></div><div id="box" style="z-index:1000;position:absolute;height:400px;width:295px;background-color:#ddd;margin-left:-300px;top:80px;border:1px solid #000;"><div id="menu" style="padding:15px;"><span id="welcome"></span><button name="logout" id="logout">Logout</button><div id="switcher"></div><div class="menu-icons"><a href="javascript:void(0);" name="genReport" id="genReport" ><img title="Reporting" id="reports" src="img/reports_icon.jpg" /></a><a href="javascript:void(0);" name="genPdf" id="genPdf"><img title="Export to PDF" id="pdf" src="img/pdf.jpg" /></a></div></div></div>');
 			//show / hide function
 			$(this_id_prefix+'div#contactable_inner').toggle(function() {
 				$(this_id_prefix+'#overlay').css({display: 'block'});

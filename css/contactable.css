@@ -13,7 +13,7 @@
 	top:120px;
 	*margin-top:10px;
 	width:26px;
-	z-index:100000;
+	z-index:1000;
 	border: 1px solid #f00;
 	border-radius: 0px 15px 15px 0px;
 }
