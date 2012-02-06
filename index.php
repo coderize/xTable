@@ -62,7 +62,7 @@ body,pre{font-family:Verdana,Helvetica,san-serif,Arial;font-size:.6em}*{padding:
 <!-- <link rel="stylesheet" type="text/css" href="css/calendar.css" /> -->
 <link rel="stylesheet" type="text/css" href="css/contactable.css" />
 
-<script src="http://code.jquery.com/jquery-latest.js" charset="UTF-8"></script>
+<script src="js/jquery.min.js" charset="UTF-8"></script>
 <script src="js/jquery.quicksearch.js" charset="UTF-8"></script>
 <script src="js/jqueryUI/js/jqueryui.js" charset="UTF-8"></script>
 <script src="http://jqueryui.com/themeroller/themeswitchertool/" charset="UTF-8"></script>
