@@ -1005,7 +1005,7 @@ function editAjax(par){
 						var hght = ($(".mid").length==0) ? 125 : 157;
 							
 							$('#myTable').fixheadertable({ 
-								caption     : ' ' + $("#project option:selected").text() + ' ', 
+								caption     : ' ', 
 								colratio    : [1,150,80, 65, 78, 140,150, 150, 260, 260],
 								height      : window.innerHeight - hght,
 								zebra       : false,
