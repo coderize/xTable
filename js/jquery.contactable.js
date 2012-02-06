@@ -43,11 +43,13 @@
 				$(this_id_prefix+'#box').animate({"marginLeft": "-=0px"}, "fast");
 				$(this).animate({"marginLeft": "+=295px"}, "slow"); 
 				$(this_id_prefix+'#box').animate({"marginLeft": "+=295px"}, "slow"); 
+				$("#contactable_inner").css("background-image","url(img/menu-sn-close.png)");
 			}, 
 			function() {
 				$(this_id_prefix+'#box').animate({"marginLeft": "-=295px"}, "slow");
 				$(this).animate({"marginLeft": "-=295px"}, "slow").animate({"marginLeft": "+=5px"}, "fast"); 
 				$(this_id_prefix+'#overlay').css({display: 'none'});
+				$("#contactable_inner").css("background-image","url(img/menu-sn-open.png)");
 			});
 			
 			
