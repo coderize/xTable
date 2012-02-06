@@ -383,7 +383,7 @@ $q = @mysql_query("SELECT manual_function_name AS 'FUNCTION'
 <button id='up'>Update</button>	
 </div><!--end graph-controls -->
 
-
+<!--
 <iframe id='graph'></iframe>
 </div>
 -->
@@ -1026,29 +1026,15 @@ function editAjax(par){
 							//////////////////////////////////DRAG AND DROP/////////////////////////////////////////////////////////////////////////
 								//$("#myTable").tableDnD( { onDragClass: "dragging"} );	
 							//////////////////////////////////END DRAG AND DROP////////////////////////////////////////////////////////////////		
-							
-							//////////////////////////////////MAIN SEARCH///////////////////////////////////////////////////////////////////////////////
-								$('input#search').quicksearch('#myTable tbody tr');							
-							//////////////////////////////////END MAIN SEARCH//////////////////////////////////////////////////////////////////////
-							
-							//////////////////////////////////THEME SWITCHER//////////////////////////////////////////////////////////////////////
-								
-							//////////////////////////////////END THEME SWITCHER/////////////////////////////////////////////////////////////
 
 							///////////////////////////////////FIX PAGINATION PROBLEM///////////////////////////////////////////////////////
 							$(".t_fixed_header_main_wrapper").append("<div id='pager'></div>");
 							
 							$("#pager").html("Total number of testcases: " + $(".mid").length) ;
 							
-							$("#pager").append("<div id='searchForm'><form id='search-form' name='search-form' method='#' action='#' onsubmit='javascript:return false;'>		<input value='Search...' type='text' id='search' style='text-align: left !important;' name='search'></form></div>");
-
+							///////////////////////////////////NEW UI JAVASCRIPT//////////////////////////////////////////////
+		
 							
-							///////////////////////////////////END FIX PAGINATION PROBLEM//////////////////////////////////////////////
-							
-							//////////////////////////////////CUSTOM COLUMN FILTERS//////////////////////////////////////////////////////
-								columnFilter();		
-							//////////////////////////////////CUSTOM COLUMN FILTERS//////////////////////////////////////////////////////
-
 							$(".t_fixed_header_caption").prepend( "<div id='hnav'><select name='hvertical' id='hvertical' onchange='javascript:reload();'>" + $("#vertical").html() + "</select> <select name='hclient' id='hclient' onchange='javascript:reload();'>"+$("#client").html()+"</select>"+" <select name='hproject' id='hproject' onchange='javascript:reload();'>" + $("#project").html() + "</select></div>" );
 							
 							$("#hnav").css("float","left");
@@ -1062,11 +1048,30 @@ function editAjax(par){
 								document.getElementById("hclient").value = "<?php  echo $client;  ?>";
 								document.getElementById("hproject").value = "<?php  echo $project;  ?>";
 							
+								
+							
+							$("#pager").append("<div id='searchForm'><form id='search-form' name='search-form' method='#' action='#' onsubmit='javascript:return false;'>		<input value='Search...' type='text' id='search' style='text-align: left !important;' name='search'></form></div>");
+							$("#search").blur(function(){
+									this.value = 'Search...';
+							});		
+							$("#search").focus(function(){
+									this.value = '';
+							});
+							
 							$("#navigation select").selectmenu({style: 'dropdown', maxHeight: 400});							
 							$("#createForm select").selectmenu({style: 'dropdown',maxHeight: 400});								
-							$('input:text, input:password').button().addClass('inpField');		
-
+							$('input:text, input:password').button().addClass('inpField');	
+							
 							$('#contactable').contactable();
+							///////////////////////////////////END NEW UI JAVASCRIPT//////////////////////////////////////////////
+							
+							//////////////////////////////////CUSTOM COLUMN FILTERS//////////////////////////////////////////////////////
+								columnFilter();		
+							//////////////////////////////////CUSTOM COLUMN FILTERS//////////////////////////////////////////////////////
+							
+							//////////////////////////////////MAIN SEARCH///////////////////////////////////////////////////////////////////////////////
+								$('input#search').quicksearch('#myTable tbody tr');							
+							//////////////////////////////////END MAIN SEARCH//////////////////////////////////////////////////////////////////////
 							
 /////////////////////////////////// CREATE TESTCASE BUTTON/////////////////////////////////////////////////////		
 							
