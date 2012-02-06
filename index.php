@@ -10,6 +10,11 @@ session_start();
 	header('Refresh: 1; URL=http://10.10.40.16/xtable/login.php');
 	exit;
 } 
+
+$vert = mysql_real_escape_string($_GET['vertical']);
+$client = mysql_real_escape_string($_GET['client']);
+$project = mysql_real_escape_string($_GET['project']);
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -21,11 +26,24 @@ session_start();
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
 <style>
-body,pre{font-family:Verdana,Helvetica,san-serif,Arial;font-size:.6em}*{padding:0;margin:0}.clearfix:after{content:".";display:block;clear:both;visibility:hidden;line-height:0;height:0}.clearfix{display:inline-block}html[xmlns] .clearfix{display:block}* html .clearfix{height:1%}#createForm,#iframeContainer{display:none}#mainContainer{padding-top:5px;min-width:960px;max-width:1500px;position:relative}.inpFields{font:inherit;color:inherit;outline:0;cursor:text}pre{font-size:1em;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word}#search{display:none;position:absolute;top:30px;right:10px;border:3px solid #7aa3cc;width:350px;height:30px;border-radius:15px;-webkit-border-radius:15px;border-top-right-radius:15px;border-top-left-radius:15px;border-bottom-right-radius:15px;border-bottom-left-radius:15px;font-size:1.2em}.dragging{border:2px solid #0f0}._filterText{width:99%;height:20px;font-style:italic;background-color:#f0f0f0;border-width:1px;font-size:14px!important}#navigation a{float:left}#navigation{position:relative;height:100px}#navigation #vertical-button,#client-button,#project-button{margin-left:5px!important}#bodyContainer{z-index:1000;position:relative}#execIframe{width:99%;height:97%}#createForm select{width:200px}#class-menu,#priority-menu,#function-menu{z-index:2000}#createForm textarea{max-width:630px;min-width:320px;max-height:95px;width:630px;height:95px}#logout{margin:4px 0 0 30%;display:none}#genReport{display:none;margin:5px 0 0 12%}#myAcc{position:absolute;top:0;right:17%;height:30px;font-weight:bold;width:152px}#accChild{display:none}#logout-confirm{display:none}#other{background-color:#ccc}#indicator{font-size:14px;color:#7ec045;font-weight:bold}#loading{display:none;position:absolute;top:41%;left:44%;z-index:10000}#editSuccess{display:none;position:absolute;top:5px;left:44%;z-index:10000;font-size:20px;color:#3d5;font-weight:bold}#account{width:152px}.myAccOpen{border-radius:10px;height:145px!important;background-color:#fff;z-index:1002;border-right:2px solid #ccc;border-left:2px solid #ccc;border-bottom:2px solid #ccc}#switcher{margin-top:3px}.function,.tcid,.priority,.class,.status{text-align:center!important}#pager{height:20px;padding:5px;font-weight:bold}#graph{width:100%;height:550px;border:0}#graph-all{position:absolute;top:165px;z-index:1;width:99%;overflow:hidden;height:500px;visibility:hidden}#graph-controls{position:relative;margin-top:20px}#up{position:absolute;left:400px;top:0}.ui-selectmenu-menu{z-index:3000}#navBtns{position:absolute;bottom:0}#logged-out{display:none;text-align:center;font-size:1.3em}#logged-out img{display:block;margin:0 auto;padding:60px 0 5px 0}#genPdf{display:none;margin:5px 0 0 18%}
+body,pre{font-family:Verdana,Helvetica,san-serif,Arial;font-size:.6em}*{padding:0;margin:0}.clearfix:after{content:".";display:block;clear:both;visibility:hidden;line-height:0;height:0}.clearfix{display:inline-block}html[xmlns] .clearfix{display:block}* html .clearfix{height:1%}#createForm,#iframeContainer{display:none}#mainContainer{padding-top:5px;min-width:960px;max-width:1500px;position:relative}.inpFields{font:inherit;color:inherit;outline:0;cursor:text}pre{font-size:1em;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word}#search{margin-left:35%;margin-top:-15px;display:none;border:3px solid #7aa3cc;width:350px;height:20px;border-radius:15px;-webkit-border-radius:15px;border-top-right-radius:15px;border-top-left-radius:15px;border-bottom-right-radius:15px;border-bottom-left-radius:15px;font-size:1.2em}.dragging{border:2px solid #0f0}._filterText{width:99%;height:20px;font-style:italic;background-color:#f0f0f0;border-width:1px;font-size:14px!important}#navigation a{float:left}#navigation{/* position:relative;height:100px */}#navigation #vertical-button,#client-button,#project-button{margin-left:5px!important}#bodyContainer{z-index:1000;position:relative}#execIframe{width:99%;height:97%}#createForm select{width:200px}#class-menu,#priority-menu,#function-menu{z-index:2000}#createForm textarea{max-width:630px;min-width:320px;max-height:95px;width:630px;height:95px}#logout{margin:4px 0 0 30%;display:none}#genReport{display:none;margin:5px 0 0 12%}#myAcc{position:absolute;top:0;right:17%;height:30px;font-weight:bold;width:152px}#accChild{display:none}#logout-confirm{display:none}#other{background-color:#ccc}#indicator{font-size:14px;color:#7ec045;font-weight:bold}#loading{display:none;position:absolute;top:41%;left:44%;z-index:10000}#editSuccess{display:none;position:absolute;top:5px;left:44%;z-index:10000;font-size:20px;color:#3d5;font-weight:bold}#account{width:152px}.myAccOpen{border-radius:10px;height:145px!important;background-color:#fff;z-index:1002;border-right:2px solid #ccc;border-left:2px solid #ccc;border-bottom:2px solid #ccc}#switcher{margin-top:3px}.function,.tcid,.priority,.class,.status{text-align:center!important}#pager{height:35px;padding:5px;font-weight:bold}#graph{width:100%;height:550px;border:0}#graph-all{position:absolute;top:165px;z-index:1;width:99%;overflow:hidden;height:500px;visibility:hidden}#graph-controls{position:relative;margin-top:20px}#up{position:absolute;left:400px;top:0}.ui-selectmenu-menu{z-index:3000}#navBtns{position:absolute;bottom:0}#logged-out{display:none;text-align:center;font-size:1.3em}#logged-out img{display:block;margin:0 auto;padding:60px 0 5px 0}#genPdf{display:none;margin:5px 0 0 18%}
 #naviForm{
-	visibility:hidden;
+	display:none;
 
 }
+#box{
+	border-radius: 0px 15px 15px 0px;
+
+}
+#reports,#pdf{
+	height:100px;
+	border-radius: 10px;
+}
+
+.menu-icons img{
+	margin: 15px;
+}
+
 </style>
 
 <link rel="stylesheet" type="text/css" href="css/base.css" />
@@ -125,9 +143,7 @@ $qstatus = mysql_query("SELECT status_id, status_name FROM  table_status");
 	
 <?php
 
-		$vert = mysql_real_escape_string($_GET['vertical']);
-		$client = mysql_real_escape_string($_GET['client']);
-		$project = mysql_real_escape_string($_GET['project']);
+		
 		
 		if($vert){
 ?>		
@@ -266,54 +282,16 @@ $q = @mysql_query("SELECT manual_function_name AS 'FUNCTION'
 /////////////////////////////////////////////////////GET ALL TYPES OF TESTCASES/////////////////////////////////////////////////
 }
 
-if($vert !='' && $client != '' && $project !=''){
-?>
-<div class='clearfix'></div>
-<div id="searchForm">
 
-	<form id='search-form' name='search-form' method='#' action='#' onsubmit="javascript:return false;">
-		<input value="Search..." type='text' id='search' style="text-align: left !important;" name='search' onfocus="javascript:if(this.value=='Search...'){ this.value=''};" onblur="javascript: if(this.value=='') { this.value='Search...'};"> 
-	<?php
-	}
-	?>
-	</form>
-
-</div><!-- end serach form -->
-<div id='navBtns'>
-
-<?php
-
-	if( $_SESSION['role'] != 5 && $_SESSION['role'] != 4 ){
-		
-		if($vert !='' && $client != '' && $project !=''){
-?>	
-	
-		
-	
-<?php 	
-	}//END IF
-}
 ?>
 
- <?php
- /*
-	if( $_SESSION['role'] != 5){
-		if($vert !='' && $client != '' && $project !=''){
-?>
-	<button id="execBtn">Execute</button>
 
-<?php
-	}
-}
-*/
-?> 
-
-</div><!-- end navBtns -->
+<!--
 <div id='myAcc'>
 
 	<button name='account' id='account'><?php echo $_SESSION['fname'] . "'s Account"; ?></button>
 		<div id='accChild'>
-			<div id="switcher"></div>
+			
 		</div>
 		
 		<button name='genReport' id='genReport'>Generate Report</button>
@@ -322,7 +300,7 @@ if($vert !='' && $client != '' && $project !=''){
 		
 		<button name='logout' id='logout'>Logout</button>
 		
-</div>
+</div>-->
 
 
 </div><!-- end navigation -->
@@ -920,9 +898,7 @@ function editAjax(par){
 	
 ////////////////////////////////////////////////////END SCENARIO / VERIFICATION EDITING////////////////////////////////////////////////////	
 
-////////////////////////////////////////////////////OTHER ELEMENTS EDITING////////////////////////////////////////////////////	
-
-		
+////////////////////////////////////////////////////OTHER ELEMENTS EDITING////////////////////////////////////////////////////			
 		function editElement(ele,obj,type,ml){			
 				
 				var elem = ele;
@@ -936,8 +912,7 @@ function editAjax(par){
 					var seleEdit = document.createElement("select");
 					seleEdit.id = 'mySelect';
 						
-					for (var i in objm){
-					
+					for (var i in objm){		
 
 						
 						if(elem.innerHTML == objm[i]){
@@ -1025,11 +1000,13 @@ function editAjax(par){
 		{ 							
 		
 						$('#myTable').columnFilters();
-		
+							
+						var hght = ($(".mid").length==0) ? 125 : 157;
+							
 							$('#myTable').fixheadertable({ 
 								caption     : ' ' + $("#project option:selected").text() + ' ', 
 								colratio    : [1,150,80, 65, 78, 140,150, 150, 260, 260],
-								height      : <?php echo ($_SESSION['role'] == 5) ? "445" : "440"; ?>,
+								height      : window.innerHeight - hght,
 								zebra       : false,
 								sortable    : true,
 								sortedColId : 2, 
@@ -1054,13 +1031,17 @@ function editAjax(par){
 							//////////////////////////////////END MAIN SEARCH//////////////////////////////////////////////////////////////////////
 							
 							//////////////////////////////////THEME SWITCHER//////////////////////////////////////////////////////////////////////
-								$('#switcher').themeswitcher();
+								
 							//////////////////////////////////END THEME SWITCHER/////////////////////////////////////////////////////////////
 
 							///////////////////////////////////FIX PAGINATION PROBLEM///////////////////////////////////////////////////////
 							$(".t_fixed_header_main_wrapper").append("<div id='pager'></div>");
-							$("#pager").html("Total number of testcases: " + $(".mid").length) ;			
-							$("#pager").append( $("#searchForm").html() );
+							
+							$("#pager").html("Total number of testcases: " + $(".mid").length) ;
+							
+							$("#pager").append("<div id='searchForm'><form id='search-form' name='search-form' method='#' action='#' onsubmit='javascript:return false;'>		<input value='Search...' type='text' id='search' style='text-align: left !important;' name='search'></form></div>");
+
+							
 							///////////////////////////////////END FIX PAGINATION PROBLEM//////////////////////////////////////////////
 							
 							//////////////////////////////////CUSTOM COLUMN FILTERS//////////////////////////////////////////////////////
@@ -1082,7 +1063,9 @@ function editAjax(par){
 							
 							$("#navigation select").selectmenu({style: 'dropdown', maxHeight: 400});							
 							$("#createForm select").selectmenu({style: 'dropdown',maxHeight: 400});								
-							$('input:text, input:password').button().addClass('inpField');			
+							$('input:text, input:password').button().addClass('inpField');		
+
+							$('#contactable').contactable();
 							
 /////////////////////////////////// CREATE TESTCASE BUTTON/////////////////////////////////////////////////////		
 							
@@ -1565,17 +1548,12 @@ function editAjax(par){
 			
 		$("#_filterText1").val("Search-->");	
 		
-		
-		
-							
-				$(function(){$('#contactable').contactable({subject: 'feedback URL:'+location.href});});
 				
-				
-				$("#contactable_inner").click(function () {
-							
-						
-							
-					});
+					
+				$("#welcome").html("Welcome, <?php echo $_SESSION['fname']; ?>");
+				//$("#menu").css(");
+				$('#switcher').themeswitcher();
+	
 
 			
 	}); //DOM Ready
