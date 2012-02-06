@@ -47,9 +47,10 @@ body,pre{font-family:Verdana,Helvetica,san-serif,Arial;font-size:.6em}*{padding:
 </style>
 
 <link rel="stylesheet" type="text/css" href="css/base.css" />
+
 <link rel="stylesheet" type="text/css" href="css/flick/jquery-ui-1.8.16.custom.css" />
 <link rel="stylesheet" type="text/css" href="css/selectmenu.css" />
-<link rel="stylesheet" type="text/css" href="css/calendar.css" />
+<!-- <link rel="stylesheet" type="text/css" href="css/calendar.css" /> -->
 <link rel="stylesheet" type="text/css" href="css/contactable.css" />
 
 <script src="http://code.jquery.com/jquery-latest.js" charset="UTF-8"></script>
@@ -60,7 +61,7 @@ body,pre{font-family:Verdana,Helvetica,san-serif,Arial;font-size:.6em}*{padding:
 <script src="js/jquery.columnfilters.js" charset="UTF-8"></script>
 <script src="js/columnFilters.js" charset="UTF-8"></script>
 <script src="js/jquery.js" charset="UTF-8"></script>
-<script src="js/calendar_db.js" charset="UTF-8"></script>
+<!-- <script src="js/calendar_db.js" charset="UTF-8"></script> -->
 <script src="js/jquery.contactable.js" charset="UTF-8"></script>
 <script src="js/jquery.validate.pack.js" charset="UTF-8"></script>
 
@@ -351,7 +352,7 @@ $q = @mysql_query("SELECT manual_function_name AS 'FUNCTION'
 	</table>
 	<table id="header-fixed"></table>
 	</div>
-	
+<!--
 <div id='graph-all'>
 <div id='graph-controls'>
 <form action='' method='GET' name='f1' id='f1'>
@@ -388,7 +389,7 @@ $q = @mysql_query("SELECT manual_function_name AS 'FUNCTION'
 
 
 </div><!-- end main container -->
-
+-->
 
 
                                 <div id='createForm'>
