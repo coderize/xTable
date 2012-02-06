@@ -386,10 +386,10 @@ $q = @mysql_query("SELECT manual_function_name AS 'FUNCTION'
 
 <iframe id='graph'></iframe>
 </div>
-
+-->
 
 </div><!-- end main container -->
--->
+
 
 
                                 <div id='createForm'>
