@@ -986,7 +986,7 @@ function editAjax(par){
 	
 	<?php echo $client;  if($client == ''){ $project = "na";} ?>
 	
-	//document.getElementById("project").value = "<?php  echo $project;  ?>";	
+	document.getElementById("project").value = "<?php  echo $project;  ?>";	
 
 ////////////////////////////////////////////////////END SET SELECTED DROPDOWN OPTIONS////////////////////////////////////////////////////	
 
