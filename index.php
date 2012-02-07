@@ -1031,10 +1031,25 @@ function editAjax(par){
 							
 							$("#hnav").css("float","left");
 								
-							$(".t_fixed_header_caption").append("<div id='hNavBtn'><button id='addBtn'>Create Testcase</button><button id='execBtn'>Execute</button></div>");
+							<?php 
+								if( $_SESSION['role'] != 5 &&  $_SESSION['role'] != 4){
+								?>
+											$(".t_fixed_header_caption").append("<div id='hNavBtn'><button id='addBtn'>Create Testcase</button><button id='execBtn'>Execute</button></div>");
 							
-							$("#hNavBtn").css("float","right");
+											$("#hNavBtn").css("float","right");
+							<?php
+								}
+								?>
 								
+								<?php 
+								if($_SESSION['role'] == 4){
+								?>
+											$(".t_fixed_header_caption").append("<div id='hNavBtn'><button id='execBtn'>Execute</button></div>");
+							
+											$("#hNavBtn").css("float","right");
+							<?php
+								}
+								?>
 								
 								document.getElementById("hvertical").value = "<?php  echo $vert;  ?>";
 								document.getElementById("hclient").value = "<?php  echo $client;  ?>";
