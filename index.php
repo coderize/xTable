@@ -979,8 +979,7 @@ function editAjax(par){
 ////////////////////////////////////////////////////END OTHER ELEMENTS EDITING////////////////////////////////////////////////////				
 	
 ////////////////////////////////////////////////////SET SELECTED DROPDOWN OPTIONS////////////////////////////////////////////////////			
-	document.getElementById("vertical").value = "<?php  echo $vert;  ?>";	
-	
+	document.getElementById("vertical").value = "<?php  echo $vert;  ?>";		
 		
 	document.getElementById("client").value = "<?php  echo $client;  ?>";
 	
@@ -1300,8 +1299,7 @@ function editAjax(par){
 			//VALID CREATE//
 			validCreate();	
 			
-			var defaultTCID = $("#tcid").val();
-			
+			var defaultTCID = $("#tcid").val();			
 			
 			/////GET ETIME /////
 			$.ajax({
@@ -1328,7 +1326,6 @@ function editAjax(par){
 				var custFunction = $("#function").val();
 				
 			}
-			
 	
 
 			////GLOBAL SEARCH REINITIALIZATION///
@@ -1483,18 +1480,6 @@ function editAjax(par){
 				
 			});
 		
-		$("#up").click(function(){
-		
-			var basedir = 'http://10.10.40.16/qc/qc_exec.php';
-
-			var vcp = basedir + '?ddvert=' + $("#vertical").val() + '&ddclient=' + $("#client").val() + '&ddproject=' + $("#project").val();
-		
-			var url = vcp + '&ddstartdate=' + $("#startdateinput").val() + '&ddenddate=' + $("#enddateinput").val();		
-			
-			$("#graph").attr('src',url);
-			
-		});
-
 
 		$("#genReport").click(function(){
 			
