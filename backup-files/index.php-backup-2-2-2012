@@ -898,7 +898,6 @@ function is_loggedin(json){
 
 //////////////////////////////////////PAUSER FUNCTION////////////////////////////////////////////////////
 
-
 function pauser(){
 
 	function timestamp(){
@@ -912,10 +911,9 @@ function pauser(){
 	$("#pauseCur").html("0");
 	$("#pauseDur").html("0");
 	$("#pauseTotalDur").html("0");
-	$("#pauseCount").html("0");
-	
+	$("#pauseCount").html("0");	
 
-	$(".pauser, #addSimilar, #addAnother, #add").bind("click keyup",function(){
+	$(".pauser, #addSimilar, #addAnother, #add").bind("click",function(){
 		
 		//SET CURRENT TO NOW
 		$("#pauseCur").html(timestamp());
@@ -938,8 +936,7 @@ function pauser(){
 			//SET INITIAL TO CURRENT
 			$("#pauseIni").html($("#pauseCur").html());
 			
-			validCreate();
-		
+			validCreate();		
 		
 		}else{
 		
@@ -962,8 +959,7 @@ function pauser(){
 			$("#pauseTotalDur").html(pausedTotalDuration);
 			
 			//SET PAUSE COUNT
-			$("#pauseCount").html(count);
-			
+			$("#pauseCount").html(count);		
 
 		
 		}
@@ -976,9 +972,6 @@ function pauser(){
 }
 
 //////////////////////////////////////END PAUSER FUNCTION////////////////////////////////////////////////////
-
-
-
 
 
  /////////////////////////////////////////////////////////////HOME DROPDOWNS -VCP///////////////////////////////////////////

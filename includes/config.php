@@ -1,7 +1,7 @@
 <?php
 
 
-$db = mysql_connect("10.10.40.31", "root", "testing450311");
+$db = mysql_connect("localhost", "root", "testing450311");
 
 $sdb = mysql_select_db("usablex");
 

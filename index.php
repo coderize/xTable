@@ -549,7 +549,7 @@ function is_loggedin(a){if(a=="INVALID_SESSION"){$("#logged-out").dialog({height
 ///////////////////////////////////////////////session checker/////////////////////////////////////////////////////
 
 //////////////////////////////////////PAUSER FUNCTION////////////////////////////////////////////////////
-function pauser(){function a(){var a=Math.round(+(new Date)/1e3);return a}$("#pauseIni").html(a());$("#pauseCur").html("0");$("#pauseDur").html("0");$("#pauseTotalDur").html("0");$("#pauseCount").html("0");$(".pauser, #addSimilar, #addAnother, #add").bind("click keyup",function(){$("#pauseCur").html(a());var b=parseInt($("#pauseIni").html());var c=parseInt($("#pauseCur").html());var d=c-b;$("#pauseDur").html(d);var e=300;if(d<e){$("#pauseIni").html($("#pauseCur").html());validCreate()}else{var f=parseInt($("#pauseTotalDur").html());var f=f==0?d:f+d;var g=parseInt($("#pauseCount").html());var g=g==0?1:g+1;$("#pauseIni").html($("#pauseCur").html());$("#pauseTotalDur").html(f);$("#pauseCount").html(g)}})}
+function pauser(){function a(){var a=Math.round(+(new Date)/1e3);return a}$("#pauseIni").html(a());$("#pauseCur").html("0");$("#pauseDur").html("0");$("#pauseTotalDur").html("0");$("#pauseCount").html("0");$(".pauser, #addSimilar, #addAnother, #add").bind("click",function(){$("#pauseCur").html(a());var b=parseInt($("#pauseIni").html());var c=parseInt($("#pauseCur").html());var d=c-b;$("#pauseDur").html(d);var e=300;if(d<e){$("#pauseIni").html($("#pauseCur").html());validCreate()}else{var f=parseInt($("#pauseTotalDur").html());var f=f==0?d:f+d;var g=parseInt($("#pauseCount").html());var g=g==0?1:g+1;$("#pauseIni").html($("#pauseCur").html());$("#pauseTotalDur").html(f);$("#pauseCount").html(g)}})}
 //////////////////////////////////////END PAUSER FUNCTION////////////////////////////////////////////////////
 
  /////////////////////////////////////////////////////////////HOME DROPDOWNS -VCP///////////////////////////////////////////
@@ -983,7 +983,7 @@ function editAjax(par){
 		
 	document.getElementById("client").value = "<?php  echo $client;  ?>";
 	
-	<?php echo $client;  if($client == ''){ $project = "na";} ?>
+	<?php if($client == ''){ $project = "na";} ?>
 	
 	document.getElementById("project").value = "<?php  echo $project;  ?>";	
 
@@ -1267,17 +1267,17 @@ function editAjax(par){
 			
  <?php
 	if( $_SESSION['role'] != 5 &&  $_SESSION['role'] != 4){
-?>  			
-			
+?>  						
 					///////////////////////////////////ADD NEW FUNCTION////////////////////////////////////////////////////////////////////////////
 						$("#function").change(function(){
 							
-							if( $(this).val() == "other450311"  && $("#newfunction").length < 1 ) {
+							if( $(this).val() == "other450311"  &&  $("#newfunction").length < 1 ) {
 
 						
 										$(this).parent().append("<input type='text'  id='newfunction' class='cf pauser' name='newfunction' style='position:absolute; text-align:left; right:55px; top:25px; width:290px;' />");		
 										$('input:text, input:password').button().addClass('inpField');
-										validCreate()
+										
+										validCreate();
 								
 								 $(".cf").keyup(function(){
 										
@@ -1325,22 +1325,12 @@ function editAjax(par){
 			data: "test=test",													  
 			}).done(function( msg ) {
 			
-				if( is_loggedin(msg) ){	
+				if( is_loggedin(msg) ){	$("#eCreateTime").html(msg); }
 				
-					$("#eCreateTime").html(msg);		
-				}
 			});		
 
 			//////////VERIFY WHICH OTHER OR NEW FUNCTION///////////
-			if( $("#newfunction").val() ){
-			
-				var custFunction = $("#newfunction").val();				
-				
-			}else{
-			
-				var custFunction = $("#function").val();
-				
-			}
+			var custFunction = ($("#newfunction").val() ) ? $("#newfunction").val() : $("#function").val();
 	
 
 			////GLOBAL SEARCH REINITIALIZATION///
@@ -1396,17 +1386,13 @@ function editAjax(par){
 																		$("#function").html(msg);
 																		
 																					$("#createForm select").selectmenu('destroy');
-																					$("#createForm select").selectmenu({style: 'dropdown', maxHeight: 400});	
-														
-																});
-																
+																					$("#createForm select").selectmenu({style: 'dropdown', maxHeight: 400});															
+																});																
 												}
 											
-												cleanCreate();	
-												
+												cleanCreate();												
 											
-											}
-											
+											}										
 											
 											if(action == 'as'){
 											
@@ -1483,17 +1469,8 @@ function editAjax(par){
 ?>	
  
  
-			$("#loading").ajaxStart(function(){
-				
-				$(this).show();
-				
-			});
-			
-			$("#loading").ajaxStop(function(){
-			
-				$(this).hide();
-				
-			});
+			$("#loading").ajaxStart(function(){	$(this).show(); });			
+			$("#loading").ajaxStop(function(){	$(this).hide(); });
 		
 
 		$("#genReport").click(function(){
@@ -1532,8 +1509,7 @@ function editAjax(par){
 		});
 		
 			
-		$("#_filterText1").val("Search-->");	
-		
+		$("#_filterText1").val("Search-->");		
 				
 					
 				$("#welcome").html("Welcome, <?php echo $_SESSION['fname']; ?>");
