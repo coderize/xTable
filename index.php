@@ -309,24 +309,6 @@ $q = @mysql_query("SELECT manual_function_name AS 'FUNCTION'
 
 ?>
 
-
-<!--
-<div id='myAcc'>
-
-	<button name='account' id='account'><?php echo $_SESSION['fname'] . "'s Account"; ?></button>
-		<div id='accChild'>
-			
-		</div>
-		
-		<button>Generate Report</button>
-		
-		<button>Generate PDF</button>
-		
-
-		
-</div>-->
-
-
 </div><!-- end navigation -->
 
 <div id="bodyContainer" style="visibility:hidden;">
