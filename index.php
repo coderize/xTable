@@ -370,8 +370,9 @@ $q = @mysql_query("SELECT manual_function_name AS 'FUNCTION'
 
 </div><!-- end main container -->
 
-
-
+<?php
+if( $_SESSION['role'] != 5 && $_SESSION['role'] != 4  ){
+?>
                                 <div id='createForm'>
 								
                                                 <table class="form" id="createTable">
@@ -519,6 +520,9 @@ $q = @mysql_query("SELECT manual_function_name AS 'FUNCTION'
                                                 
                                 
                                 </div>
+		<?
+		}
+		?>
 								
 <div id='iframeContainer'></div>								
 								
