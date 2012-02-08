@@ -15,6 +15,15 @@ $vert = mysql_real_escape_string($_GET['vertical']);
 $client = mysql_real_escape_string($_GET['client']);
 $project = mysql_real_escape_string($_GET['project']);
 
+if($vert == '' && $client == '' && $project == ''){
+	
+	echo "Invalid URL arguments...";
+	header('Refresh: 1; URL=http://10.10.40.16/xtable/index.php?vertical=6&client=267&project=703');
+	exit;
+
+}
+
+
 ?>
 <!DOCTYPE html>
 <html>
