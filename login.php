@@ -1,7 +1,15 @@
-<?php 
-require "includes/config.php";
-error_reporting(E_ALL & ~E_NOTICE); 
- ?>
+<?php
+header("Content-type: text/html; charset=utf-8");  
+error_reporting(E_ALL ^ E_NOTICE);
+require "includes/config.php"; 
+require "includes/sess.php";
+session_start();
+
+ if( $_SESSION['fname'] ){
+	header('Refresh: 0; URL=http://localhost/usablex/xtable/home.php');
+	exit;
+} 
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -521,7 +529,10 @@ if($logout=="true"){
 	
 								if( msg == 'Login Successful.'){
 									
-										$("#selectionMsg").html(msg);
+									window.location.href = 'http://localhost/usablex/xtable/home.php';
+									
+									
+				/* 						$("#selectionMsg").html(msg);
 										$("#selectionMsg").attr("class","success");										
 										$("#selectionMsg").fadeOut("slow");
 										$("#selectionMsg").css("margin-bottom","10px");
@@ -551,7 +562,7 @@ if($logout=="true"){
 													$( ".vcp" ).css("margin-bottom","15px");
 													
 													
-													$("#selectionMsg").fadeOut(3000);
+													$("#selectionMsg").fadeOut(3000); */
 													
 								}else{
 								

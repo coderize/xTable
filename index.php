@@ -1210,7 +1210,7 @@ function editAjax(par){
 											buttons: {
 												"Log out from xTable": function() {
 													$.ajax({											
-													  type: "POST",
+													  type: "GET",
 													  url: "login_mod.php",
 													  cache: false,
 													  data: "kill=kill",
@@ -1491,9 +1491,9 @@ function editAjax(par){
 				$("#welcome").html("Welcome, <?php echo $_SESSION['fname']; ?>");
 				$('#switcher').themeswitcher();
 				
-								document.getElementById("hvertical").value = "<?php  echo $vert;  ?>";
-								document.getElementById("hclient").value = "<?php  echo $client;  ?>";
-								document.getElementById("hproject").value = "<?php  echo $project;  ?>";
+			document.getElementById("hvertical").value = "<?php  echo $vert;  ?>";
+			document.getElementById("hclient").value = "<?php  echo $client;  ?>";
+			document.getElementById("hproject").value = "<?php  echo $project;  ?>";
 
 
 			

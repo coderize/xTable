@@ -4,13 +4,14 @@ require "includes/config.php";
 require "includes/sess.php";
 session_start();
 
-$kill = @mysql_real_escape_string($_POST['kill']);
+$kill = @mysql_real_escape_string($_GET['kill']);
 
 
 if( $kill ){
 	
 	if( session_destroy() ){
 		echo "true";
+		header("Location: http://localhost/usablex/xtable/login.php?logout=true");
 		exit;
 	}else{
 		echo "false";
