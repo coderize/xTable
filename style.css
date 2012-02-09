@@ -1,0 +1,128 @@
+body{
+	background-image: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 700, from(#546673), to(#1F242A));
+	background-image: -o-linear-gradient(#1F242A, #546673);
+}
+
+#modal {
+		position: absolute;
+		top: 10px;
+		right: 20px;
+}
+
+.ui-button-text-only .ui-button-text {
+padding: .4em 1em;
+}
+
+.ui-button .ui-button-text {
+display: block;
+line-height: 1.4;
+}
+
+Inherited from button#modal.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-only
+.ui-button {
+cursor: pointer;
+text-align: center;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+font-weight: bold;
+color: #2E6E9E;
+}
+
+.ui-widget {
+font-family: Lucida Grande, Lucida Sans, Arial, sans-serif;
+font-size: 1.1em;
+}
+
+user agent stylesheetinput[type="button"], input[type="submit"], input[type="reset"], input[type="file"]::-webkit-file-upload-button, button {
+text-align: center;
+cursor: default;
+color: buttontext;
+}
+
+user agent stylesheetinput, textarea, keygen, select, button, isindex {
+font: -webkit-small-control;
+color: initial;
+letter-spacing: normal;
+word-spacing: normal;
+line-height: normal;
+text-transform: none;
+text-indent: 0px;
+text-shadow: none;
+text-align: -webkit-auto;
+}
+
+Inherited from body
+body {
+font: 100% Arial, sans-serif;
+}
+
+
+#main{
+	margin: auto;
+	margin-top: 100px;
+	width: 820px;
+	height: 300px;
+}
+
+#icon{
+	position: relative;
+	float: left;
+	width: 130px;
+	height: 130px;
+	margin: 35px;
+/* 	border-radius: 15px;
+	border: 2px solid 9b9696; */
+}
+
+#XTable{
+	border-radius: 15px;
+}
+
+#Dashboard{
+	border-radius: 15px;
+}
+
+#Reporting{
+	border-radius: 15px;
+}
+
+#Administration{
+	border-radius: 15px;
+}
+
+
+img{
+	border: 2px solid #9b9696;
+}
+
+img:hover{
+	margin-top:-10px;
+	height:150px;
+	width:150px;	
+	-webkit-box-shadow: 0px 0px 15px 10px #ff7777;	
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
