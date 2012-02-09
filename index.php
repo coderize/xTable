@@ -981,8 +981,7 @@ function editAjax(par){
 
 ////////////////////////////////////////////////////END SET SELECTED DROPDOWN OPTIONS////////////////////////////////////////////////////	
 
-	$(document).ready(function() 
-		{ 							
+	$(document).ready(function() { 							
 		
 						$('#myTable').columnFilters();
 							
@@ -1290,9 +1289,7 @@ function editAjax(par){
 							}
 						
 						}); 
-					///////////////////////////////////END ADD NEW FUNCTION////////////////////////////////////////////////////////////////////////////
-
-			
+					///////////////////////////////////END ADD NEW FUNCTION////////////////////////////////////////////////////////////////////////////		
 			
 			/////////////////////////////////////////////////////////////INSERT NEW TESTCASE///////////////////////////////////////////	
 
@@ -1430,25 +1427,11 @@ function editAjax(par){
 /////////////////////////////////////////////////////////////END INSERT NEW TESTCASE//////////////////////////////////////////
 /////////////////////////////////////////ADD NEW / SIMILAR / ANOTHER////////////////////////////////////	
 							
-							$("#add").click(function(){			
-									
-										addCreate("close");											
-
-							});	
+							$("#add").click(function(){		addCreate("close");	});	
 								
-								$("#addAnother").click(function(){			
-									
-										addCreate("aa");	
-										pauser();
-
-							});	
+								$("#addAnother").click(function(){		addCreate("aa");		pauser(); 	});	
 							
-							$("#addSimilar").click(function(){			
-									
-										addCreate("as");	
-										pauser();
-
-							});	
+							$("#addSimilar").click(function(){	addCreate("as"); 	pauser();  });	
 							
 							
 				/////////////////////////////////////////END ADD NEW / SIMILAR / ANOTHER//////////////////////////////////	
@@ -1504,9 +1487,9 @@ function editAjax(par){
 				$("#welcome").html("Welcome, <?php echo $_SESSION['fname']; ?>");
 				$('#switcher').themeswitcher();
 				
-								//document.getElementById("hvertical").value = "<?php  echo $vert;  ?>";
-								//document.getElementById("hclient").value = "<?php  echo $client;  ?>";
-								//document.getElementById("hproject").value = "<?php  echo $project;  ?>";
+								document.getElementById("hvertical").value = "<?php  echo $vert;  ?>";
+								document.getElementById("hclient").value = "<?php  echo $client;  ?>";
+								document.getElementById("hproject").value = "<?php  echo $project;  ?>";
 
 
 			
