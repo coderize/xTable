@@ -1043,11 +1043,7 @@ function editAjax(par){
 								}
 								?>
 								
-								document.getElementById("hvertical").value = "<?php  echo $vert;  ?>";
-								document.getElementById("hclient").value = "<?php  echo $client;  ?>";
-								document.getElementById("hproject").value = "<?php  echo $project;  ?>";
-							
-								
+
 							
 							$("#pager").append("<div id='searchForm'><form id='search-form' name='search-form' method='#' action='#' onsubmit='javascript:return false;'>		<input value='Search...' type='text' id='search' style='text-align: left !important;' name='search'></form></div>");
 							$("#search").blur(function(){
@@ -1508,6 +1504,9 @@ function editAjax(par){
 				$("#welcome").html("Welcome, <?php echo $_SESSION['fname']; ?>");
 				$('#switcher').themeswitcher();
 				
+								//document.getElementById("hvertical").value = "<?php  echo $vert;  ?>";
+								//document.getElementById("hclient").value = "<?php  echo $client;  ?>";
+								//document.getElementById("hproject").value = "<?php  echo $project;  ?>";
 
 
 			
