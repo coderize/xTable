@@ -849,7 +849,8 @@ function editAjax(par){
 																						
 																									ele.childNodes[0].innerHTML = strip_tags($("#myTextarea").val(), '<i><b>');																
 																									
-																									editAjax(ele.childNodes[0]);																										
+																									editAjax(ele.childNodes[0]);	
+																									$('input#search').quicksearch('#myTable tbody tr');	
 																										
 																									$("#myTextarea").remove();																									
 																									$(this).dialog("close"); 																									
@@ -915,7 +916,8 @@ function editAjax(par){
 					  
 									var ms  = $("#mySelect option:selected").text();
 									$(elem).html(ms);																	
-									editAjax(elem.childNodes[0]);									
+									editAjax(elem.childNodes[0]);	
+									$('input#search').quicksearch('#myTable tbody tr');	
 									
 					}  			
 					
@@ -931,6 +933,7 @@ function editAjax(par){
 								 	var ms  = $("#mySelect option:selected").text();
 									$(elem).html(ms);																	
 									editAjax(elem.childNodes[0]);		
+									$('input#search').quicksearch('#myTable tbody tr');	
 									
 					}
 
@@ -959,6 +962,7 @@ function editAjax(par){
 							
 							ele.innerHTML = inp.value;
 							editAjax(ele.childNodes[0]);
+							$('input#search').quicksearch('#myTable tbody tr');	
 
 						}				
 			}			
