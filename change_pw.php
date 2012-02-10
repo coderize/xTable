@@ -435,7 +435,7 @@ html {
 		if($loginSuccess == 'true'){	
 	?>
 				
-				window.location.href="http://localhost/usablex/xtable/home.php";
+				window.location.href="http://10.10.40.16/xtable/home.php";
 	
 	
 	

@@ -1,4 +1,5 @@
 ﻿<?php 
+ob_start();
 header("Content-type: text/html; charset=utf-8");  
 error_reporting(E_ALL ^ E_NOTICE);
 require "includes/config.php"; 
@@ -22,7 +23,6 @@ if($vert == '' && $client == '' && $project == ''){
 	exit;
 
 }
-
 
 ?>
 <!DOCTYPE html>
@@ -74,8 +74,25 @@ body,pre{font-family:Verdana,Helvetica,san-serif,Arial;font-size:.6em}*{padding:
 	display:block;
 }
 
-</style>
+#main{
+	margin-top:100px;
+	border: 1px solid #000;
+	
+}
+#icon img{
+	height:60px;
+	width:60px;
+	display:inline;
+	float:left;
+	margin:5px;
+	border-radius:10px;
 
+}
+#XTable{
+	margin-left:10px !important;
+}
+
+</style>
 <link rel="stylesheet" type="text/css" href="css/base.css" />
 <link rel="stylesheet" type="text/css" href="css/flick/jquery-ui-1.8.16.custom.css" />
 <link rel="stylesheet" type="text/css" href="css/selectmenu.css" />
@@ -531,7 +548,6 @@ if( $_SESSION['role'] != 5 && $_SESSION['role'] != 4  ){
 <img src='img/awsnap.gif' />
 Aw Snap, Looks like you have been logged out!
 <br/>
-
 </div>
 <div id="contactable"></div>
 <script charset="UTF-8">
@@ -609,7 +625,7 @@ function editAjax(par){
 /////////////////////////////////////////////////////////////END EDITING AJAX///////////////////////////////////////////
 
 
-/////////////////////////////////////////////////////////////ADD TESTCASE FIELDS VALIDITY///////////////////////////////////////////
+/////////////////////////////////////////////////////////////ADD TESTCASE FIELDS VALIDITY/////////////////
 		function cFieldsCheck(){
 									
 									$(".cf").each(function(){
@@ -668,9 +684,8 @@ function editAjax(par){
 									});	 
 			
 		}
- /////////////////////////////////////////////////////////////END ADD TESTCASE FIELDS VALIDITY///////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////CREATE/ADD/ADD SIMILAR/ADD ANOTHER BUTTONS VALIDATION///////////////////////////////////////////	
+/////////////////////////////////////////////////////////////END ADD TESTCASE FIELDS VALIDITY///////////////////////////////////////////
+/////////////////////////////////////////////////////////////CREATE/ADD/ADD SIMILAR/ADD ANOTHER BUTTONS VALIDATION/////////////
 	
 		function validCreate(){
 
@@ -812,8 +827,7 @@ function editAjax(par){
 /////////////////////////////////////////////////////////////END TCID LOGIC /////////////////////////////////////////////////////////////////////		
 
 ////////////////////////////////////////////////////CLEAN CREATE FORM FIELDS////////////////////////////////////////////////////		
-	function cleanCreate(){
-		
+	function cleanCreate(){		
 			$("#function").val("");
 			$("#tcid").val("");
 			$("#status").val("");
@@ -1009,16 +1023,14 @@ function editAjax(par){
 								minColWidth    : 75
 								
 							});   	
-														
+							
 							//////////////////////////////////DRAG AND DROP/////////////////////////////////////////////////////////////////////////
 								//$("#myTable").tableDnD( { onDragClass: "dragging"} );	
 							//////////////////////////////////END DRAG AND DROP////////////////////////////////////////////////////////////////		
 
 							///////////////////////////////////FIX PAGINATION PROBLEM///////////////////////////////////////////////////////
-							$(".t_fixed_header_main_wrapper").append("<div id='pager'></div>");
-							
-							$("#pager").html("Total number of testcases: " + $(".mid").length) ;
-							
+							$(".t_fixed_header_main_wrapper").append("<div id='pager'></div>");							
+							$("#pager").html("Total number of testcases: " + $(".mid").length) ;							
 							///////////////////////////////////NEW UI JAVASCRIPT//////////////////////////////////////////////
 		
 							
@@ -1147,8 +1159,7 @@ function editAjax(par){
 							
 							$("#execBtn").click(function(){				
 							
-											$.ajax({
-											
+											$.ajax({											
 													  type: "GET",													  
 													  url: "execution.php",													  
 													  cache: false,													  
@@ -1164,7 +1175,7 @@ function editAjax(par){
 										
 																			autoOpen: true,
 																			height: 580,
-																			width: 1000,
+																			width: 1010,
 																			modal: true,
 																			resizable: false
 																			
@@ -1449,12 +1460,12 @@ function editAjax(par){
 			$("#loading").ajaxStop(function(){	$(this).hide(); });
 		
 
-		$("#genReport").click(function(){
+	//$("#genReport").click(function(){
 			
-			window.open( "reportgen.php?vertical=<?php echo $vert; ?>&client=<?php echo $client; ?>", "reportWin", "status = 1, height = 440, width = 600, toolbars=no,menubar=no,location=no,scrollbars=no,resizable=no,status=no" );
+			//window.open( "reportgen.php?vertical=<?php echo $vert; ?>&client=<?php echo $client; ?>", "reportWin", "status = 1, height = 440, width = 600, toolbars=no,menubar=no,location=no,scrollbars=no,resizable=no,status=no" );
 			
 		
-		});
+		//});
 			
 		$("#genPdf").click(function(){
 		
@@ -1496,15 +1507,27 @@ function editAjax(par){
 			document.getElementById("hproject").value = "<?php  echo $project;  ?>";
 
 
+			$("#navXTable").attr("href","javascript:void(0)");
+			$("#XTable").css("border","3px solid #ff7777");
+			$("#XTable").css("-webkit-box-shadow","0px 0px 2px 2px #ff7777");
+			
+			
+			
 			
 	}); //DOM Ready
 	
 							
-						
+		
 	
 
 </script>
+<?php
 
+	setcookie("vertical", $vert, time()+3600);
+	setcookie("client", $client, time()+3600);
+	setcookie("project", $project, time()+3600);
+	
+?>
 
 
 </body>

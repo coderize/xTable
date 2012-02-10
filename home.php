@@ -20,7 +20,7 @@ session_start();
 	</head>
 
 	<body>
-	<a href="http://localhost/usablex/xtable/login_mod.php?kill=kill" style="text-decoration:none">
+	<a href="http://10.10.40.16/xtable/login_mod.php?kill=kill" style="text-decoration:none">
 		<button name="modal" id="modal" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false">
 		<span class="ui-button-text">Logout</span></button>
 	</a>
@@ -30,9 +30,6 @@ session_start();
 		<div id="icon">
 			<a href="http://10.10.40.16/xtable/index.php?vertical=na" name="navXTable" id="navXTable" title="xTable">
 				<img alt="XTable" id="XTable" src="img/xtable.png" height="130px" width="130px" />
-				
-				
-				
 			</a>
 		</div>
 
@@ -43,11 +40,8 @@ session_start();
 		</div>
 
 		<div id="icon">
-			<a href="http://10.10.40.16/xtable/reportgen.php?vertical=na&client=" name="navReporting" id="navReporting" title="Reporting">		
+			<a href="http://10.10.40.16/xtable/reportgen.php" name="navReporting" id="navReporting" title="Reporting">		
 				<img alt="Reporting" id="Reporting" src="img/reports_icon.jpg" height="130px" width="130px" />
-				
-				
-				
 			</a>
 		</div>		
 		
@@ -56,7 +50,7 @@ session_start();
 				<img alt="Administration" id="Administration" src="img/admin.png" height="130px" width="130px" title="Administration"/>				
 			</a>			
 		</div>
-		
+	</div>
 	</body>
 	
 </html>

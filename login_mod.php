@@ -11,7 +11,7 @@ if( $kill ){
 	
 	if( session_destroy() ){
 		echo "true";
-		header("Location: http://localhost/usablex/xtable/login.php?logout=true");
+		header("Location: http://10.10.40.16/xtable/login.php?logout=true");
 		exit;
 	}else{
 		echo "false";
