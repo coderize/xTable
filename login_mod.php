@@ -7,11 +7,11 @@ session_start();
 $kill = @mysql_real_escape_string($_GET['kill']);
 
 
-if( $kill ){
+if( $kill == "true"){
 	
 	if( session_destroy() ){
 		echo "true";
-		header("Location: http://10.10.40.16/xtable/login.php?logout=true");
+		header("Location: login.php?logout=true");
 		exit;
 	}else{
 		echo "false";
@@ -33,7 +33,7 @@ if($email && $password){
 		
 			while ($user = mysql_fetch_object($q)){
 
-				if($user->user_status == 'Y' ){
+				if($user->user_status_id == '1' ){
 			
 				if($email == $user->user_email && MD5($password) == $user->user_password){
 						
@@ -57,7 +57,7 @@ if($email && $password){
 										
 					echo "Login Successful.";
 					
-					//header('Refresh: 1; URL=http://localhost/usablex/xtable/');
+				
 				
 				}else{
 				

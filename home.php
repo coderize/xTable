@@ -6,7 +6,7 @@ require "includes/sess.php";
 session_start();
 
  if( !$_SESSION['fname'] ){
-	header('Refresh: 0; URL=http://10.10.40.16/xtable/login.php');
+	header('Refresh: 0; URL=login.php');
 	exit;
 } 
 ?>
@@ -20,7 +20,7 @@ session_start();
 	</head>
 
 	<body>
-	<a href="http://10.10.40.16/xtable/login_mod.php?kill=kill" style="text-decoration:none">
+	<a href="login.php?kill=true" style="text-decoration:none">
 		<button name="modal" id="modal" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false">
 		<span class="ui-button-text">Logout</span></button>
 	</a>
@@ -28,7 +28,7 @@ session_start();
 	<div id="main">
 
 		<div id="icon">
-			<a href="http://10.10.40.16/xtable/index.php?vertical=na" name="navXTable" id="navXTable" title="xTable">
+			<a href="index.php?vertical=na" name="navXTable" id="navXTable" title="xTable">
 				<img alt="XTable" id="XTable" src="img/xtable.png" height="130px" width="130px" />
 			</a>
 		</div>
@@ -40,16 +40,23 @@ session_start();
 		</div>
 
 		<div id="icon">
-			<a href="http://10.10.40.16/xtable/reportgen.php" name="navReporting" id="navReporting" title="Reporting">		
+			<a href="reportgen.php" name="navReporting" id="navReporting" title="Reporting">		
 				<img alt="Reporting" id="Reporting" src="img/reports_icon.jpg" height="130px" width="130px" />
 			</a>
 		</div>		
-		
+<?php
+	if( $_SESSSION['role'] < 3){
+?>
+	
 		<div id="icon">
-			<a href="administration.html" name="navAdministration" id="navAdministration">
+			<a href="admin.php" name="navAdministration" id="navAdministration">
 				<img alt="Administration" id="Administration" src="img/admin.png" height="130px" width="130px" title="Administration"/>				
 			</a>			
 		</div>
+
+<?php		
+}
+?>
 	</div>
 	</body>
 	

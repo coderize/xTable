@@ -8,7 +8,7 @@ session_start();
 
  if( !$_SESSION['fname'] ){
 	echo "Error, you need to login first";
-	header('Refresh: 1; URL=http://10.10.40.16/xtable/login.php');
+	header('Refresh: 1; URL=login.php');
 	exit;
 } 
 
@@ -19,7 +19,7 @@ $project = mysql_real_escape_string($_GET['project']);
 if($vert == '' && $client == '' && $project == ''){
 	
 	echo "Invalid URL arguments...";
-	header('Refresh: 1; URL=http://10.10.40.16/xtable/index.php?vertical=na');
+	header('Refresh: 1; URL=index.php?vertical=na');
 	exit;
 
 }
@@ -99,6 +99,8 @@ body,pre{font-family:Verdana,Helvetica,san-serif,Arial;font-size:.6em}*{padding:
 <!-- <link rel="stylesheet" type="text/css" href="css/calendar.css" /> -->
 <link rel="stylesheet" type="text/css" href="css/contactable.css" />
 
+<script src="js/userEdit.js" charset="UTF-8"></script>
+<script src="js/deviceEdit.js" charset="UTF-8"></script>
 <script src="js/jquery.min.js" charset="UTF-8"></script>
 <script src="js/jquery.quicksearch.js" charset="UTF-8"></script>
 <script src="js/jqueryUI/js/jqueryui.js" charset="UTF-8"></script>
@@ -109,8 +111,6 @@ body,pre{font-family:Verdana,Helvetica,san-serif,Arial;font-size:.6em}*{padding:
 <script src="js/jquery.js" charset="UTF-8"></script>
 <!-- <script src="js/calendar_db.js" charset="UTF-8"></script> -->
 <script src="js/jquery.contactable.js" charset="UTF-8"></script>
-
-
 
 <?php
 	if( $_SESSION['role'] != 5 &&  $_SESSION['role'] != 4){
@@ -1231,7 +1231,7 @@ function editAjax(par){
 														
 															if (msg == "true"){
 															
-																window.location.href ="http://10.10.40.16/xtable/login.php?logout=true";
+																window.location.href ="login.php?logout=true";
 																
 															}else{
 															

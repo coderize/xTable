@@ -83,7 +83,7 @@ font: 100% Arial, sans-serif;
 	border-radius: 15px;
 }
 
-#Reporting{
+#Reporting,#userAdmin,#deviceAdmin{
 	border-radius: 15px;
 }
 
@@ -105,6 +105,8 @@ img{
 }
 
 
+
+, #nav{
 
 
 

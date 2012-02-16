@@ -6,7 +6,7 @@ session_start();
 
 if (!$_SESSION['fname'] ){
 		
-	header('Refresh: 0; URL=http://10.10.40.16/xtable/login.php');
+	header('Refresh: 0; URL=login.php');
 	exit;
 	
 }
@@ -383,8 +383,6 @@ html {
 
 			if($update){
 			
-				//echo "Password updated succesfully";
-				//header('Refresh: 0; URL=http://10.10.40.16/xtable/');
 				$loginSuccess = "true";
 				
 			
@@ -435,7 +433,7 @@ html {
 		if($loginSuccess == 'true'){	
 	?>
 				
-				window.location.href="http://10.10.40.16/xtable/home.php";
+				window.location.href="home.php";
 	
 	
 	
