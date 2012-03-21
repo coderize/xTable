@@ -11,7 +11,6 @@ if( $kill == "true"){
 	
 	if( session_destroy() ){
 		echo "true";
-		header("Location: login.php?logout=true");
 		exit;
 	}else{
 		echo "false";

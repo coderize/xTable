@@ -77,6 +77,9 @@ $crypto = substr($crypto, 0, -22);
 	if($_GET['othertcid'] == "true" ){
 
 		$rel = mysql_real_escape_string($_GET['rel']);
+		
+		 if( !$rel ) {  die("MISSING REL");	 }
+		 
 		$q = mysql_query("SELECT FLOOR(MAX(manual_tcid)) + 1.01 AS 'OTH_TCID'
 													FROM table_manual
 													WHERE manual_relation_id = {$rel}") or die("Error: Other TCID SQL". mysql_error());

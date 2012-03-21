@@ -98,7 +98,14 @@ body,pre{font-family:Verdana,Helvetica,san-serif,Arial;font-size:.6em}*{padding:
 <link rel="stylesheet" type="text/css" href="css/selectmenu.css" />
 <!-- <link rel="stylesheet" type="text/css" href="css/calendar.css" /> -->
 <link rel="stylesheet" type="text/css" href="css/contactable.css" />
+<?php
+	if( $_SESSION['role'] != 5 &&  $_SESSION['role'] != 4){
+?>
 
+<script src="js/addEdit.js" charset="UTF-8"></script>
+<?php
+}
+?>
 <script src="js/userEdit.js" charset="UTF-8"></script>
 <script src="js/deviceEdit.js" charset="UTF-8"></script>
 <script src="js/jquery.min.js" charset="UTF-8"></script>
@@ -112,14 +119,7 @@ body,pre{font-family:Verdana,Helvetica,san-serif,Arial;font-size:.6em}*{padding:
 <!-- <script src="js/calendar_db.js" charset="UTF-8"></script> -->
 <script src="js/jquery.contactable.js" charset="UTF-8"></script>
 
-<?php
-	if( $_SESSION['role'] != 5 &&  $_SESSION['role'] != 4){
-?>
 
-<script src="js/addEdit.js" charset="UTF-8"></script>
-<?php
-}
-?>
 <?php
 $qpriority = mysql_query("SELECT priority_id, priority_name FROM table_priority");
 			
@@ -630,7 +630,7 @@ function editAjax(par){
 									
 									$(".cf").each(function(){
 									
-											if( $.trim($(this).val()) && $.trim($(this).val()) !='na'){
+											if( $.trim($(this).val()) && $.trim($(this).val()) !='na' && $.trim($(this).val()) !='MISSING REL' ){
 													
 													$(this).parent().siblings(':first').html("<img class='success' src='img/accept.gif'/>");											
 											
