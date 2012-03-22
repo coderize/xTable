@@ -1,5 +1,4 @@
 <?php 
-header("Content-type: text/html; charset=utf-8");  
 error_reporting(E_ALL ^ E_NOTICE);
 require "includes/config.php"; 
 require "includes/sess.php";
@@ -57,14 +56,17 @@ session_start();
 
 <?php
 
-$er = @mysql_query("SELECT devtype_id, devtype_name
+$userloc = $_SESSION['loc'];
+
+$er = @mysql_query("SELECT devtype_name
 															 
-															FROM table_devtype
+															FROM table_device, table_devtype
 															
-															WHERE devtype_id <> 4
+															WHERE device_location_id = '{$userloc}'
+															AND device_type_id = devtype_id
 															 
 															GROUP BY devtype_name
-															 
+															
 															ORDER BY devtype_name") or die("UNABLE TO GET DEVICES");
 									
 			
@@ -82,16 +84,16 @@ $er = @mysql_query("SELECT devtype_id, devtype_name
 
 				$dq = mysql_query("SELECT device_id, devgroup_name, device_name, device_version
  
-														FROM table_device, table_devgroup, table_devtype
+														FROM table_device, table_devtype, table_devgroup
 														
-														WHERE device_type_id = '{$query_row->devtype_id}'
+														WHERE devtype_id = device_type_id
 														AND devgroup_id = device_group_id
-														AND devtype_id = device_type_id
+														AND device_location_id = '{$userloc}'
+														AND devtype_name = '{$query_row->devtype_name}'
 														 
-														GROUP BY device_type_id, device_group_id, device_name, device_version
-														
+														GROUP BY devtype_name, devgroup_name, device_name, device_version														
 														 
-														ORDER BY device_type_id, device_group_id, device_name, device_version");
+														ORDER BY devtype_name, devgroup_name, device_name, device_version");
 														
 
 					while ($query_row2 = @mysql_fetch_object($dq)){
@@ -107,24 +109,11 @@ $er = @mysql_query("SELECT devtype_id, devtype_name
 					
 <?php 					
 					}
-
 ?>
 
-
-				
-							
-							
-							
-							
-							
-							
 <?php
 	}
 ?>
-
-
-
-
 
 
 </tbody> 

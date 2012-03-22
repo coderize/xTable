@@ -131,6 +131,8 @@ if( $startExec == 'true' ){
 																, devgroup_name
 																, device_name
 																, device_version
+																, exec_create_date
+																, exec_creator_id
 																 
 																FROM table_manual, table_device, table_manual_exec, table_priority, table_class, table_devtype, table_devgroup
 																 
@@ -142,51 +144,45 @@ if( $startExec == 'true' ){
 																AND devgroup_id = device_group_id
 																AND exec_id = '{$next}' ") or die("QUERY ERROR");
 
-
 ?>
-
 
 <form id='executionForm' name='executionForm' action="<?php $_SERVER['PHP_SELF']; ?>" method="GET" />
 
 <table id="executionTable"> 
-<thead> 
+<thead>
+
 <?php 
 
 	while ($rows = mysql_fetch_object($qse)){
 
 ?>
-<tr> 
-	<th colspan='4' style='text-align:left'>
-
+	<tr> 
+		<th colspan='4' style='text-align:left'>FUNCTION: <?php echo $rows->manual_function_name; ?></th>  
+	</tr>
 	
-	FUNCTION: <?php echo $rows->manual_function_name; ?></th>  
-</tr> 
-<tr> 
-	<th  colspan='2'  style='text-align:left'>TCID: <?php echo $rows->manual_tcid; ?></th>  
-
-	<td id='exePri'  style='text-align:left'>PRIORITY: <?php echo $rows->priority_name; ?></td>
-	<td id='exeCla'  style='text-align:left'>CLASS: <?php echo $rows->class_name; ?></td>
-</tr> 
-<tr> 
-	<th colspan='4'  style='text-align:left'>NAME: <?php echo $rows->manual_name; ?></th>  
-</tr> 
-<tr> 
-	<th colspan='4'  style='text-align:left'>PREREQUISITE: <?php echo $rows->manual_prereq; ?></th>  
-</tr> 
-
-<tr> 
-	<td colspan='2' id='scenario'  style='text-align:center'>SCENARIO</td>
+	<tr>
+		<th colspan='2'  style='text-align:left'>TCID: <?php echo $rows->manual_tcid; ?></th>  
+		<td id='exePri'  style='text-align:left'>PRIORITY: <?php echo $rows->priority_name; ?></td>
+		<td id='exeCla'  style='text-align:left'>CLASS: <?php echo $rows->class_name; ?></td>
+	</tr>
 	
-	<td  colspan='2' id='verification'  style='text-align:center'>VERIFICATION</td>
+	<tr> 
+		<th colspan='4'  style='text-align:left'>NAME: <?php echo $rows->manual_name; ?></th>  
+	</tr>
 	
-</tr> 
+	<tr> 
+		<th colspan='4'  style='text-align:left'>PREREQUISITE: <?php echo $rows->manual_prereq; ?></th>  
+	</tr> 
 
-<tr> 
-	<td  colspan='2'><textarea readonly='readonly'  style='height:150px; width:470px; max-width:470px !important; max-height:150px !important;'><?php echo $rows->manual_steps; ?></textarea></td>	
+	<tr> 
+		<td colspan='2' id='scenario'  style='text-align:center'>SCENARIO</td>	
+		<td  colspan='2' id='verification'  style='text-align:center'>VERIFICATION</td>	
+	</tr> 
 
-	<td  colspan='2'><textarea  readonly='readonly'  style='height:150px; width:470px; max-width:470px !important; max-height:150px !important;'><?php echo $rows->manual_expected; ?></textarea></td>
-	
-</tr> 
+	<tr> 
+		<td  colspan='2'><textarea readonly='readonly'  style='height:150px; width:470px; max-width:470px !important; max-height:150px !important;'><?php echo $rows->manual_steps; ?></textarea></td>	
+		<td  colspan='2'><textarea  readonly='readonly'  style='height:150px; width:470px; max-width:470px !important; max-height:150px !important;'><?php echo $rows->manual_expected; ?></textarea></td>		
+	</tr> 
 
 </thead> 
 <tbody> 
@@ -212,30 +208,30 @@ if( $startExec == 'true' ){
 
 	<div id='deviceImage'>
 	
-			<span id='dt'>Device Type: <b><?php echo $rows->device_type; ?></b></span><br />
-			<span id='dg'>Device Group: <b><?php echo $rows->device_group; ?></b></span><br />		
-			<span id='dn'>Device Name: <b><?php echo $rows-> device_name; ?></b></span><br />
-			<span id='dv'>Device Version: <b><?php echo $rows->device_version; ?></b></span><br />
-			
-			<button id='pass' onclick='javascript:next(<?php echo $curTC; ?>, <?php echo $last; ?>,0,<?php echo $stime; ?>)'>Pass</button>
-			
-			<button id='fail' onclick='javascript:next(<?php echo $curTC; ?>, <?php echo $last; ?>,1,<?php echo $stime; ?>)'>Fail</button>
-			
-			<button id='skip' onclick='javascript:next(<?php echo $curTC; ?>, <?php echo $last; ?>,2,<?php echo $stime; ?>)'>Skip</button>
+			<span id='dt'>Device Type: <b><?php echo $rows->devtype_name; ?></b></span><br />
+			<span id='dg'>Device Group: <b><?php echo $rows->devgroup_name; ?></b></span><br />		
+			<span id='dn'>Device Name: <b><?php echo $rows->device_name; ?></b></span><br />
+			<span id='dv'>Device Version: <b><?php echo $rows->device_version; ?></b></span><br />	
 		
-			
+			<button id='pass' onclick='javascript:next(<?php echo $curTC; ?>, <?php echo $last; ?>,0,<?php echo $stime; ?>)'>Pass</button>			
+			<button id='fail' onclick='javascript:next(<?php echo $curTC; ?>, <?php echo $last; ?>,1,<?php echo $stime; ?>)'>Fail</button>			
+			<button id='skip' onclick='javascript:next(<?php echo $curTC; ?>, <?php echo $last; ?>,2,<?php echo $stime; ?>)'>Skip</button>
+	
 	</div>
 
 <button id='execCancel' value='cancel'>Stop Execution</button>
 
-
 </form>
 
-
 <?php
-	}//end while
 
+	$create_date = $rows->exec_create_date; 
+	$creator = $rows->exec_creator_id;
+
+	}//end while
+	
 }//end if
+
 ?>
 
 <script>
@@ -271,19 +267,37 @@ if( $startExec == 'true' ){
 										
 									});	
 
-							}else{ alert("You have completed this suite of testcases."); $("#iframeContainer").dialog( "close" ); } 
+							}else{ 
+										
+								$.ajax({											
+										  type: "GET",													  
+										  url: "exec_results.php",													  
+										  cache: false,													  
+										  data: "create_date=<?php echo $create_date; ?>&creator=<?php echo $creator; ?>",												  
+										}).done(function( msg ) {
+										
+												if( is_loggedin(msg) ){	
+										
+													$("#iframeContainer").html(msg); 
+														
+														$( "#iframeContainer" ).dialog({
+									
+																		autoOpen: true,
+																		height: 580,
+																		width: 1010,
+																		modal: true,
+																		resizable: false
+																		
+														});	
+												}
+										  
+										});
+											
+							} 
 						
 						});	
 
- } ///end functio next
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
+ } ///end function next 
 	
 	$(document).ready(function() 
 		{ 							

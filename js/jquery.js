@@ -109,7 +109,7 @@ $.widget("ui.selectmenu", {
 		
 		//create menu portion, append to body
 		var cornerClass = (o.style == "dropdown")? " ui-corner-bottom" : " ui-corner-all"
-		this.list = $('<ul class="' + self.widgetBaseClass + '-menu ui-widget ui-widget-content'+cornerClass+'" aria-hidden="true" role="listbox" aria-labelledby="'+this.ids[0]+'" id="'+this.ids[1]+'"></ul>').appendTo('body');	
+		this.list = $('<ul class="' + self.widgetBaseClass + '-menu ui-widget ui-widget-content'+cornerClass+'" aria-hidden="true" role="listbox" aria-labelledby="'+this.ids[0]+'" id="'+this.ids[1]+'"></ul>').appendTo('body');				
 		
 		//serialize selectmenu element options	
 		var selectOptionData = [];

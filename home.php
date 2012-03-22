@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 header("Content-type: text/html; charset=utf-8");  
 error_reporting(E_ALL ^ E_NOTICE);
 require "includes/config.php"; 
@@ -11,6 +11,17 @@ session_start();
 } 
 ?>
 
+<style>
+
+#logout{
+	display:block;
+	position:absolute;
+	top:10px;
+	right:15px;
+}
+
+</style>
+
 <html>
 	<head>
 		<title>UsableX</title>
@@ -20,8 +31,8 @@ session_start();
 	</head>
 
 	<body>
-	<a href="login.php?kill=true" style="text-decoration:none">
-		<button name="modal" id="modal" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false">
+	<a onClick="window.location.href ='login.php?logout=true'" style="text-decoration:none">
+		<button name="logout" id="logout" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false">
 		<span class="ui-button-text">Logout</span></button>
 	</a>
 	
@@ -59,7 +70,38 @@ session_start();
 ?>
 	</div>
 	</body>
+
+	<script charset="UTF-8">
+	
+			///////////////////////////////////LOGOUT FUNCTION///////////////////////////////////////////////////////////////////////	
+			$("#logout").click(function(){
+							
+							window.location.reload();
+							window.location.href ="login.php?logout=true";
+							
+								$.ajax({											
+								  type: "GET",
+								  url: "login_mod.php",
+								  cache: false,
+								  data: "kill=kill",
+								}).done(function( msg ) {
+								
+									if( is_loggedin(msg) ){		
+									
+										if (msg == "true"){
+										
+											window.location.href ="login.php?logout=true";
+											
+										}else{
+										
+											alert("Error logging out, try again");																
+										}
+									}																
+										
+								});		
+
+			});// END LOGOUT 
+	
+	</script>
 	
 </html>
-
-

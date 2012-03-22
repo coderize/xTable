@@ -17,7 +17,7 @@ $crypto = substr($crypto, 0, -22);
 
 		$tcid = @mysql_real_escape_string($_GET['tcid']);
 		$rel = @mysql_real_escape_string($_GET['rel']);
-		$funciton = @mysql_real_escape_string($_GET['function']);
+		$function = @mysql_real_escape_string($_GET['function']);
 		$name = @mysql_real_escape_string($_GET['name']);
 		$priority = @mysql_real_escape_string($_GET['priority']);
 		$class = @mysql_real_escape_string($_GET['class']);
@@ -37,7 +37,7 @@ $crypto = substr($crypto, 0, -22);
 
 
 	$q = mysql_query("INSERT INTO table_manual (manual_tcid, manual_relation_id, manual_function_name, manual_name, manual_priority_id, manual_class_id, manual_prereq, manual_steps, manual_expected, manual_start, manual_end, manual_pauseduration, manual_pausecount, manual_status, manual_author_id)
-	VALUES ('{$tcid}', '{$rel}', '{$funciton}', '{$name}', '{$priority}', '{$class}', '{$prereq}', '{$scenario}', '{$expected}', '{$stime}', '{$etime}', '{$ptd}', '{$pc}', '{$status}', '{$author}')") or die('this is whats wrong-> ' . mysql_error());
+	VALUES ('{$tcid}', '{$rel}', UPPER('{$function}'), '{$name}', '{$priority}', '{$class}', '{$prereq}', '{$scenario}', '{$expected}', '{$stime}', '{$etime}', '{$ptd}', '{$pc}', '{$status}', '{$author}')") or die('this is whats wrong-> ' . mysql_error());
 
 
 		if($q){
@@ -77,9 +77,6 @@ $crypto = substr($crypto, 0, -22);
 	if($_GET['othertcid'] == "true" ){
 
 		$rel = mysql_real_escape_string($_GET['rel']);
-		
-		 if( !$rel ) {  die("MISSING REL");	 }
-		 
 		$q = mysql_query("SELECT FLOOR(MAX(manual_tcid)) + 1.01 AS 'OTH_TCID'
 													FROM table_manual
 													WHERE manual_relation_id = {$rel}") or die("Error: Other TCID SQL". mysql_error());
@@ -360,6 +357,30 @@ while($fns = mysql_fetch_object($qfunctions)){
 	}
 
 	///////////////////////////////////////////////////// END INSERT NEW DEVICE /////////////////////////////////////////////////////
+	
+	///////////////////////////////////////////////////// START MODIFY RESULTS /////////////////////////////////////////////////////
+	
+	if ( $_GET['resultsEdit'] == 'true' ) {
+
+		$eid = mysql_real_escape_string( $_GET['eid'] );
+		$result = mysql_real_escape_string($_GET['result']);
+
+		$q = mysql_query("UPDATE table_manual_exec SET exec_result = '{$result}' WHERE exec_id = '{$eid}' ") or die(mysql_error());
+	
+		if ($q){
+
+			echo "200";
+
+		}else{
+		
+			echo "404";
+				
+		} 
+
+	}
+	
+	///////////////////////////////////////////////////// END MODIFY RESULTS /////////////////////////////////////////////////////	
+	
 	
 }else{
 

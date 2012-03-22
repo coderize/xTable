@@ -1,22 +1,20 @@
 <?php 
-header("Content-type: text/html; charset=utf-8");  
-error_reporting(E_ALL ^ E_NOTICE);
-require "includes/config.php"; 
-require "includes/sess.php";
-session_start();
+	header("Content-type: text/html; charset=utf-8");  
+	error_reporting(E_ALL ^ E_NOTICE);
+	require "includes/config.php"; 
+	require "includes/sess.php";
+	session_start();
 
   if( !$_SESSION['fname'] || $_SESSION['role']  > 2){
 	header('Refresh: 0; URL=login.php');
 	 exit;
  } 
 
-
-
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-<title>UsableX - Administration - Users</title>
+<title>UsableX - User Administration</title>
 <meta http-equiv="Content-Encoding" content="gzip">
 <meta http-equiv="Accept-Encoding" content="gzip, deflate">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -73,7 +71,11 @@ body,pre{font-family:Verdana,Helvetica,san-serif,Arial;font-size:.6em}*{padding:
 
 .myAccOpen{border-radius:10px;height:145px!important;background-color:#fff;z-index:1002;border-right:2px solid #ccc;border-left:2px solid #ccc;border-bottom:2px solid #ccc}
 
-#switcher{margin-top:3px}.function,.tcid,.priority,.class,.status{text-align:center!important}#pager{height:35px;padding:5px;font-weight:bold}#graph{width:100%;height:550px;border:0}#graph-all{position:absolute;top:165px;z-index:1;width:99%;overflow:hidden;height:500px;visibility:hidden}
+#switcher{margin-top:3px}
+
+.group,.location,.status{text-align:center!important}
+
+#pager{height:35px;padding:5px;font-weight:bold}#graph{width:100%;height:550px;border:0}#graph-all{position:absolute;top:165px;z-index:1;width:99%;overflow:hidden;height:500px;visibility:hidden}
 
 #graph-controls{position:relative;margin-top:20px}#up{position:absolute;left:400px;top:0}.ui-selectmenu-menu{z-index:3000}#navBtns{position:absolute;bottom:0}#logged-out{display:none;text-align:center;font-size:1.3em}#logged-out img{display:block;margin:0 auto;padding:60px 0 5px 0}
 
@@ -142,7 +144,6 @@ body,pre{font-family:Verdana,Helvetica,san-serif,Arial;font-size:.6em}*{padding:
 <link rel="stylesheet" type="text/css" href="css/contactable.css" />
 
 <script src="js/userEdit.js" charset="UTF-8"></script>
-<script src="js/addEdit.js" charset="UTF-8"></script>
 <script src="js/deviceEdit.js" charset="UTF-8"></script>
 <script src="js/jquery.min.js" charset="UTF-8"></script>
 <script src="js/jquery.quicksearch.js" charset="UTF-8"></script>
@@ -161,11 +162,14 @@ body,pre{font-family:Verdana,Helvetica,san-serif,Arial;font-size:.6em}*{padding:
 	if( $_SESSION['role'] != 5 &&  $_SESSION['role'] != 4){
 ?>
 
-<script src="js/userEdit.js" charset="UTF-8"></script>
+	<script src="js/userEdit.js" charset="UTF-8"></script>
+
 <?php
 }
 ?>
+
 <?php
+
 $qlocation = mysql_query("SELECT location_id, location_name FROM table_location");
 			
 			echo "<script charset='UTF-8'>";
@@ -207,7 +211,7 @@ $qstatus = mysql_query("SELECT ustatus_id, ustatus_name FROM  table_ustatus");
 
 </script>
 </head>
-
+<div id='mainContainer'>
 <?php
 
 
@@ -231,10 +235,8 @@ $q = @mysql_query("SELECT a.user_id AS 'UID'
 								AND a.user_id > 2
 								AND a.user_mod_by = b.user_id
 
-								ORDER BY a.user_status_id, a.user_location_id, a.user_group_id, a.user_email"); //or die ("UNABLE TO GET TESTCASES");
+								ORDER BY a.user_status_id, a.user_location_id, a.user_group_id, a.user_email"); //or die ("UNABLE TO GET USERS");
 ?>
-
-</div><!-- end navigation -->
 
 <div id="bodyContainer">
 
@@ -261,12 +263,12 @@ $q = @mysql_query("SELECT a.user_id AS 'UID'
 			<tr>
 				<td class= 'mid'><?php echo $query_row->UID; ?></td>
 				<td class= 'rhw'><?php echo $query_row->FIRST_NAME; ?></td>
-				<td class= 'rhw '><?php echo $query_row->LAST_NAME; ?></td>			   
-				<td class= 'tdw '><?php echo $query_row->EMAIL; ?></td>
-				<td class= 'tdw '><?php echo $query_row->PASSWORD; ?></td>
-				<td class= 'tdw '><?php echo $query_row->GROUP; ?></td>
-				<td class= 'tdw '><?php echo $query_row->LOCATION; ?></td>
-				<td class= 'tdw tdh'><?php echo $query_row->STATUS; ?></td>			   
+				<td class= 'rhw'><?php echo $query_row->LAST_NAME; ?></td>			   
+				<td class= 'tdw'><?php echo $query_row->EMAIL; ?></td>
+				<td class= 'tdw'><?php echo $query_row->PASSWORD; ?></td>
+				<td class= 'tdw' style='text-align:center'><?php echo $query_row->GROUP; ?></td>
+				<td class= 'tdw' style='text-align:center'><?php echo $query_row->LOCATION; ?></td>
+				<td class= 'tdw tdh' style='text-align:center'><?php echo $query_row->STATUS; ?></td>			   
 				<td class= 'tdw tdh'><?php echo $query_row->DATE_CREATED; ?></td>			   
 				<td class= 'tdw tdh'><?php echo $query_row->LAST_MODIFIED; ?></td>		
 				<td class= 'tdw tdh'><?php echo $query_row->MODIFIED_BY; ?></td>		
@@ -280,7 +282,6 @@ $q = @mysql_query("SELECT a.user_id AS 'UID'
 	</table>
 	<table id="header-fixed"></table>
 	</div>
-
 
 </div><!-- end main container -->
 
@@ -412,23 +413,26 @@ if( $_SESSION['role'] < 3 ){
                                                 
                                 
                                 </div>
-		<?
+		<?php
 		}
 		?>
-								
-<div id='iframeContainer'></div>								
-								
-<div id="logout-confirm" title="Log out?">
-	<p>You will be logged out. Are you sure?</p>
-</div>								
-<div id="loading" ><img src='img/3MA_loadingcontent.gif' /></div>
-<div id='logged-out'>
-<img src='img/awsnap.gif' />
-Aw Snap, Looks like you have been logged out!
-<br/>
+	
+	<div id='iframeContainer'></div>						
 
-</div>
-<div id="contactable"></div>
+	<div id="logout-confirm" title="Log out?">
+		<p>You will be logged out. Are you sure?</p>
+	</div>
+	
+	<div id="loading" ><img src='img/3MA_loadingcontent.gif' /></div>
+	
+	<div id='logged-out'>
+		<img src='img/awsnap.gif' />
+			Aw Snap, Looks like you have been logged out!
+		<br/>
+	</div>
+	
+	<div id="contactable"></div>
+	
 <script charset="UTF-8">
 ///////////////////////////////////////////////session checker/////////////////////////////////////////////////////
 
@@ -463,7 +467,7 @@ function editAjax(par){
 			url: "action.php",													  
 			cache: false,	
 			async: true,
-			data: "userEdit=true&uid=" + uid+ "&firstname=" + firstname + "&lastname=" + lastname + "&email=" + email + "&password=" + password + "&group=" + group + "&userloc=" + userloc + "&status=" + status + "&crypto=<?php echo session_id() . 'zLsX7795d1d5AsCsD3wFGv'; ?>"
+			data: "userEdit=true&uid=" + uid + "&firstname=" + firstname + "&lastname=" + lastname + "&email=" + email + "&password=" + password + "&group=" + group + "&userloc=" + userloc + "&status=" + status + "&crypto=<?php echo session_id() . 'zLsX7795d1d5AsCsD3wFGv'; ?>"
 			}).done(function( msg ) {
 			
 			if( is_loggedin(msg) ){					
@@ -480,9 +484,8 @@ function editAjax(par){
 					}
 			
 			}
-							
+	
 			}); 
-
 }
 
 /////////////////////////////////////////////////////////////END EDITING AJAX///////////////////////////////////////////
@@ -742,7 +745,7 @@ function editAjax(par){
 							///////////////////////////////////FIX PAGINATION PROBLEM///////////////////////////////////////////////////////
 							$(".t_fixed_header_main_wrapper").append("<div id='pager'></div>");
 							
-							$("#pager").html("Total number of testcases: " + $(".uid").length) ;
+							$("#pager").html("Total number of users: " + $(".uid").length) ;
 							
 				
 							/////////////////////////////////////CREATE BUTTON/////////////////////////////////////////////////
@@ -775,51 +778,47 @@ function editAjax(par){
 								$('input#search').quicksearch('#userTable tbody tr');							
 							//////////////////////////////////END MAIN SEARCH//////////////////////////////////////////////////////////////////////
 							
-/					////////////////////////////////// CREATE TESTCASE BUTTON/////////////////////////////////////////////////////		
+					////////////////////////////////// CREATE TESTCASE BUTTON/////////////////////////////////////////////////////		
 							
 
-					$("#addBtn").click(function(){
-					
-					
-								 $.ajax({
-								type: "GET",													  
-								url: "action.php",
-								cache: false,													  
-								data: "crypto=<?php echo session_id() . 'zLsX7795d1d5AsCsD3wFGv'; ?>",													  
-								}).done(function( msg ) {
+					$("#addBtn").click(function(){					
+			
+						$.ajax({
+							type: "GET",													  
+							url: "action.php",
+							cache: false,													  
+							data: "crypto=<?php echo session_id() . 'zLsX7795d1d5AsCsD3wFGv'; ?>",													  
+						}).done(function( msg ) {
+								
+							if( is_loggedin(msg) ){								
+									
+									cFieldsCheck();
+									$("#createForm tr").css("display","table-row");
+									$("#createForm").css("display","block");
+									$("#test").css("display","block");
+									$("#indicator").css("display","none");
+								
+									$( "#createForm" ).dialog({
 										
-								if( is_loggedin(msg) ){								
-										
-											cFieldsCheck();
-											$("#createForm tr").css("display","table-row");
-											$("#createForm").css("display","block");
-											$("#test").css("display","block");
-											$("#indicator").css("display","none");
-										
-											$( "#createForm" ).dialog({
-												
-													height: 527,
-													width: 800,
-													modal: true,
-													resizable: false
-													
-												});										
-												
-													$("#cancel").click(function(){
-												
-													$("#createForm").dialog( "close" );												
-												
-												});	 					
+											height: 527,
+											width: 800,
+											modal: true,
+											resizable: false
 											
-											validCreate();
-											cleanCreate();
-											
+										});										
+										
+											$("#cancel").click(function(){
+										
+											$("#createForm").dialog( "close" );												
+										
+										});	 					
+									
+									validCreate();
+									cleanCreate();										
 
-								}
-						});				
-										
-										
-		});
+							}
+						});														
+					});
 						
 							///////////////////////////////////END CREATE TESTCASE BUTTON/////////////////////////////////////////////////////		
 
@@ -837,19 +836,19 @@ function editAjax(par){
 											height:140,
 											modal: true,
 											buttons: {
-												"Log out from xTable": function() {
+												"Log out from UsableX": function() {
 													$.ajax({											
 													  type: "POST",
 													  url: "login_mod.php",
 													  cache: false,
 													  data: "kill=kill",
 													}).done(function( msg ) {
-													
+														alert(msg);
 														if( is_loggedin(msg) ){		
 														
 															if (msg == "true"){
 															
-																window.location.href ="http://10.10.40.16/xtable/login.php?logout=true";
+																window.location.href ="login.php?logout=true";
 																
 															}else{
 															
@@ -866,14 +865,9 @@ function editAjax(par){
 									});
 
 								});
-							///////////////////////////////////END LOGOUT FUNCTION///////////////////////////////////////////////////////////////////////	
-								
-
+							///////////////////////////////////END LOGOUT FUNCTION///////////////////////////////////////////////////////////////////////		
 			
-		
-			
-			/////////////////////////////////////////////////////////////INSERT NEW USER///////////////////////////////////////////	
-
+			/////////////////////////////////////////////////////////////INSERT NEW USER///////////////////////////////////////////
 
 		function addCreate(action){
 		
@@ -889,9 +883,7 @@ function editAjax(par){
 				validCreate();	
 					
 				////GLOBAL SEARCH REINITIALIZATION///
-				$('input#search').quicksearch('table tbody tr');
-						
-				
+				$('input#search').quicksearch('table tbody tr');			
 				
 				////INSERT RECORD TO THE DATABASE////			
 				 $.ajax({
@@ -941,12 +933,11 @@ function editAjax(par){
 										$("input").removeClass("ui-state-hover");								
 										
 										/////////////////////////////////////Insert into  table info///////////////////////////////////
-
-										/*
+									
 										
-										$('#userTable tbody').prepend('<tr><td class="mid ui-widget-content">' + myObj.mysql_last_id + '</td><td style="text-transform:uppercase;" ondblclick="javascript:editElement(this,locationObj,true,75);" class=" function rhw ui-widget-content" style="text-align:center;">' + custFunction + '</td><td ondblclick="javascript:editElement(this,statusObj,false,8);" class="tdw center ui-widget-content"  style="text-align:center;">' + 	$("#status option:selected").text() + '</td><td ondblclick="javascript:editElement(this,locationObj,true,5);" class="tdw center  ui-widget-content"  style="text-align:center;">' +	defaultTCID	 + '</td><td ondblclick="javascript:editElement(this,locationObj,false,8);" class="tdw center ui-widget-content"  style="text-align:center;">' + 	$("#priority option:selected").text() + '</td><td ondblclick="javascript:editElement(this,classObj,false,25);"  class="tdw center  ui-widget-content"  style="text-align:center;">' + $("#class option:selected").text() + '</td><td  ondblclick="javascript:editElement(this,locationObj,false,100);"  class="tdw center  ui-widget-content"  style="text-align:left;">' +$("#testname").val()+'</td><td  ondblclick="javascript:editSV(this);"  class="tdw tdh  ui-widget-content"><pre>' +  strip_tags($("#preConditions").val(), '<i><b>') +'</pre></td><td ondblclick="javascript:editSV(this);" class="tdw tdh  ui-widget-content"><pre>'+ 	strip_tags($("#scenario").val(), '<i><b>') +'</pre></td><td  ondblclick="javascript:editSV(this);" class="tdw tdh  ui-widget-content"><pre>'+   strip_tags($("#verification").val(), '<i><b>')	+'</pre></td></tr>');	
+										$('#userTable tbody').prepend('<tr><td class="uid ui-widget-content">' + myObj.mysql_last_id + '</td><td ondblclick="javascript:editElement(this,locationObj,true,75);" class="firstname rhw ui-widget-content" style="text-align:left;">' + $("#firstname").val() + '</td><td ondblclick="javascript:editElement(this,locationObj,true,5);" class="tdw ui-widget-content" style="text-align:left;">' + $("#lastname").val()  + '</td><td ondblclick="javascript:editElement(this,locationObj,true,5);" class="tdw ui-widget-content"  style="text-align:left;">' + $("#email").val() + '</td><td ondblclick="javascript:editElement(this,locationObj,true,5);" class="tdw ui-widget-content"  style="text-align:left;">' + $("#password").val() + '</td><td ondblclick="javascript:editElement(this,groupObj,false,8);" class="tdw center ui-widget-content"  style="text-align:center;">' + 	$("#group option:selected").text() + '</td><td ondblclick="javascript:editElement(this,locationObj,false,25);"  class="tdw center  ui-widget-content"  style="text-align:center;">' + $("#userloc option:selected").text() + '</td><td ondblclick="javascript:editElement(this,statusObj,false,8);" class="tdw center ui-widget-content"  style="text-align:center;">' + $("#status option:selected").text() + '</td></tr>');	
 
-										*/
+										
 
 										$('input#search').quicksearch('#userTable tbody tr');
 
@@ -968,51 +959,36 @@ function editAjax(par){
 			/////////////////////////////////////////////////////////////END INSERT NEW TESTCASE//////////////////////////////////////////
 			/////////////////////////////////////////ADD NEW / SIMILAR / ANOTHER////////////////////////////////////	
 							
-							$("#add").click(function(){addCreate("close"); });	
-								
-							$("#addAnother").click(function(){addCreate("aa"); });	
-							
-							$("#addSimilar").click(function(){addCreate("as"); });	
-							
+					$("#add").click(function(){addCreate("close"); });
+						
+					$("#addAnother").click(function(){addCreate("aa"); });	
+					
+					$("#addSimilar").click(function(){addCreate("as"); });							
 							
 				/////////////////////////////////////////END ADD NEW / SIMILAR / ANOTHER//////////////////////////////////	
-
-
- 
-		$("#loading").ajaxStart(function(){	$(this).show(); });			
-		$("#loading").ajaxStop(function(){	$(this).hide(); });
-		
-		
-		$("#_filterText1").click(function(){
-				
-			$(this).val("");
-
-		});
-		
-		$("#_filterText1").blur(function(){
-				
-			$(this).val("Search-->");
-
-		});
-		
-			
-		$("#_filterText1").val("Search-->");		
-				
+			 
+					$("#loading").ajaxStart(function(){ $(this).show(); });			
+					$("#loading").ajaxStop(function(){	$(this).hide(); });		
 					
-				$("#welcome").html("Welcome, <?php echo $_SESSION['fname']; ?>");
-				$('#switcher').themeswitcher();
-				
-
-			
-	}); //DOM Ready
-	
+					$("#_filterText1").click(function(){
 							
+						$(this).val("");
+
+					});
+					
+					$("#_filterText1").blur(function(){
+							
+						$(this).val("Search--");
+
+					});
 						
-	
+					$("#_filterText1").val("Search--");		
+							
+						$("#welcome").html("Welcome, <?php echo $_SESSION['fname']; ?>");
+						$('#switcher').themeswitcher();
+						
+	}); //DOM Ready					
 
 </script>
-
-
-
 </body>
 </html></pre></body></html>

@@ -7,7 +7,7 @@ session_start();
 $kill = @mysql_real_escape_string($_GET['kill']);
 
 
-if( $kill == "true"){
+if( $kill ){
 	
 	if( session_destroy() ){
 		echo "true";
@@ -81,13 +81,6 @@ if($email && $password){
 
 	echo "Please provide valid username and password";
 }
-
-
-
-
-
-
-
 
 
 ?>

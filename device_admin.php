@@ -395,7 +395,7 @@ if( $_SESSION['role'] < 3 ){
                                                 
                                 
                                 </div>
-		<?
+		<?php
 		}
 		?>
 
@@ -730,7 +730,7 @@ function editAjax(par){
 							///////////////////////////////////FIX PAGINATION PROBLEM///////////////////////////////////////////////////////
 							$(".t_fixed_header_main_wrapper").append("<div id='pager'></div>");
 							
-							$("#pager").html("Total number of testcases: " + $(".did").length) ;
+							$("#pager").html("Total number of devices: " + $(".did").length) ;
 							
 				
 							/////////////////////////////////////CREATE BUTTON/////////////////////////////////////////////////
@@ -763,7 +763,7 @@ function editAjax(par){
 								$('input#search').quicksearch('#deviceTable tbody tr');							
 							//////////////////////////////////END MAIN SEARCH//////////////////////////////////////////////////////////////////////
 							
-/					////////////////////////////////// CREATE TESTCASE BUTTON/////////////////////////////////////////////////////		
+/					////////////////////////////////// ADD DEVICE BUTTON/////////////////////////////////////////////////////		
 							
 
 					$("#addBtn").click(function(){
@@ -809,7 +809,7 @@ function editAjax(par){
 										
 		});
 						
-							///////////////////////////////////END CREATE TESTCASE BUTTON/////////////////////////////////////////////////////		
+							///////////////////////////////////END ADD DEVICE BUTTON/////////////////////////////////////////////////////		
 
 							deviceEdit();	
 							cFieldsCheck();							
@@ -993,4 +993,4 @@ function editAjax(par){
 
 
 </body>
-</html></pre></body></html>
+</html>
