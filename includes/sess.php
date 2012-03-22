@@ -46,11 +46,6 @@
 
         mysql_query("DELETE FROM table_session WHERE session_rnd_id = '$sess_id';");
 		
-			unset($_SESSION['fname']);
-			unset($_SESSION['lname']);
-			unset($_SESSION['user_id']);
-			unset($_SESSION['role']);
-			unset($_SESSION['loc']);
 		
         return true;
     }
