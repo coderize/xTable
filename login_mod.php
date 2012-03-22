@@ -4,10 +4,10 @@ require "includes/config.php";
 require "includes/sess.php";
 session_start();
 
-$kill = @mysql_real_escape_string($_POST['kill']);
+$kill = @mysql_real_escape_string($_GET['kill']);
 
 
-if( $kill ){
+if( $kill == "true"){
 	
 	if( session_destroy() ){
 		echo "true";
@@ -32,7 +32,7 @@ if($email && $password){
 		
 			while ($user = mysql_fetch_object($q)){
 
-				if($user->user_status == 'Y' ){
+				if($user->user_status_id == '1' ){
 			
 				if($email == $user->user_email && MD5($password) == $user->user_password){
 						
@@ -56,7 +56,7 @@ if($email && $password){
 										
 					echo "Login Successful.";
 					
-					//header('Refresh: 1; URL=http://localhost/usablex/xtable/');
+				
 				
 				}else{
 				

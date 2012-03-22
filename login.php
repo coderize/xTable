@@ -1,7 +1,15 @@
-<?php 
-require "includes/config.php";
-error_reporting(E_ALL & ~E_NOTICE); 
- ?>
+<?php
+header("Content-type: text/html; charset=utf-8");  
+error_reporting(E_ALL ^ E_NOTICE);
+require "includes/config.php"; 
+require "includes/sess.php";
+session_start();
+
+ if( $_SESSION['fname'] ){
+	header('Refresh: 0; URL=home.php');
+	exit;
+} 
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -513,7 +521,7 @@ if($logout=="true"){
 									
 										$("#msg").fadeOut(1500, function(){
 											
-											window.location = 'http://10.10.40.16/xtable/change_pw.php'
+											window.location = 'change_pw.php'
 						
 										});	
 
@@ -521,37 +529,10 @@ if($logout=="true"){
 	
 								if( msg == 'Login Successful.'){
 									
-										$("#selectionMsg").html(msg);
-										$("#selectionMsg").attr("class","success");										
-										$("#selectionMsg").fadeOut("slow");
-										$("#selectionMsg").css("margin-bottom","10px");
-										
-										$( "#wrapper" ).dialog("close");
-										
-											$( "#dropdowns" ).dialog({
-												
-													width: 445,
-													modal: true,													
-													hide: "explode",
-													show: 'slide',
-													draggable: false,										
-													resizable: false										
-												});		
-												
-												$("#selectionClose").click(function(){
-				
-													$( "#dropdowns" ).dialog("close");
-												
-												});
-												
-													$( ".ui-dialog-content" ).css("padding","0px");
-													$( ".ui-widget-header" ).css("display","none");
-													$( ".vcp" ).css("width","400px");
-													$( ".vcp" ).css("height","30px");
-													$( ".vcp" ).css("margin-bottom","15px");
-													
-													
-													$("#selectionMsg").fadeOut(3000);
+									window.location.href = 'home.php';
+									
+									
+			
 													
 								}else{
 								
@@ -568,48 +549,7 @@ if($logout=="true"){
 				
 				$("#logout").fadeOut(4000);
 			
-				$("#vertical").change(function(){
-				
-					if( $("#vertical").val() ){
-					
-						$.ajax({
-							type: "GET",
-							url: "dd.php",
-							cache: false,
-							async: true,
-							data: "vert="+ $("#vertical").val() + "&client=1"
-							}).done(function( msg ) {	
-								
-									$("#client").html(msg);
-								
-								});
-						}
-				
-				});
-			
-			
-			
-			$("#client").change(function(){
-				
-					if( $("#vertical").val() && $("#client").val() ){
-					
-						$.ajax({
-							type: "GET",
-							url: "dd.php",
-							cache: false,
-							async: true,
-							data: "vert="+ $("#vertical").val() + "&client="+  $("#client").val() + "&project=1"
-							}).done(function( msg ) {	
-								
-									$("#project").html(msg);
-								
-								});
-						}
-				
-				});
-			
-			
-			
+
 			
 				$("#close").click(function(){
 				
@@ -618,13 +558,7 @@ if($logout=="true"){
 				});
 			
 				
-				$("#project").change(function(){
-				
-					var url = "http://10.10.40.16/xtable/index.php?vertical="+$("#vertical").val()+"&client="+$("#client").val()+"&project="+$("#project").val()
-					
-					window.location.href = url;
-				
-				});
+
 			
 				$("#loading").ajaxStart(function(){
 				

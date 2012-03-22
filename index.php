@@ -1,4 +1,5 @@
 ﻿<?php 
+ob_start();
 header("Content-type: text/html; charset=utf-8");  
 error_reporting(E_ALL ^ E_NOTICE);
 require "includes/config.php"; 
@@ -7,9 +8,22 @@ session_start();
 
  if( !$_SESSION['fname'] ){
 	echo "Error, you need to login first";
-	header('Refresh: 1; URL=http://10.10.40.16/xtable/login.php');
+	header('Refresh: 1; URL=login.php');
 	exit;
 } 
+
+$vert = mysql_real_escape_string($_GET['vertical']);
+$client = mysql_real_escape_string($_GET['client']);
+$project = mysql_real_escape_string($_GET['project']);
+
+if($vert == '' && $client == '' && $project == ''){
+	
+	echo "Invalid URL arguments...";
+	header('Refresh: 1; URL=index.php?vertical=na');
+	exit;
+
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -21,32 +35,69 @@ session_start();
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
 <style>
-body,pre{font-family:Verdana,Helvetica,san-serif,Arial;font-size:.6em}*{padding:0;margin:0}.clearfix:after{content:".";display:block;clear:both;visibility:hidden;line-height:0;height:0}.clearfix{display:inline-block}html[xmlns] .clearfix{display:block}* html .clearfix{height:1%}#createForm,#iframeContainer{display:none}#mainContainer{padding-top:5px;min-width:960px;max-width:1500px;position:relative}.inpFields{font:inherit;color:inherit;outline:0;cursor:text}pre{font-size:1em;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word}#search{display:none;position:absolute;top:30px;right:10px;border:3px solid #7aa3cc;width:350px;height:30px;border-radius:15px;-webkit-border-radius:15px;border-top-right-radius:15px;border-top-left-radius:15px;border-bottom-right-radius:15px;border-bottom-left-radius:15px;font-size:1.2em}.dragging{border:2px solid #0f0}._filterText{width:99%;height:20px;font-style:italic;background-color:#f0f0f0;border-width:1px;font-size:14px!important}#navigation a{float:left}#navigation{position:relative;height:100px}#navigation #vertical-button,#client-button,#project-button{margin-left:5px!important}#bodyContainer{z-index:1000;position:relative}#execIframe{width:99%;height:97%}#createForm select{width:200px}#class-menu,#priority-menu,#function-menu{z-index:2000}#createForm textarea{max-width:630px;min-width:320px;max-height:95px;width:630px;height:95px}#logout{margin:4px 0 0 30%;display:none}#genReport{display:none;margin:5px 0 0 12%}#myAcc{position:absolute;top:0;right:17%;height:30px;font-weight:bold;width:152px}#accChild{display:none}#logout-confirm{display:none}#other{background-color:#ccc}#indicator{font-size:14px;color:#7ec045;font-weight:bold}#loading{display:none;position:absolute;top:41%;left:44%;z-index:10000}#editSuccess{display:none;position:absolute;top:5px;left:44%;z-index:10000;font-size:20px;color:#3d5;font-weight:bold}#account{width:152px}.myAccOpen{border-radius:10px;height:145px!important;background-color:#fff;z-index:1002;border-right:2px solid #ccc;border-left:2px solid #ccc;border-bottom:2px solid #ccc}#switcher{margin-top:3px}.function,.tcid,.priority,.class,.status{text-align:center!important}#pager{height:20px;padding:5px;font-weight:bold}#graph{width:100%;height:550px;border:0}#graph-all{position:absolute;top:165px;z-index:1;width:99%;overflow:hidden;height:500px;visibility:hidden}#graph-controls{position:relative;margin-top:20px}#up{position:absolute;left:400px;top:0}.ui-selectmenu-menu{z-index:3000}#navBtns{position:absolute;bottom:0}#logged-out{display:none;text-align:center;font-size:1.3em}#logged-out img{display:block;margin:0 auto;padding:60px 0 5px 0}#genPdf{display:none;margin:5px 0 0 18%}
+body,pre{font-family:Verdana,Helvetica,san-serif,Arial;font-size:.6em}*{padding:0;margin:0}.clearfix:after{content:".";display:block;clear:both;visibility:hidden;line-height:0;height:0}.clearfix{display:inline-block}html[xmlns] .clearfix{display:block}* html .clearfix{height:1%}#createForm,#iframeContainer{display:none}#mainContainer{padding-top:5px;min-width:960px;max-width:1500px;position:relative}.inpFields{font:inherit;color:inherit;outline:0;cursor:text}pre{font-size:1em;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word}#search{margin-left:35%;margin-top:-15px;display:none;border:3px solid #7aa3cc;width:350px;height:20px;border-radius:15px;-webkit-border-radius:15px;border-top-right-radius:15px;border-top-left-radius:15px;border-bottom-right-radius:15px;border-bottom-left-radius:15px;font-size:1.2em}.dragging{border:2px solid #0f0}._filterText{width:99%;height:20px;font-style:italic;background-color:#f0f0f0;border-width:1px;font-size:14px!important}#navigation a{float:left}#navigation{/* position:relative;height:100px */}#navigation #vertical-button,#client-button,#project-button{margin-left:5px!important}#bodyContainer{z-index:1000;position:relative}#execIframe{width:99%;height:97%}#createForm select{width:200px}#class-menu,#priority-menu,#function-menu{z-index:2000}#createForm textarea{max-width:630px;min-width:320px;max-height:95px;width:630px;height:95px}#logout{margin:4px 0 0 30%;display:none}#myAcc{position:absolute;top:0;right:17%;height:30px;font-weight:bold;width:152px}#accChild{display:none}#logout-confirm{display:none}#other{background-color:#ccc}#indicator{font-size:14px;color:#7ec045;font-weight:bold}#loading{display:none;position:absolute;top:41%;left:44%;z-index:10000}#editSuccess{display:none;position:absolute;top:5px;left:44%;z-index:10000;font-size:20px;color:#3d5;font-weight:bold}#account{width:152px}.myAccOpen{border-radius:10px;height:145px!important;background-color:#fff;z-index:1002;border-right:2px solid #ccc;border-left:2px solid #ccc;border-bottom:2px solid #ccc}#switcher{margin-top:3px}.function,.tcid,.priority,.class,.status{text-align:center!important}#pager{height:35px;padding:5px;font-weight:bold}#graph{width:100%;height:550px;border:0}#graph-all{position:absolute;top:165px;z-index:1;width:99%;overflow:hidden;height:500px;visibility:hidden}#graph-controls{position:relative;margin-top:20px}#up{position:absolute;left:400px;top:0}.ui-selectmenu-menu{z-index:3000}#navBtns{position:absolute;bottom:0}#logged-out{display:none;text-align:center;font-size:1.3em}#logged-out img{display:block;margin:0 auto;padding:60px 0 5px 0}
 #naviForm{
-	visibility:hidden;
+	display:none;
 
 }
-</style>
+#box{
+	border-radius: 0px 15px 15px 0px;
 
+}
+#reports,#pdf{
+	height:100px;
+	border-radius: 10px;
+}
+
+.menu-icons img{
+	margin: 15px;
+}
+
+.over{
+	opacity: .7;
+}
+
+.over:hover{
+	opacity: 1 !important;
+
+}
+#logout{
+	display:block;
+	position:absolute;
+	top:10px;
+	right:15px;
+
+}
+#welcome{
+	font-size:14px;
+	margin: 5px 0px 20px 0px;
+	display:block;
+}
+
+#main{
+	margin-top:100px;
+	border: 1px solid #000;
+	
+}
+#icon img{
+	height:60px;
+	width:60px;
+	display:inline;
+	float:left;
+	margin:5px;
+	border-radius:10px;
+
+}
+#XTable{
+	margin-left:10px !important;
+}
+
+</style>
 <link rel="stylesheet" type="text/css" href="css/base.css" />
 <link rel="stylesheet" type="text/css" href="css/flick/jquery-ui-1.8.16.custom.css" />
 <link rel="stylesheet" type="text/css" href="css/selectmenu.css" />
-<link rel="stylesheet" type="text/css" href="css/calendar.css" />
+<!-- <link rel="stylesheet" type="text/css" href="css/calendar.css" /> -->
 <link rel="stylesheet" type="text/css" href="css/contactable.css" />
-
-<script src="http://code.jquery.com/jquery-latest.js" charset="UTF-8"></script>
-<script src="js/jquery.quicksearch.js" charset="UTF-8"></script>
-<script src="js/jqueryUI/js/jqueryui.js" charset="UTF-8"></script>
-<script src="http://jqueryui.com/themeroller/themeswitchertool/" charset="UTF-8"></script>
-<script src="js/jquery.fixheadertable.js" charset="UTF-8"></script>
-<script src="js/jquery.columnfilters.js" charset="UTF-8"></script>
-<script src="js/columnFilters.js" charset="UTF-8"></script>
-<script src="js/jquery.js" charset="UTF-8"></script>
-<script src="js/calendar_db.js" charset="UTF-8"></script>
-<script src="js/jquery.contactable.js" charset="UTF-8"></script>
-<script src="js/jquery.validate.pack.js" charset="UTF-8"></script>
-
-
 <?php
 	if( $_SESSION['role'] != 5 &&  $_SESSION['role'] != 4){
 ?>
@@ -55,6 +106,20 @@ body,pre{font-family:Verdana,Helvetica,san-serif,Arial;font-size:.6em}*{padding:
 <?php
 }
 ?>
+<script src="js/userEdit.js" charset="UTF-8"></script>
+<script src="js/deviceEdit.js" charset="UTF-8"></script>
+<script src="js/jquery.min.js" charset="UTF-8"></script>
+<script src="js/jquery.quicksearch.js" charset="UTF-8"></script>
+<script src="js/jqueryUI/js/jqueryui.js" charset="UTF-8"></script>
+<script src="http://jqueryui.com/themeroller/themeswitchertool/" charset="UTF-8"></script>
+<script src="js/jquery.fixheadertable.js" charset="UTF-8"></script>
+<script src="js/jquery.columnfilters.js" charset="UTF-8"></script>
+<script src="js/columnFilters.js" charset="UTF-8"></script>
+<script src="js/jquery.js" charset="UTF-8"></script>
+<!-- <script src="js/calendar_db.js" charset="UTF-8"></script> -->
+<script src="js/jquery.contactable.js" charset="UTF-8"></script>
+
+
 <?php
 $qpriority = mysql_query("SELECT priority_id, priority_name FROM table_priority");
 			
@@ -125,9 +190,7 @@ $qstatus = mysql_query("SELECT status_id, status_name FROM  table_status");
 	
 <?php
 
-		$vert = mysql_real_escape_string($_GET['vertical']);
-		$client = mysql_real_escape_string($_GET['client']);
-		$project = mysql_real_escape_string($_GET['project']);
+		
 		
 		if($vert){
 ?>		
@@ -160,7 +223,7 @@ $qstatus = mysql_query("SELECT status_id, status_name FROM  table_status");
 <?php
 		
 		
-		if($vert && $client){
+		
 ?>		
 		<select name='project' id='project' onchange="javascript:reload();">	
 		<option value=''>Project Selection</option>
@@ -188,7 +251,7 @@ $qstatus = mysql_query("SELECT status_id, status_name FROM  table_status");
 <?php
 				}
 	
-		}		
+				
 		
 ?>
 
@@ -266,64 +329,8 @@ $q = @mysql_query("SELECT manual_function_name AS 'FUNCTION'
 /////////////////////////////////////////////////////GET ALL TYPES OF TESTCASES/////////////////////////////////////////////////
 }
 
-if($vert !='' && $client != '' && $project !=''){
+
 ?>
-<div class='clearfix'></div>
-<div id="searchForm">
-
-	<form id='search-form' name='search-form' method='#' action='#' onsubmit="javascript:return false;">
-		<input value="Search..." type='text' id='search' style="text-align: left !important;" name='search' onfocus="javascript:if(this.value=='Search...'){ this.value=''};" onblur="javascript: if(this.value=='') { this.value='Search...'};"> 
-	<?php
-	}
-	?>
-	</form>
-
-</div><!-- end serach form -->
-<div id='navBtns'>
-
-<?php
-
-	if( $_SESSION['role'] != 5 && $_SESSION['role'] != 4 ){
-		
-		if($vert !='' && $client != '' && $project !=''){
-?>	
-	
-		
-	
-<?php 	
-	}//END IF
-}
-?>
-
- <?php
- /*
-	if( $_SESSION['role'] != 5){
-		if($vert !='' && $client != '' && $project !=''){
-?>
-	<button id="execBtn">Execute</button>
-
-<?php
-	}
-}
-*/
-?> 
-
-</div><!-- end navBtns -->
-<div id='myAcc'>
-
-	<button name='account' id='account'><?php echo $_SESSION['fname'] . "'s Account"; ?></button>
-		<div id='accChild'>
-			<div id="switcher"></div>
-		</div>
-		
-		<button name='genReport' id='genReport'>Generate Report</button>
-		
-		<button name='genPdf' id='genPdf'>Generate PDF</button>
-		
-		<button name='logout' id='logout'>Logout</button>
-		
-</div>
-
 
 </div><!-- end navigation -->
 
@@ -373,46 +380,13 @@ if($vert !='' && $client != '' && $project !=''){
 	</table>
 	<table id="header-fixed"></table>
 	</div>
-	
-<div id='graph-all'>
-<div id='graph-controls'>
-<form action='' method='GET' name='f1' id='f1'>
-<input type='text' name='ddstartdate' id='startdateinput' value='' >
-
-<script>
-                new tcal ({
-                                // form name
-                                'formname': 'f1',
-                                // input name
-                                'controlname': 'ddstartdate'
-                });
-
-</script>
-
-<input type='text' name='ddenddate' id='enddateinput' value='' >
-<script>
-
-                new tcal ({
-                                // form name
-                                'formname': 'f1',
-                                // input name
-                                'controlname': 'ddenddate'
-                });
-
-</script>
-</form>	
-<button id='up'>Update</button>	
-</div><!--end graph-controls -->
-
-
-<iframe id='graph'></iframe>
-</div>
 
 
 </div><!-- end main container -->
 
-
-
+<?php
+if( $_SESSION['role'] != 5 && $_SESSION['role'] != 4  ){
+?>
                                 <div id='createForm'>
 								
                                                 <table class="form" id="createTable">
@@ -560,6 +534,9 @@ if($vert !='' && $client != '' && $project !=''){
                                                 
                                 
                                 </div>
+		<?
+		}
+		?>
 								
 <div id='iframeContainer'></div>								
 								
@@ -567,12 +544,10 @@ if($vert !='' && $client != '' && $project !=''){
 	<p>You will be logged out. Are you sure?</p>
 </div>								
 <div id="loading" ><img src='img/3MA_loadingcontent.gif' /></div>
-<div id="editSuccess">Save Successful</div>
 <div id='logged-out'>
 <img src='img/awsnap.gif' />
 Aw Snap, Looks like you have been logged out!
 <br/>
-
 </div>
 <div id="contactable"></div>
 <script charset="UTF-8">
@@ -582,7 +557,7 @@ function is_loggedin(a){if(a=="INVALID_SESSION"){$("#logged-out").dialog({height
 ///////////////////////////////////////////////session checker/////////////////////////////////////////////////////
 
 //////////////////////////////////////PAUSER FUNCTION////////////////////////////////////////////////////
-function pauser(){function a(){var a=Math.round(+(new Date)/1e3);return a}$("#pauseIni").html(a());$("#pauseCur").html("0");$("#pauseDur").html("0");$("#pauseTotalDur").html("0");$("#pauseCount").html("0");$(".pauser, #addSimilar, #addAnother, #add").bind("click keyup",function(){$("#pauseCur").html(a());var b=parseInt($("#pauseIni").html());var c=parseInt($("#pauseCur").html());var d=c-b;$("#pauseDur").html(d);var e=300;if(d<e){$("#pauseIni").html($("#pauseCur").html());validCreate()}else{var f=parseInt($("#pauseTotalDur").html());var f=f==0?d:f+d;var g=parseInt($("#pauseCount").html());var g=g==0?1:g+1;$("#pauseIni").html($("#pauseCur").html());$("#pauseTotalDur").html(f);$("#pauseCount").html(g)}})}
+function pauser(){function a(){var a=Math.round(+(new Date)/1e3);return a}$("#pauseIni").html(a());$("#pauseCur").html("0");$("#pauseDur").html("0");$("#pauseTotalDur").html("0");$("#pauseCount").html("0");$(".pauser, #addSimilar, #addAnother, #add").bind("click",function(){$("#pauseCur").html(a());var b=parseInt($("#pauseIni").html());var c=parseInt($("#pauseCur").html());var d=c-b;$("#pauseDur").html(d);var e=300;if(d<e){$("#pauseIni").html($("#pauseCur").html());validCreate()}else{var f=parseInt($("#pauseTotalDur").html());var f=f==0?d:f+d;var g=parseInt($("#pauseCount").html());var g=g==0?1:g+1;$("#pauseIni").html($("#pauseCur").html());$("#pauseTotalDur").html(f);$("#pauseCount").html(g)}})}
 //////////////////////////////////////END PAUSER FUNCTION////////////////////////////////////////////////////
 
  /////////////////////////////////////////////////////////////HOME DROPDOWNS -VCP///////////////////////////////////////////
@@ -650,12 +625,12 @@ function editAjax(par){
 /////////////////////////////////////////////////////////////END EDITING AJAX///////////////////////////////////////////
 
 
-/////////////////////////////////////////////////////////////ADD TESTCASE FIELDS VALIDITY///////////////////////////////////////////
+/////////////////////////////////////////////////////////////ADD TESTCASE FIELDS VALIDITY/////////////////
 		function cFieldsCheck(){
 									
 									$(".cf").each(function(){
 									
-											if( $.trim($(this).val()) && $.trim($(this).val()) !='na'){
+											if( $.trim($(this).val()) && $.trim($(this).val()) !='na' && $.trim($(this).val()) !='MISSING REL' ){
 													
 													$(this).parent().siblings(':first').html("<img class='success' src='img/accept.gif'/>");											
 											
@@ -709,9 +684,8 @@ function editAjax(par){
 									});	 
 			
 		}
- /////////////////////////////////////////////////////////////END ADD TESTCASE FIELDS VALIDITY///////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////CREATE/ADD/ADD SIMILAR/ADD ANOTHER BUTTONS VALIDATION///////////////////////////////////////////	
+/////////////////////////////////////////////////////////////END ADD TESTCASE FIELDS VALIDITY///////////////////////////////////////////
+/////////////////////////////////////////////////////////////CREATE/ADD/ADD SIMILAR/ADD ANOTHER BUTTONS VALIDATION/////////////
 	
 		function validCreate(){
 
@@ -789,11 +763,11 @@ function editAjax(par){
 
 			if( $("#newfunction").val() ){
 			
-				var custFunction = $("#newfunction").val();
+				var custFunction =  encodeURIComponent($("#newfunction").val());
 				
 			}else{
 			
-				var custFunction = $("#function").val();
+				var custFunction =  encodeURIComponent($("#function").val());
 			}
 				cFieldsCheck();
 				validCreate();
@@ -853,8 +827,7 @@ function editAjax(par){
 /////////////////////////////////////////////////////////////END TCID LOGIC /////////////////////////////////////////////////////////////////////		
 
 ////////////////////////////////////////////////////CLEAN CREATE FORM FIELDS////////////////////////////////////////////////////		
-	function cleanCreate(){
-		
+	function cleanCreate(){		
 			$("#function").val("");
 			$("#tcid").val("");
 			$("#status").val("");
@@ -890,7 +863,8 @@ function editAjax(par){
 																						
 																									ele.childNodes[0].innerHTML = strip_tags($("#myTextarea").val(), '<i><b>');																
 																									
-																									editAjax(ele.childNodes[0]);																										
+																									editAjax(ele.childNodes[0]);	
+																									$('input#search').quicksearch('#myTable tbody tr');	
 																										
 																									$("#myTextarea").remove();																									
 																									$(this).dialog("close"); 																									
@@ -920,9 +894,7 @@ function editAjax(par){
 	
 ////////////////////////////////////////////////////END SCENARIO / VERIFICATION EDITING////////////////////////////////////////////////////	
 
-////////////////////////////////////////////////////OTHER ELEMENTS EDITING////////////////////////////////////////////////////	
-
-		
+////////////////////////////////////////////////////OTHER ELEMENTS EDITING////////////////////////////////////////////////////			
 		function editElement(ele,obj,type,ml){			
 				
 				var elem = ele;
@@ -936,8 +908,7 @@ function editAjax(par){
 					var seleEdit = document.createElement("select");
 					seleEdit.id = 'mySelect';
 						
-					for (var i in objm){
-					
+					for (var i in objm){		
 
 						
 						if(elem.innerHTML == objm[i]){
@@ -959,7 +930,8 @@ function editAjax(par){
 					  
 									var ms  = $("#mySelect option:selected").text();
 									$(elem).html(ms);																	
-									editAjax(elem.childNodes[0]);									
+									editAjax(elem.childNodes[0]);	
+									$('input#search').quicksearch('#myTable tbody tr');	
 									
 					}  			
 					
@@ -975,6 +947,7 @@ function editAjax(par){
 								 	var ms  = $("#mySelect option:selected").text();
 									$(elem).html(ms);																	
 									editAjax(elem.childNodes[0]);		
+									$('input#search').quicksearch('#myTable tbody tr');	
 									
 					}
 
@@ -1003,6 +976,7 @@ function editAjax(par){
 							
 							ele.innerHTML = inp.value;
 							editAjax(ele.childNodes[0]);
+							$('input#search').quicksearch('#myTable tbody tr');	
 
 						}				
 			}			
@@ -1015,21 +989,26 @@ function editAjax(par){
 ////////////////////////////////////////////////////END OTHER ELEMENTS EDITING////////////////////////////////////////////////////				
 	
 ////////////////////////////////////////////////////SET SELECTED DROPDOWN OPTIONS////////////////////////////////////////////////////			
-	document.getElementById("vertical").value = "<?php  echo $vert;  ?>";
+	document.getElementById("vertical").value = "<?php  echo $vert;  ?>";		
+		
 	document.getElementById("client").value = "<?php  echo $client;  ?>";
+	
+	<?php if($client == ''){ $project = "na";} ?>
+	
 	document.getElementById("project").value = "<?php  echo $project;  ?>";	
 
 ////////////////////////////////////////////////////END SET SELECTED DROPDOWN OPTIONS////////////////////////////////////////////////////	
 
-	$(document).ready(function() 
-		{ 							
+	$(document).ready(function() { 							
 		
 						$('#myTable').columnFilters();
-		
+							
+						var hght = ($(".mid").length==0) ? 125 : 157;
+							
 							$('#myTable').fixheadertable({ 
-								caption     : ' ' + $("#project option:selected").text() + ' ', 
+								caption     : ' ', 
 								colratio    : [1,150,80, 65, 78, 140,150, 150, 260, 260],
-								height      : <?php echo ($_SESSION['role'] == 5) ? "445" : "440"; ?>,
+								height      : window.innerHeight - hght,
 								zebra       : false,
 								sortable    : true,
 								sortedColId : 2, 
@@ -1044,45 +1023,65 @@ function editAjax(par){
 								minColWidth    : 75
 								
 							});   	
-														
+							
 							//////////////////////////////////DRAG AND DROP/////////////////////////////////////////////////////////////////////////
 								//$("#myTable").tableDnD( { onDragClass: "dragging"} );	
 							//////////////////////////////////END DRAG AND DROP////////////////////////////////////////////////////////////////		
-							
-							//////////////////////////////////MAIN SEARCH///////////////////////////////////////////////////////////////////////////////
-								$('input#search').quicksearch('#myTable tbody tr');							
-							//////////////////////////////////END MAIN SEARCH//////////////////////////////////////////////////////////////////////
-							
-							//////////////////////////////////THEME SWITCHER//////////////////////////////////////////////////////////////////////
-								$('#switcher').themeswitcher();
-							//////////////////////////////////END THEME SWITCHER/////////////////////////////////////////////////////////////
 
 							///////////////////////////////////FIX PAGINATION PROBLEM///////////////////////////////////////////////////////
-							$(".t_fixed_header_main_wrapper").append("<div id='pager'></div>");
-							$("#pager").html("Total number of testcases: " + $(".mid").length) ;			
-							$("#pager").append( $("#searchForm").html() );
-							///////////////////////////////////END FIX PAGINATION PROBLEM//////////////////////////////////////////////
+							$(".t_fixed_header_main_wrapper").append("<div id='pager'></div>");							
+							$("#pager").html("Total number of testcases: " + $(".mid").length) ;							
+							///////////////////////////////////NEW UI JAVASCRIPT//////////////////////////////////////////////
+		
 							
-							//////////////////////////////////CUSTOM COLUMN FILTERS//////////////////////////////////////////////////////
-								columnFilter();		
-							//////////////////////////////////CUSTOM COLUMN FILTERS//////////////////////////////////////////////////////
-
 							$(".t_fixed_header_caption").prepend( "<div id='hnav'><select name='hvertical' id='hvertical' onchange='javascript:reload();'>" + $("#vertical").html() + "</select> <select name='hclient' id='hclient' onchange='javascript:reload();'>"+$("#client").html()+"</select>"+" <select name='hproject' id='hproject' onchange='javascript:reload();'>" + $("#project").html() + "</select></div>" );
 							
 							$("#hnav").css("float","left");
 								
-							$(".t_fixed_header_caption").append("<div id='hNavBtn'><button id='addBtn'>Create Testcase</button><button id='execBtn'>Execute</button></div>");
+							<?php 
+								if( $_SESSION['role'] != 5 &&  $_SESSION['role'] != 4){
+								?>
+											$(".t_fixed_header_caption").append("<div id='hNavBtn'><button id='addBtn'>Create Testcase</button><button id='execBtn'>Execute</button></div>");
 							
-							$("#hNavBtn").css("float","right");
+											$("#hNavBtn").css("float","right");
+							<?php
+								}
+								?>
 								
+								<?php 
+								if($_SESSION['role'] == 4){
+								?>
+											$(".t_fixed_header_caption").append("<div id='hNavBtn'><button id='execBtn'>Execute</button></div>");
+							
+											$("#hNavBtn").css("float","right");
+							<?php
+								}
+								?>
 								
-								document.getElementById("hvertical").value = "<?php  echo $vert;  ?>";
-								document.getElementById("hclient").value = "<?php  echo $client;  ?>";
-								document.getElementById("hproject").value = "<?php  echo $project;  ?>";
+
+							
+							$("#pager").append("<div id='searchForm'><form id='search-form' name='search-form' method='#' action='#' onsubmit='javascript:return false;'>		<input value='Search...' type='text' id='search' style='text-align: left !important;' name='search'></form></div>");
+							$("#search").blur(function(){
+									this.value = 'Search...';
+							});		
+							$("#search").focus(function(){
+									this.value = '';
+							});
 							
 							$("#navigation select").selectmenu({style: 'dropdown', maxHeight: 400});							
 							$("#createForm select").selectmenu({style: 'dropdown',maxHeight: 400});								
-							$('input:text, input:password').button().addClass('inpField');			
+							$('input:text, input:password').button().addClass('inpField');	
+							
+							$('#contactable').contactable();
+							///////////////////////////////////END NEW UI JAVASCRIPT//////////////////////////////////////////////
+							
+							//////////////////////////////////CUSTOM COLUMN FILTERS//////////////////////////////////////////////////////
+								columnFilter();		
+							//////////////////////////////////CUSTOM COLUMN FILTERS//////////////////////////////////////////////////////
+							
+							//////////////////////////////////MAIN SEARCH///////////////////////////////////////////////////////////////////////////////
+								$('input#search').quicksearch('#myTable tbody tr');							
+							//////////////////////////////////END MAIN SEARCH//////////////////////////////////////////////////////////////////////
 							
 /////////////////////////////////// CREATE TESTCASE BUTTON/////////////////////////////////////////////////////		
 							
@@ -1160,8 +1159,7 @@ function editAjax(par){
 							
 							$("#execBtn").click(function(){				
 							
-											$.ajax({
-											
+											$.ajax({											
 													  type: "GET",													  
 													  url: "execution.php",													  
 													  cache: false,													  
@@ -1177,7 +1175,7 @@ function editAjax(par){
 										
 																			autoOpen: true,
 																			height: 580,
-																			width: 1000,
+																			width: 1010,
 																			modal: true,
 																			resizable: false
 																			
@@ -1223,7 +1221,7 @@ function editAjax(par){
 											buttons: {
 												"Log out from xTable": function() {
 													$.ajax({											
-													  type: "POST",
+													  type: "GET",
 													  url: "login_mod.php",
 													  cache: false,
 													  data: "kill=kill",
@@ -1233,7 +1231,7 @@ function editAjax(par){
 														
 															if (msg == "true"){
 															
-																window.location.href ="http://10.10.40.16/xtable/login.php?logout=true";
+																window.location.href ="login.php?logout=true";
 																
 															}else{
 															
@@ -1268,33 +1266,20 @@ function editAjax(par){
 										  }
 									?>
 								///////////////////////////////////END SHOW TABLE IF ALL VCP///////////////////////////////////////////////////////////////////////
-								
-								///////////////////////////////////MY ACCOUNT DROP DOWN///////////////////////////////////////////////////////////////////////
-									$("#account").click(function(){
-												
-										$("#accChild").toggle("slow");
-										$("#logout").toggle("slow");
-										$("#genReport").toggle("slow");
-										$("#genPdf").toggle("slow");
-										
-										$("#myAcc").toggleClass("myAccOpen");
-
-									});
-								///////////////////////////////////MY ACCOUNT DROP DOWN///////////////////////////////////////////////////////////////////////
 			
  <?php
 	if( $_SESSION['role'] != 5 &&  $_SESSION['role'] != 4){
-?>  			
-			
+?>  						
 					///////////////////////////////////ADD NEW FUNCTION////////////////////////////////////////////////////////////////////////////
 						$("#function").change(function(){
 							
-							if( $(this).val() == "other450311"  && $("#newfunction").length < 1 ) {
+							if( $(this).val() == "other450311"  &&  $("#newfunction").length < 1 ) {
 
 						
 										$(this).parent().append("<input type='text'  id='newfunction' class='cf pauser' name='newfunction' style='position:absolute; text-align:left; right:55px; top:25px; width:290px;' />");		
 										$('input:text, input:password').button().addClass('inpField');
-										validCreate()
+										
+										validCreate();
 								
 								 $(".cf").keyup(function(){
 										
@@ -1319,9 +1304,7 @@ function editAjax(par){
 							}
 						
 						}); 
-					///////////////////////////////////END ADD NEW FUNCTION////////////////////////////////////////////////////////////////////////////
-
-			
+					///////////////////////////////////END ADD NEW FUNCTION////////////////////////////////////////////////////////////////////////////		
 			
 			/////////////////////////////////////////////////////////////INSERT NEW TESTCASE///////////////////////////////////////////	
 
@@ -1331,8 +1314,7 @@ function editAjax(par){
 			//VALID CREATE//
 			validCreate();	
 			
-			var defaultTCID = $("#tcid").val();
-			
+			var defaultTCID = $("#tcid").val();			
 			
 			/////GET ETIME /////
 			$.ajax({
@@ -1343,23 +1325,12 @@ function editAjax(par){
 			data: "test=test",													  
 			}).done(function( msg ) {
 			
-				if( is_loggedin(msg) ){	
+				if( is_loggedin(msg) ){	$("#eCreateTime").html(msg); }
 				
-					$("#eCreateTime").html(msg);		
-				}
 			});		
 
 			//////////VERIFY WHICH OTHER OR NEW FUNCTION///////////
-			if( $("#newfunction").val() ){
-			
-				var custFunction = $("#newfunction").val();				
-				
-			}else{
-			
-				var custFunction = $("#function").val();
-				
-			}
-			
+			var custFunction = ($("#newfunction").val() ) ? $("#newfunction").val() : $("#function").val();
 	
 
 			////GLOBAL SEARCH REINITIALIZATION///
@@ -1415,17 +1386,13 @@ function editAjax(par){
 																		$("#function").html(msg);
 																		
 																					$("#createForm select").selectmenu('destroy');
-																					$("#createForm select").selectmenu({style: 'dropdown', maxHeight: 400});	
-														
-																});
-																
+																					$("#createForm select").selectmenu({style: 'dropdown', maxHeight: 400});															
+																});																
 												}
 											
-												cleanCreate();	
-												
+												cleanCreate();												
 											
-											}
-											
+											}										
 											
 											if(action == 'as'){
 											
@@ -1456,6 +1423,7 @@ function editAjax(par){
 									/////////////////////////////////////Insert into  table info///////////////////////////////////
 									$('#myTable tbody').prepend('<tr><td class="mid ui-widget-content">' + myObj.mysql_last_id + '</td><td style="text-transform:uppercase;" ondblclick="javascript:editElement(this,priorityObj,true,75);" class=" function rhw ui-widget-content" style="text-align:center;">' + custFunction + '</td><td ondblclick="javascript:editElement(this,statusObj,false,8);" class="tdw center ui-widget-content"  style="text-align:center;">' + 	$("#status option:selected").text() + '</td><td ondblclick="javascript:editElement(this,priorityObj,true,5);" class="tdw center  ui-widget-content"  style="text-align:center;">' +	defaultTCID	 + '</td><td ondblclick="javascript:editElement(this,priorityObj,false,8);" class="tdw center ui-widget-content"  style="text-align:center;">' + 	$("#priority option:selected").text() + '</td><td ondblclick="javascript:editElement(this,classObj,false,25);"  class="tdw center  ui-widget-content"  style="text-align:center;">' + $("#class option:selected").text() + '</td><td  ondblclick="javascript:editElement(this,priorityObj,true,100);"  class="tdw center  ui-widget-content"  style="text-align:left;">' +$("#testname").val()+'</td><td  ondblclick="javascript:editSV(this);"  class="tdw tdh  ui-widget-content"><pre>' +  strip_tags($("#preConditions").val(), '<i><b>') +'</pre></td><td ondblclick="javascript:editSV(this);" class="tdw tdh  ui-widget-content"><pre>'+ 	strip_tags($("#scenario").val(), '<i><b>') +'</pre></td><td  ondblclick="javascript:editSV(this);" class="tdw tdh  ui-widget-content"><pre>'+   strip_tags($("#verification").val(), '<i><b>')	+'</pre></td></tr>');	
 									
+									$('input#search').quicksearch('#myTable tbody tr');	
 
 							}else{
 								
@@ -1474,25 +1442,11 @@ function editAjax(par){
 /////////////////////////////////////////////////////////////END INSERT NEW TESTCASE//////////////////////////////////////////
 /////////////////////////////////////////ADD NEW / SIMILAR / ANOTHER////////////////////////////////////	
 							
-							$("#add").click(function(){			
-									
-										addCreate("close");											
-
-							});	
+							$("#add").click(function(){		addCreate("close");	});	
 								
-								$("#addAnother").click(function(){			
-									
-										addCreate("aa");	
-										pauser();
-
-							});	
+								$("#addAnother").click(function(){		addCreate("aa");		pauser(); 	});	
 							
-							$("#addSimilar").click(function(){			
-									
-										addCreate("as");	
-										pauser();
-
-							});	
+							$("#addSimilar").click(function(){	addCreate("as"); 	pauser();  });	
 							
 							
 				/////////////////////////////////////////END ADD NEW / SIMILAR / ANOTHER//////////////////////////////////	
@@ -1502,37 +1456,16 @@ function editAjax(par){
 ?>	
  
  
-			$("#loading").ajaxStart(function(){
-				
-				$(this).show();
-				
-			});
-			
-			$("#loading").ajaxStop(function(){
-			
-				$(this).hide();
-				
-			});
+			$("#loading").ajaxStart(function(){	$(this).show(); });			
+			$("#loading").ajaxStop(function(){	$(this).hide(); });
 		
-		$("#up").click(function(){
-		
-			var basedir = 'http://10.10.40.16/qc/qc_exec.php';
 
-			var vcp = basedir + '?ddvert=' + $("#vertical").val() + '&ddclient=' + $("#client").val() + '&ddproject=' + $("#project").val();
-		
-			var url = vcp + '&ddstartdate=' + $("#startdateinput").val() + '&ddenddate=' + $("#enddateinput").val();		
+	//$("#genReport").click(function(){
 			
-			$("#graph").attr('src',url);
-			
-		});
-
-
-		$("#genReport").click(function(){
-			
-			window.open( "reportgen.php?vertical=<?php echo $vert; ?>&client=<?php echo $client; ?>", "reportWin", "status = 1, height = 440, width = 600, toolbars=no,menubar=no,location=no,scrollbars=no,resizable=no,status=no" );
+			//window.open( "reportgen.php?vertical=<?php echo $vert; ?>&client=<?php echo $client; ?>", "reportWin", "status = 1, height = 440, width = 600, toolbars=no,menubar=no,location=no,scrollbars=no,resizable=no,status=no" );
 			
 		
-		});
+		//});
 			
 		$("#genPdf").click(function(){
 		
@@ -1563,29 +1496,38 @@ function editAjax(par){
 		});
 		
 			
-		$("#_filterText1").val("Search-->");	
-		
-		
-		
-							
-				$(function(){$('#contactable').contactable({subject: 'feedback URL:'+location.href});});
+		$("#_filterText1").val("Search-->");		
 				
+					
+				$("#welcome").html("Welcome, <?php echo $_SESSION['fname']; ?>");
+				$('#switcher').themeswitcher();
 				
-				$("#contactable_inner").click(function () {
-							
-						
-							
-					});
+			document.getElementById("hvertical").value = "<?php  echo $vert;  ?>";
+			document.getElementById("hclient").value = "<?php  echo $client;  ?>";
+			document.getElementById("hproject").value = "<?php  echo $project;  ?>";
 
+
+			$("#navXTable").attr("href","javascript:void(0)");
+			$("#XTable").css("border","3px solid #ff7777");
+			$("#XTable").css("-webkit-box-shadow","0px 0px 2px 2px #ff7777");
+			
+			
+			
 			
 	}); //DOM Ready
 	
 							
-						
+		
 	
 
 </script>
+<?php
 
+	setcookie("vertical", $vert, time()+3600);
+	setcookie("client", $client, time()+3600);
+	setcookie("project", $project, time()+3600);
+	
+?>
 
 
 </body>

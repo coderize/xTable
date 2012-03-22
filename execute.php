@@ -127,17 +127,19 @@ if( $startExec == 'true' ){
 																, manual_prereq
 																, manual_steps
 																, manual_expected
-																, device_type
-																, device_group
+																, devtype_name
+																, devgroup_name
 																, device_name
 																, device_version
 																 
-																FROM table_manual, table_device, table_manual_exec, table_priority, table_class
+																FROM table_manual, table_device, table_manual_exec, table_priority, table_class, table_devtype, table_devgroup
 																 
 																WHERE exec_manual_id = manual_id
 																AND manual_priority_id = priority_id
 																AND manual_class_id = class_id
 																AND exec_device_id = device_id
+																AND devtype_id = device_type_id
+																AND devgroup_id = device_group_id
 																AND exec_id = '{$next}' ") or die("QUERY ERROR");
 
 

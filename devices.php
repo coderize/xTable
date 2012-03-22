@@ -1,4 +1,5 @@
 <?php 
+header("Content-type: text/html; charset=utf-8");  
 error_reporting(E_ALL ^ E_NOTICE);
 require "includes/config.php"; 
 require "includes/sess.php";
@@ -56,13 +57,15 @@ session_start();
 
 <?php
 
-$er = @mysql_query("SELECT device_type
+$er = @mysql_query("SELECT devtype_id, devtype_name
 															 
-															FROM table_device
+															FROM table_devtype
+															
+															WHERE devtype_id <> 4
 															 
-															GROUP BY device_type
+															GROUP BY devtype_name
 															 
-															ORDER BY device_type") or die("UNABLE TO GET DEVICES");
+															ORDER BY devtype_name") or die("UNABLE TO GET DEVICES");
 									
 			
 									
@@ -71,28 +74,30 @@ $er = @mysql_query("SELECT device_type
 	?>
 							<tr> 							
 								<td class='ghead' colspan='0'>	
-									<?php echo  strtoupper($query_row->device_type); ?>
+									<?php echo  strtoupper($query_row->devtype_name); ?>
 								</td> 
 							</tr> 
 							
 <?php			
 
-				$dq = mysql_query("SELECT device_id, device_group, device_name, device_version
+				$dq = mysql_query("SELECT device_id, devgroup_name, device_name, device_version
  
-														FROM table_device
+														FROM table_device, table_devgroup, table_devtype
 														
-														WHERE device_type = '{$query_row->device_type}'
+														WHERE device_type_id = '{$query_row->devtype_id}'
+														AND devgroup_id = device_group_id
+														AND devtype_id = device_type_id
 														 
-														GROUP BY device_type, device_group, device_name, device_version
+														GROUP BY device_type_id, device_group_id, device_name, device_version
 														
 														 
-														ORDER BY device_type, device_group, device_name, device_version");
+														ORDER BY device_type_id, device_group_id, device_name, device_version");
 														
 
 					while ($query_row2 = @mysql_fetch_object($dq)){
 ?>						<tr>
 								<td><input type='checkbox' name='<?php echo $query_row2->device_id;?>' id='' class='deviceList' /></td>
-								<td style='text-align:center;'><?php echo $query_row2->device_group; ?></td>
+								<td style='text-align:center;'><?php echo $query_row2->devgroup_name; ?></td>
 								<td style='text-align:center;'><?php echo $query_row2->device_name; ?></td>
 								<td style='text-align:center;'><?php echo $query_row2->device_version; ?></td>
 							</tr>

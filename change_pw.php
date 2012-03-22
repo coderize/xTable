@@ -6,8 +6,7 @@ session_start();
 
 if (!$_SESSION['fname'] ){
 		
-	echo "You need to login first";
-	header('Refresh: 0; URL=http://10.10.40.16/xtable/login.php');
+	header('Refresh: 0; URL=login.php');
 	exit;
 	
 }
@@ -384,8 +383,6 @@ html {
 
 			if($update){
 			
-				//echo "Password updated succesfully";
-				//header('Refresh: 0; URL=http://10.10.40.16/xtable/');
 				$loginSuccess = "true";
 				
 			
@@ -435,84 +432,8 @@ html {
 			<?php
 		if($loginSuccess == 'true'){	
 	?>
-				$("#wrapper").css("display","none");
-	
-										 $( "#dropdowns" ).dialog({
-												
-													width: 445,
-													modal: true,													
-													hide: "explode",
-													show: 'slide',
-													draggable: false,										
-													resizable: false										
-												});		 
-												
-												$("#selectionClose").click(function(){
 				
-													$( "#dropdowns" ).dialog("close");
-													window.location.href = "http://10.10.40.16/xtable/login.php";
-												
-												});
-												
-													$( ".ui-dialog-content" ).css("padding","0px");
-													$( ".ui-widget-header" ).css("display","none");
-													$( ".vcp" ).css("width","400px");
-													$( ".vcp" ).css("height","30px");
-													$( ".vcp" ).css("margin-bottom","15px");
-													
-													
-													
-		$("#vertical").change(function(){
-				
-					if( $("#vertical").val() ){
-					
-						$.ajax({
-							type: "GET",
-							url: "dd.php",
-							cache: false,
-							async: true,
-							data: "vert="+ $("#vertical").val() + "&client=1"
-							}).done(function( msg ) {	
-								
-									$("#client").html(msg);
-								
-								});
-						}
-				
-				});
-			
-			
-			
-			$("#client").change(function(){
-				
-					if( $("#vertical").val() && $("#client").val() ){
-					
-						$.ajax({
-							type: "GET",
-							url: "dd.php",
-							cache: false,
-							async: true,
-							data: "vert="+ $("#vertical").val() + "&client="+  $("#client").val() + "&project=1"
-							}).done(function( msg ) {	
-								
-									$("#project").html(msg);
-								
-								});
-						}
-				
-				});
-	
-	
-			$("#project").change(function(){
-				
-					var url = "http://10.10.40.16/xtable/index.php?vertical="+$("#vertical").val()+"&client="+$("#client").val()+"&project="+$("#project").val()
-					
-					window.location.href = url;
-				
-				});
-	
-	
-	
+				window.location.href="home.php";
 	
 	
 	

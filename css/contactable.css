@@ -1,20 +1,21 @@
 #contactable #contactable_inner {
-	background-image:url(../img/feeback.png);
+	background-image:url(../img/menu-sn-open.png);
+	background-repeat: no-repeat;
 	color:#FFFFFF;
-	background-color:#333333;
 	cursor:pointer;
-	height:102px;
+	height:32px;
 	left:0;
-	margin-left:-5px; 
 	*margin-left:-5px; 
 	overflow:hidden;
 	position:fixed;
 	*position:absolute;
 	text-indent:-100000px;
-	top:102px;
+	top:120px;
 	*margin-top:10px;
-	width:44px;
-	z-index:100000;
+	width:26px;
+	z-index:1000;
+	border: 1px solid #f00;
+	border-radius: 0px 15px 15px 0px;
 }
 
 #contactable #contactForm {
@@ -126,6 +127,6 @@
 
 
 #contactable_inner{
-	opacity: .3;
+/* 	opacity: .3; */
 }
 

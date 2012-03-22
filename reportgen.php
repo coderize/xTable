@@ -1,6 +1,15 @@
 <?php 
-error_reporting(E_ALL & ~E_NOTICE); 
+ob_start();
+header("Content-type: text/html; charset=utf-8");  
+error_reporting(E_ALL ^ E_NOTICE);
 require "includes/config.php"; 
+require "includes/sess.php";
+session_start();
+
+ if( !$_SESSION['fname'] ){
+	header('Refresh: 0; URL=http://10.10.40.16/xtable/login.php');
+	exit;
+} 
 ?>
 <html>
 	<head>
@@ -8,21 +17,30 @@ require "includes/config.php";
 		<title>Report Generator</title>
 		
 		<link rel="stylesheet" type="text/css" href="css/base.css" />
-		<link rel="stylesheet" type="text/css" href="css/redmond/jquery-ui-1.8.16.custom.css" />
+		<link rel="stylesheet" type="text/css" href="css/flick/jquery-ui-1.8.16.custom.css" />
 		<link rel="stylesheet" type="text/css" href="css/selectmenu.css" />
+		<link rel="stylesheet" type="text/css" href="css/contactable.css" />
 		<script src="http://code.jquery.com/jquery-latest.js"></script>
 		<script src="js/jqueryUI/js/jqueryui.js"></script>
 		<script src="js/jquery.js"></script>
+		<script src="http://jqueryui.com/themeroller/themeswitchertool/" charset="UTF-8"></script>
+		<script src="js/jquery.contactable.js" charset="UTF-8"></script>
 		<style>
+		body{
+			font-family: verdana, Helvetica, san-serif;
+		}
 		 *{margin:0px;padding:0px; font-size: 12px;}
 		 
 		#mainContainer{
 			padding: 5px;
 		 }
-		 
-		 .ui-selectmenu, ul{
-			width:170px !important;
-		 
+		 #vertical{
+		 min-width: 200px !important;
+		 }
+
+		 #client{
+			min-width:375px !important;
+			
 		 }
 		 
 		#navigation a {
@@ -33,11 +51,64 @@ require "includes/config.php";
 		}
 		
 		#generate{
-			position:absolute;
-			top:100px;
-			right: 15%;
+		margin-top: -5px;
+		margin-left: 5px;	
 		
 		}
+		
+		#box{
+	border-radius: 0px 15px 15px 0px;
+
+}
+#reports,#pdf{
+	height:100px;
+	border-radius: 10px;
+}
+
+.menu-icons img{
+	margin: 15px;
+}
+
+.over{
+	opacity: .7;
+}
+
+.over:hover{
+	opacity: 1 !important;
+
+}
+#logout{
+	display:block;
+	position:absolute;
+	top:10px;
+	right:15px;
+
+}
+#welcome{
+	font-size:14px;
+	margin: 5px 0px 20px 0px;
+	display:block;
+}
+
+#main{
+	margin-top:100px;
+	border: 1px solid #000;
+	
+}
+#icon img{
+	height:60px;
+	width:60px;
+	display:inline;
+	float:left;
+	margin:5px;
+	border-radius:10px;
+
+}
+#XTable{
+	margin-left:10px !important;
+}
+		
+		
 		</style>
 		
 	</head>
@@ -72,11 +143,14 @@ require "includes/config.php";
 	
 <?php
 		
-		if($vert){
+
 ?>		
 		<select name='client' id='client' onchange="javascript:reload();">	
 		<option value=''>Client Selection</option>
 <?php				
+
+$vert = ($vert && $vert != 'na' && $vert !='6') ? $vert : $_COOKIE['vertical'];
+
 				$clients = mysql_query("SELECT client_id, client_name 
 											FROM table_client, table_vertical, table_relation
 											 
@@ -97,7 +171,7 @@ require "includes/config.php";
 <?php
 				}	
 		
-		}		
+			
 		
 ?>
 </select>
@@ -128,6 +202,7 @@ require "includes/config.php";
 </div> <!-- end main container -->
 
 <button id='generate'>Generate</button>
+<div id="contactable"></div>
 <?php 
 
 $days_passed_this_month = date("j");
@@ -142,7 +217,7 @@ $last_month = date("F", $timestamp_last_month);
 
 <script>
 
-			function reload(){
+ 		function reload(){
 	
 			 	ddvert = document.getElementById('vertical'); 				
 				ddclient = document.getElementById('client');							
@@ -150,20 +225,12 @@ $last_month = date("F", $timestamp_last_month);
 				window.location = vertpath;				
 				clientpath = vertpath + "&client=" + ddclient.value;
 				window.location = clientpath;				
-             }    
+             }   
 			 
-$(document).ready(function() { 	
+$(document).ready(function() { 		
 
-		document.getElementById("vertical").value = "<?php  echo $vert;  ?>";
-		document.getElementById("client").value = "<?php  echo $client;  ?>";
-		document.getElementById("month").value = "<?php  echo $last_month;  ?>";	
-	
-
-	$( "button, input:submit, input:reset" ).button();
-	$("select").selectmenu({style: 'dropdown', maxHeight: 400});	
-
-
-
+		$( "button, input:submit, input:reset" ).button();
+		$("select").selectmenu({style: 'dropdown', maxHeight: 400});	
 		
 		$("#generate").click(function(){		
 		
@@ -173,9 +240,7 @@ $(document).ready(function() {
 		
 		var client = vertical + "&client=" + $("#client").val();
 		
-		var full_url = client + "&month=" + $("#month").val();
-		
-		
+		var full_url = client + "&month=" + $("#month").val();		
 		
 			
 			var name =  new Date().getTime();
@@ -185,11 +250,34 @@ $(document).ready(function() {
 		
 		});
 		
+			$('#contactable').contactable();
+			$("#welcome").html("Welcome, <?php echo $_SESSION['fname']; ?>");
+			$('#switcher').themeswitcher();
+			$('button').button();
+			$("#navReporting").attr("href","javascript:void(0)");
+			$("#Reporting").css("border","3px solid #ff7777");
+			$("#Reporting").css("-webkit-box-shadow","0px 0px 2px 2px #ff7777");
+			$("#pdf").click(function(){
+				
+					alert("Exporting on this page is not supported.");
+			});
+	});	
+		
+			
+		document.getElementById("vertical").value = "<?php  echo $vert = ($vert && $vert != 'na' && $vert !='6') ? $vert : $_COOKIE['vertical'];  ?>";
+		
+		
+		document.getElementById("client").value = "<?php  echo $client = ($client && $vert !='na' && $vert !='267') ? $client : $_COOKIE['client'];  ?>";
+			
+			
+		document.getElementById("month").value = "<?php  echo $last_month;  ?>";	
+		
+
 		
 		
 		
-	});
 </script>
+
 
 </body>
 </html>
