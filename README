@@ -1,4 +1,7 @@
 TODO:
+
+# COVERTING THIS PROJECT TO KOHANA
+
 1.add sql schema files
 2.fix js to be fully unobtrusive
 3.remove built in rights management and move to db
@@ -10,4 +13,4 @@ TODO:
 9. bring inline css to 5%
 10. build reporting page
 11. make  compatible with firefox
-12. 
+ 
