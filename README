@@ -2,9 +2,9 @@ TODO:
 
 # COVERTING THIS PROJECT TO KOHANA
 
-1.add sql schema files
-2.fix js to be fully unobtrusive
-3.remove built in rights management and move to db
+1. add sql schema files
+2. fix js to be fully unobtrusive
+3. remove built in rights management and move to db
 4. remove dependency of wkhtmltox
 5. bring jQuery dependency to 5%
 6. remove dependency of theme switcher and make local
