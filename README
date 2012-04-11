@@ -13,8 +13,6 @@ TODO:
 9. bring inline css to 5%
 10. build reporting page
 11. make  compatible with firefox
-<<<<<<< HEAD
 12. clean up css 
-=======
-12. integrate with boost web driver framework 
->>>>>>> 01b8c945f0ed24dcb2dd5cc12f0192f3091532f3
+13. integrate with boost web driver framework 
+
