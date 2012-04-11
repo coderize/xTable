@@ -1,6 +1,6 @@
 TODO:
 
-## COVERTING THIS PROJECT TO KOHANA
+<b>COVERTING THIS PROJECT TO KOHANA</b>
 
 1. add sql schema files
 2. fix js to be fully unobtrusive
@@ -15,4 +15,6 @@ TODO:
 11. make  compatible with firefox
 12. clean up css 
 13. integrate with boost web driver framework 
+
+note: @jl added sql folder to put in sql schema file with basic dummy data. 
 
