@@ -31,7 +31,7 @@ body,pre{font-family:Verdana,Helvetica,san-serif,Arial;font-size:.6em}*{padding:
 
 #iframeContainer{display:none;}
 
-#mainContainer{padding-top:5px;min-width:960px;max-width:1500px;position:relative}
+#mainContainer{padding-top:5px;min-width:960px;position:relative}
 
 .inpFields{font:inherit;color:inherit;outline:0;cursor:text}pre{font-size:1em;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word}
 
