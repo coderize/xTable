@@ -27,7 +27,7 @@ if($vert == '' && $client == '' && $project == ''){
 <!DOCTYPE html>
 <html>
 <head>
-<title>UsableX - xTable</title>
+<title>Coderize - xTable</title>
 
 <meta http-equiv="Content-Encoding" content="gzip">
 <meta http-equiv="Accept-Encoding" content="gzip, deflate">
