@@ -1,6 +1,6 @@
 TODO:
 
-# COVERTING THIS PROJECT TO KOHANA
+## COVERTING THIS PROJECT TO KOHANA
 
 1.add sql schema files
 2.fix js to be fully unobtrusive
