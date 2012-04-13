@@ -15,6 +15,6 @@ COVERTING THIS PROJECT TO KOHANA
 11. make  compatible with firefox
 12. clean up css 
 13. integrate with boost web driver framework 
-
+14. add unit tests with phantom js
 note: @jl added sql folder to put in sql schema file with basic dummy data. 
 
