@@ -287,9 +287,12 @@ $.widget("ui.selectmenu", {
 				.addClass(self.widgetBaseClass+"-menu-popup");	
 		}
 		
-		//append status span to button
-		this.newelement.prepend('<span class="'+self.widgetBaseClass+'-status">'+ selectOptionData[this._selectedIndex()].text +'</span>');
-		
+		try{
+			//append status span to button
+			this.newelement.prepend('<span class="'+self.widgetBaseClass+'-status">'+ selectOptionData[this._selectedIndex()].text +'</span>');
+		}catch(e){
+			var escapeerror = 'true';
+		}
 		//hide original selectmenu element
 		this.element.hide();
 		
