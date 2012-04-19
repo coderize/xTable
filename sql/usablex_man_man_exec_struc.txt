@@ -1,0 +1,104 @@
+-- phpMyAdmin SQL Dump
+-- version 3.4.9
+-- http://www.phpmyadmin.net
+--
+-- Host: localhost
+-- Generation Time: Apr 11, 2012 at 01:28 PM
+-- Server version: 5.1.61
+-- PHP Version: 5.3.3
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- Database: `usablex`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `table_manual`
+--
+
+CREATE TABLE IF NOT EXISTS `table_manual` (
+  `manual_id` int(6) NOT NULL AUTO_INCREMENT,
+  `manual_tcid` decimal(10,2) DEFAULT NULL,
+  `manual_relation_id` int(5) DEFAULT NULL,
+  `manual_function_name` varchar(50) DEFAULT NULL,
+  `manual_name` varchar(150) DEFAULT NULL,
+  `manual_priority_id` int(1) NOT NULL,
+  `manual_class_id` int(1) DEFAULT NULL,
+  `manual_prereq` varchar(255) DEFAULT NULL,
+  `manual_steps` text,
+  `manual_expected` text,
+  `manual_bdd` text,
+  `manual_start` varchar(10) NOT NULL,
+  `manual_end` varchar(10) NOT NULL,
+  `manual_pauseduration` varchar(10) NOT NULL DEFAULT '0',
+  `manual_pausecount` varchar(2) NOT NULL DEFAULT '0',
+  `manual_status` int(1) DEFAULT NULL,
+  `manual_author_id` int(4) DEFAULT NULL,
+  PRIMARY KEY (`manual_id`),
+  KEY `manual_class_id` (`manual_class_id`),
+  KEY `manual_author_id` (`manual_author_id`),
+  KEY `manual_relation_id` (`manual_relation_id`),
+  KEY `manual_priority_id` (`manual_priority_id`),
+  KEY `manual_status` (`manual_status`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=23990 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `table_manual_exec`
+--
+
+CREATE TABLE IF NOT EXISTS `table_manual_exec` (
+  `exec_id` int(10) NOT NULL AUTO_INCREMENT,
+  `exec_manual_id` int(6) NOT NULL,
+  `exec_creator_id` int(4) NOT NULL,
+  `exec_device_id` int(3) DEFAULT NULL,
+  `exec_create_date` varchar(10) CHARACTER SET utf8 NOT NULL,
+  `exec_user_id` int(4) DEFAULT NULL,
+  `exec_start` varchar(10) CHARACTER SET utf8 NOT NULL,
+  `exec_end` varchar(10) CHARACTER SET utf8 NOT NULL,
+  `exec_pauseduration` varchar(10) CHARACTER SET utf8 NOT NULL DEFAULT '0',
+  `exec_pausecount` varchar(2) CHARACTER SET utf8 NOT NULL DEFAULT '0',
+  `exec_result` int(1) DEFAULT NULL,
+  `exec_device_version` varchar(75) CHARACTER SET utf8 NOT NULL,
+  PRIMARY KEY (`exec_id`),
+  KEY `exec_manual_id` (`exec_manual_id`),
+  KEY `exec_creator_id` (`exec_creator_id`),
+  KEY `exec_device_id` (`exec_device_id`),
+  KEY `exec_user_id` (`exec_user_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1248552 ;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `table_manual`
+--
+ALTER TABLE `table_manual`
+  ADD CONSTRAINT `table_manual_ibfk_5` FOREIGN KEY (`manual_relation_id`) REFERENCES `table_relation` (`relation_id`),
+  ADD CONSTRAINT `table_manual_ibfk_1` FOREIGN KEY (`manual_priority_id`) REFERENCES `table_priority` (`priority_id`),
+  ADD CONSTRAINT `table_manual_ibfk_2` FOREIGN KEY (`manual_class_id`) REFERENCES `table_class` (`class_id`),
+  ADD CONSTRAINT `table_manual_ibfk_3` FOREIGN KEY (`manual_status`) REFERENCES `table_status` (`status_id`),
+  ADD CONSTRAINT `table_manual_ibfk_4` FOREIGN KEY (`manual_author_id`) REFERENCES `table_user` (`user_id`);
+
+--
+-- Constraints for table `table_manual_exec`
+--
+ALTER TABLE `table_manual_exec`
+  ADD CONSTRAINT `table_manual_exec_ibfk_2` FOREIGN KEY (`exec_device_id`) REFERENCES `table_device` (`device_id`),
+  ADD CONSTRAINT `table_manual_exec_ibfk_1` FOREIGN KEY (`exec_user_id`) REFERENCES `table_user` (`user_id`);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
