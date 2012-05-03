@@ -411,13 +411,6 @@ if(!$automation){
 ?>
 
 
-<script>
 
-
-//$(".testBox").click(function(){$(this).slideToggle("slow");});
-//$("a").click( function(){ $(this).siblings("div").slideToggle("slow"); }  );
-//$(".testNameLink").click( function(){ $(this).siblings("div > div").slideToggle("slow"); }  );
-
-</script>
 </body>
 </html>

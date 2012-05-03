@@ -1,5 +1,4 @@
-<?php 
-
+﻿<?php 
 header("Content-type: text/html; charset=utf-8");  
 error_reporting(E_ALL ^ E_NOTICE);
 require "includes/config.php"; 
@@ -118,6 +117,7 @@ body,pre{font-family:Verdana,Helvetica,san-serif,Arial;font-size:.6em}*{padding:
 <script src="js/jquery.js" charset="UTF-8"></script>
 <!-- <script src="js/calendar_db.js" charset="UTF-8"></script> -->
 <script src="js/jquery.contactable.js" charset="UTF-8"></script>
+<!--<script src="js/jquery.tablednd.js" charset="UTF-8"></script>-->
 
 
 <?php

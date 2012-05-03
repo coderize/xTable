@@ -93,7 +93,7 @@ session_start();
 	#manual, #automation, #defects{
 		width:1130px;
 		margin: 0 auto;
-		margin-bottom: 20px;
+		margin-top: 100px;
 	}
 
 	#automation{
@@ -158,7 +158,7 @@ $client_name = $client_name->client_name;
 
 
 	<div  id="header">
-	<img src="img/monthly_report_header.png" />
+	<!--<img src="img/monthly_report_header.png" />-->
 
 	</div><!-- end header -->	
 
@@ -166,9 +166,7 @@ $client_name = $client_name->client_name;
 	<div class='innerheader'>Manual Testing Results</div>
 		<div id="innermanual">			
 		
-			<p class='para'>Manual testing is the process of manually testing a system for defects and areas of vulnerability. QA Engineers interact with a system from the perspective of an end user, and validate features of the application to ensure correct behavior. Prior to testing, the QA Engineer analyses system documentation and creates test cases using business and system logic.
-  
-			The following shows the results for Usablenet's daily manual testing efforts of the <?php echo $client_name;  ?>  mobile site. Each day Usablenet's quality assurance team conducts scripted and ad hoc testing of the <?php echo $client_name;  ?>  mobile site.</p>	
+			<p class='para'>The following results are for: <?php echo $client_name;  ?>  </p>	
 			
 			<?php 
 			
