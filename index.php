@@ -170,7 +170,7 @@ $qstatus = mysql_query("SELECT status_id, status_name FROM  table_status");
 <body id="bod">
 <?php 
 
-	$verts = mysql_query("SELECT vertical_id, vertical_name FROM table_vertical WHERE vertical_id < 7 ORDER BY vertical_name ASC");	
+	$verts = mysql_query("SELECT vertical_id, vertical_name FROM table_vertical WHERE vertical_id < 9 ORDER BY vertical_name ASC");	
 ?>
 <div id='mainContainer'>
 
