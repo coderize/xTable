@@ -1,11 +1,11 @@
-<?php
-header("Content-type: text/html; charset=utf-8");  
+﻿<?php
+header("Content-type: text/html; charset=utf-8");
 error_reporting(E_ALL ^ E_NOTICE);
-require "includes/config.php"; 
+require "includes/config.php";
 require "includes/sess.php";
 session_start();
 
- if( $_SESSION['fname'] ){
+if( $_SESSION['fname'] ){
 	header('Refresh: 0; URL=home.php');
 	exit;
 } 
@@ -343,12 +343,12 @@ html {
 
 <div id="frame">
 	<div id="rframe">
-		<div>quality</div>
-		<div>people</div>
-		<div>success</div>
-		<div>patience</div>
-		<div>positivity</div>
-		<div>professionalism</div>
+		<div>Quality</div>
+		<div>Quality</div>
+		<div>Quality</div>
+		<div>Quality</div>
+		<div>Quality</div>
+		<div>Quality</div>
 	</div>
 </div>
 
@@ -493,6 +493,7 @@ if($logout=="true"){
 
 				$( ".ui-dialog-content" ).css("padding","0px");
 				$( ".ui-widget-header" ).css("display","none");
+				$("#username").focus();
 				
 			
 				

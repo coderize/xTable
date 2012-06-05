@@ -229,19 +229,16 @@ $qstatus = mysql_query("SELECT status_id, status_name FROM  table_status");
 		<select name='project' id='project' onchange="javascript:reload();">	
 		<option value=''>Project Selection</option>
 <?php				
-				$projects = mysql_query("SELECT project_id, project_name
- 
-															FROM table_project, table_client, table_vertical, table_relation
-															 
-															WHERE vertical_id = r_vertical
-															AND vertical_id = '{$vert}'
-															AND client_id = r_client
-															AND client_id = '{$client}'
-															AND project_id = r_project
-															 
-															GROUP BY project_id
-															ORDER BY project_name ASC															
-															");
+	$projects = mysql_query("SELECT project_id, project_name
+					FROM table_project, table_client, table_vertical, table_relation
+					WHERE vertical_id = r_vertical
+					AND vertical_id = '{$vert}'
+					AND client_id = r_client
+					AND client_id = '{$client}'
+					AND project_id = r_project
+					GROUP BY project_id
+					ORDER BY project_name ASC															
+					");
 		
 				while($qprojects = mysql_fetch_object($projects)){
 ?>			
@@ -264,14 +261,13 @@ $qstatus = mysql_query("SELECT status_id, status_name FROM  table_status");
 <?php 
 ////////////////////////////TODO: CHECK VALID SELECTIONS FIRST/////////////////////////////////////////////////////////////////
 $iq = @mysql_query("SELECT relation_id AS rel
-												FROM table_relation, table_vertical, table_client, table_project
-												
-												WHERE r_vertical =  '{$vert}'
-												AND r_client =  '{$client}'
-												AND r_project =  '{$project}'
-												
-												GROUP BY relation_id 
-												LIMIT 1"); //or die("UNABLE TO GET REL");
+			FROM table_relation, table_vertical, table_client, table_project
+			WHERE r_vertical =  '{$vert}'
+			AND r_client =  '{$client}'
+			AND r_project =  '{$project}'
+			GROUP BY relation_id 
+			LIMIT 1"); //or die("UNABLE TO GET REL");
+
 $iq = mysql_fetch_object($iq);									
 
 if( $_SESSION['role'] != 5 && $_SESSION['role'] != 4  ){
@@ -299,7 +295,7 @@ $q = @mysql_query("SELECT manual_function_name AS 'FUNCTION'
 									
 									ORDER BY status_name, manual_tcid
 								
-									"); //or die ("UNABLE TO GET TESTCASES");
+									");//or die ("UNABLE TO GET TESTCASES");
 /////////////////////////////////////////////////////NOT SE AND PM/////////////////////////////////////////////////
 }else{
 /////////////////////////////////////////////////////GET ALL TYPES OF TESTCASES/////////////////////////////////////////////////
@@ -326,7 +322,7 @@ $q = @mysql_query("SELECT manual_function_name AS 'FUNCTION'
 									
 									ORDER BY status_name, manual_tcid
 								
-									"); //or die ("UNABLE TO GET TESTCASES");
+									");//or die ("UNABLE TO GET TESTCASES");
 /////////////////////////////////////////////////////GET ALL TYPES OF TESTCASES/////////////////////////////////////////////////
 }
 
@@ -360,9 +356,9 @@ $q = @mysql_query("SELECT manual_function_name AS 'FUNCTION'
      <?php  while($query_row = @mysql_fetch_object($q))  {    ?>     
 				
 			<tr>
-				<td class='mid'><?php echo $query_row->MID; ?></td>
-			   <td  class= 'rhw'><?php echo $query_row->FUNCTION; ?></td>
-			   <td  class= 'rhw center'><?php echo $query_row->STATUS; ?></td>			   
+			   <td class='mid'><?php echo $query_row->MID; ?></td>
+			   <td class= 'rhw'><?php echo $query_row->FUNCTION; ?></td>
+			   <td class= 'rhw center'><?php echo $query_row->STATUS; ?></td>			   
 			   <td class= 'tdw center'><?php echo $query_row->TCID; ?></td>
 			   <td class= 'tdw center'><?php echo $query_row->PRIORITY; ?></td>
 			   <td class= 'tdw center'><?php echo $query_row->CLASS; ?></td>
@@ -387,157 +383,13 @@ $q = @mysql_query("SELECT manual_function_name AS 'FUNCTION'
 
 <?php
 if( $_SESSION['role'] != 5 && $_SESSION['role'] != 4  ){
+// TESTCASE CREATION HTML TEMPLATE>
+
+	require("create_testcase_template.html");
+
+}
+
 ?>
-                                <div id='createForm'>
-								
-                                                <table class="form" id="createTable">
-															<tr>
-																<td style='text-align:center;height:16px;' colspan='3'>
-																	<span id='indicator'>Record inserted succesfully.</span>
-																</td>
-															</tr>
-                                                                <tr>
-																<td id='fcheck' class='sib'> <img class='error' src='img/denied.gif'/></td>
-                                                                                <td><strong>Function:</strong></td>
-                                                                                                <td style='text-align:left !important;'>
-                                                                                                              
-																											
-																															<select id="function" name="function" class="cf pauser" style="width:310px;">
-																															
-																																<option>default</option>
-																															
-																															</select>
-																												
-                                                                                                </td>
-                                                                </tr>
-																
-																       <tr>
-																	   <td id='tcheck' class='sib'> <img class='error' src='img/denied.gif'/></td>
-                                                                                <td><strong>TCID:</strong></td>
-                                                                                                <td style='text-align:left  !important;'>
-                                                                                                                <input style="text-align:left" name="tcid" id="tcid" class="cf pauser" size="10" maxlength='5' readonly='readonly' />
-                                                                                                </td>
-																								
-                                                                </tr >
-																
-																     <tr>
-																<td id='' class='sib'> <img class='error' src='img/denied.gif'/></td>
-                                                                                <td><strong>Status:</strong></td>
-                                                                                                <td>
-																								
-                                                                                                               <select id="status" name="status" class="cf" style='text-align:left;'>
-																											   
-																												   <option value="na">Select a Status</option>
-																												   <option value="1">Live</option>
-																												   <option value="2">Demo</option>
-																												   <option value="3">In-Progress</option>
-																												</select>
-																											   
-																										
-																											   
-                                                                                                </td>
-																								
-                                                                </tr>
-                                                                <tr>
-																<td id='pcheck' class='sib'> <img class='error' src='img/denied.gif'/></td>
-                                                                                <td><strong>Priority:</strong></td>
-                                                                                                <td id='stime'>
-																								
-                                                                                                               <select id="priority" name="priority" class="cf" style='text-align:left;'>
-																												   <option value="na">Select a Priority</option>
-																												   <option value="1">Critical</option>
-																												   <option value="2">High</option>
-																												   <option value="3">Medium</option>
-																												   <option value="4">Low</option>
-																											   </select>
-																											   
-																										
-																											   
-                                                                                                </td>
-																								
-                                                                </tr>
-
-                                                                <tr>
-																<td id='ccheck' class='sib'> <img class='error' src='img/denied.gif'/></td>
-                                                                                <td><strong>Class:</strong></td>
-                                                                                                <td id='etime'>
-																								
-																											<select id="class" name="class" class="cf" style='text-align:left;'>
-																												<option value="na">Select a Class</option>
-																												<option value="1">Data Handling</option>																												
-																												<option value="3">Exception Handling</option>
-																												<option value="4">Functional</option>																												
-																												<option value="6">Performance</option>
-																												<option value="7">Boundary</option>
-																												<option value="8">UI</option>
-																												<option value="9">Usability</option>
-																											</select>
-																											
-                                                                                                                 
-                                                                                                </td>
-																								
-                                                                </tr>
-
-                                                                <tr>
-																	<td id='tcheck' class='sib'><img class='error' src='img/denied.gif'/> </td>
-                                                                                <td><strong>Test Name:</strong></td>
-                                                                                                <td style='text-align:left  !important;'>
-                                                                                                      <input style="text-align:left" name="testname" id="testname" size="50"  class="cf pauser"/>
-                                                                                                </td>
-																							
-                                                                </tr>															
-																
-																
-                                                                <tr>
-																<td id='pccheck' class='sib'> <img class='error' src='img/denied.gif'/></td>
-                                                                                <td><strong>Pre-Conditions:</strong></td>
-                                                                                                <td>
-                                                                                                                <textarea style='height:75px;' cols="50" rows="5" name="preConditions" id="preConditions"  class="cf pauser"></textarea>
-                                                                                                </td>
-																								
-                                                                </tr>
-
-                                                                <tr>
-																<td id='scheck' class='sib'><img class='error' src='img/denied.gif'/> </td>
-                                                                                <td><strong>Scenario:</strong></td>
-                                                                                                <td>
-                                                                                                                <textarea cols="50" rows="5" name="scenario" id="scenario"  class="cf pauser"></textarea>
-                                                                                                </td>
-																								
-                                                                </tr>
-
-                                                                <tr>
-																<td id='vcheck' class='sib'><img class='error' src='img/denied.gif'/> </td>
-                                                                                <td><strong>Verification:</strong></td>
-                                                                                                <td>
-                                                                                                                <textarea cols="50" rows="5" name="verification" id="verification"  class="cf pauser"></textarea>
-                                                                                                </td>
-																								
-                                                                </tr>
-
-                                                                <tr>
-                                                                                <td colspan="3" style='padding:3px'>
-                                                                                                <input type="reset"  id='cancel' value="Cancel" />
-                                                                                                <input type="submit"   id='add' value="Add" />
-                                                                                                <input type="submit"  id='addAnother' value="Add Another" />
-                                                                                                <input type="submit" id='addSimilar' value="Add Similar" />
-																								<span id='sCreateTime' class='createTime' style='visibility:hidden'></span>
-																								<span id='eCreateTime' class='createTime' style='visibility:hidden'></span>
-																								<span id='pauseIni' class='' style='visibility:hidden'></span>
-																								<span id='pauseCur' class='' style='visibility:hidden'></span>
-																								<span id='pauseDur' class='' style='visibility:hidden'></span>
-																								<span id='pauseTotalDur' class='' style='visibility:hidden'></span>
-																								<span id='pauseCount' class='' style='visibility:hidden'></span>
-                                                                                </td>
-                                                                </tr>
-
-                                                </table>
-                                                
-                                
-                                </div>
-		<?php
-		}
-		?>
 								
 <div id='iframeContainer'></div>								
 								
@@ -1061,7 +913,7 @@ function editAjax(par){
 								
 
 							
-							$("#pager").append("<div id='searchForm'><form id='search-form' name='search-form' method='#' action='#' onsubmit='javascript:return false;'>		<input value='Search...' type='text' id='search' style='text-align: left !important;' name='search'></form></div>");
+							$("#pager").append("<div id='searchForm'><form id='search-form' name='search-form' method='#' action='#' onsubmit='javascript:return false;'><input value='Search...' type='text' id='search' style='text-align: left !important;' name='search'></form></div>");
 							$("#search").blur(function(){
 									this.value = 'Search...';
 							});		
@@ -1497,7 +1349,7 @@ function editAjax(par){
 		});
 		
 			
-		$("#_filterText1").val("Search--");		
+		$("#_filterText1").val("Search...");		
 				
 					
 				$("#welcome").html("Welcome, <?php echo $_SESSION['fname']; ?>");
