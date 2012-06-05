@@ -406,7 +406,7 @@ Aw Snap, Looks like you have been logged out!
 <script charset="UTF-8">
 ///////////////////////////////////////////////session checker/////////////////////////////////////////////////////
 
-function is_loggedin(a){if(a=="INVALID_SESSION"){$("#logged-out").dialog({height:300,width:400,modal:true,resizable:false});function b(){window.location.href=window.location.href}setTimeout(b,2e3);return false}else{return true}}
+function is_loggedin(a){if(a=="INVALID_SESSION"){$("#logged-out").dialog({height:300,width:400,modal:true,resizable:false});function b(){window.location.reload();}setTimeout(b,2e3);return false}else{return true}}
 ///////////////////////////////////////////////session checker/////////////////////////////////////////////////////
 
 //////////////////////////////////////PAUSER FUNCTION////////////////////////////////////////////////////
@@ -700,50 +700,35 @@ function editAjax(par){
 
 ////////////////////////////////////////////////////SCENARIO / VERIFICATION EDITING////////////////////////////////////////////////////	
 	
-								function editSV(ele){				
-													
-														$("<textarea id='myTextarea'></textarea>").html(ele.childNodes[0].innerHTML).appendTo("body");
+function editSV(ele){	
 
-														 $( "#myTextarea" ).dialog({
-										
-																						autoOpen: true,
-																						height: 500,
-																						width: 800,
-																						modal: true,
-																						title: 'Modify',
-																						resizable: false,
-																						buttons: { "Save": function() {
-																						
-																									ele.childNodes[0].innerHTML = strip_tags($("#myTextarea").val(), '<i><b>');																
-																									
-																									editAjax(ele.childNodes[0]);	
-																									$('input#search').quicksearch('#myTable tbody tr');	
-																										
-																									$("#myTextarea").remove();																									
-																									$(this).dialog("close"); 																									
-																								
-																								},"Cancel":function(){
-																							
-																										$("#myTextarea").remove();
-																									}																								
-																						},
-																						close: function(event, ui) {
-																									$("#myTextarea").remove();
-																							
+	$("<textarea id='myTextarea'></textarea>").html(ele.childNodes[0].innerHTML).appendTo("body");
+	$( "#myTextarea" ).dialog({
+				autoOpen: true,
+				height: 500,
+				width: 800,
+				modal: true,
+				title: 'Modify',
+				resizable: false,
+				buttons: { "Save": function() {
+						ele.childNodes[0].innerHTML = strip_tags($("#myTextarea").val(), '<i><b>');																		    editAjax(ele.childNodes[0]);
+						$('input#search').quicksearch('#myTable tbody tr');	
+						$("#myTextarea").remove();																								    $(this).dialog("close"); 																								},"Cancel":function(){
+							
+							$("#myTextarea").remove();
+						}
+					},close: function(event, ui) {
+						$("#myTextarea").remove();
+					}
+				});	
+	
 
-																						}
-																						
-																		});	
-
-
-														$("#myTextarea").css("width","780px");
-														$("#myTextarea").css("height","450px");
-														$("#myTextarea").css("max-width","780px");
-														$("#myTextarea").css("max-height","450px");
-														$("#myTextarea").css("font-size","1.2em");
-
-													 
-								}//END EDITSV
+	$("#myTextarea").css("width","780px");
+	$("#myTextarea").css("height","450px");
+	$("#myTextarea").css("max-width","780px");
+	$("#myTextarea").css("max-height","450px");
+	$("#myTextarea").css("font-size","1.2em");
+}//END EDITSV
 	
 ////////////////////////////////////////////////////END SCENARIO / VERIFICATION EDITING////////////////////////////////////////////////////	
 
@@ -1321,7 +1306,7 @@ function editAjax(par){
 		//});
 			
 		$("#genPdf").click(function(){
-		
+	/*	
 			var cproj= $.trim($("#project option:selected").text());
 			cproj = cproj.replace(/\s+/g," ");
 			cproj = cproj.split('%20').join("_");
@@ -1330,9 +1315,9 @@ function editAjax(par){
 			ccli = ccli.replace(/\s+/g," ");
 			ccli = ccli.split('%20').join("_");
 			
-			window.open( "https://xtable.4usable.net/xtable/exporter.php?project="+ cproj +"&client="+ ccli +"&rel=<?php echo $iq->rel; ?>", "PDFWin", "status = 1, height = 440, width = 600, toolbars=no,menubar=no,location=no,scrollbars=no,resizable=no,status=no" );
+			window.open( "localhost/xtable/exporter.php?project="+ cproj +"&client="+ ccli +"&rel=<?php echo $iq->rel; ?>", "PDFWin", "status = 1, height = 440, width = 600, toolbars=no,menubar=no,location=no,scrollbars=no,resizable=no,status=no" );
 			
-		
+	 */	
 		});
 		
 		
@@ -1376,9 +1361,9 @@ function editAjax(par){
 </script>
 <?php
 
-	setcookie("vertical", $vert, time()+3600);
-	setcookie("client", $client, time()+3600);
-	setcookie("project", $project, time()+3600);
+//	setcookie("vertical", $vert, time()+3600);
+//	setcookie("client", $client, time()+3600);
+//	setcookie("project", $project, time()+3600);
 	
 ?>
 
