@@ -6,12 +6,12 @@ require "includes/sess.php";
 session_start();
 
  
-$crypto = @mysql_real_escape_string($_GET['crypto']);
-$crypto = substr($crypto, 0, -22);
+//$crypto = @mysql_real_escape_string($_GET['crypto']);
+//$crypto = substr($crypto, 0, -22);
 
 
-	 if( $crypto == session_id()  && $_SESSION['user_id']){
-
+	 //if( $crypto == session_id()  && $_SESSION['user_id']){
+if( TRUE ){
 
 	if( $_GET['cTestcase']=='true' ){
 
@@ -386,7 +386,7 @@ while($fns = mysql_fetch_object($qfunctions)){
 
 		echo "INVALID_SESSION";  
 		session_destroy();	
-		setcookie("PHPSESSID", "", time()-3600, "/", "10.10.40.16", 0,TRUE);
+		setcookie("PHPSESSID", "", time()-3600);
 		exit;
 
 

@@ -13,7 +13,7 @@ if( $_SESSION['fname'] ){
 <!DOCTYPE html>
 <html>
 <head>
-<title>UsableX Login</title>
+<title>xTable Login</title>
 
 <style>
 body{margin:0; padding:0; font:100% Arial, sans-serif;}
@@ -292,6 +292,11 @@ html {
 
 	color: #E20037;
 }
+.smallText{
+	
+	font-size: 17px;
+}
+
 
 #msg{
 	padding-bottom: 15px;
@@ -379,8 +384,8 @@ if($logout=="true"){
 		
             <div id="user" >
 				<div id='msg'></div>
-                <label class="no-placeholder-hide">Username</label><input type="text"  id='username' name="username" autocomplete="on" placeholder="Username" />
-                <label class="no-placeholder-hide">Password</label><input type="password"  id='password' name="password" placeholder="Password" />
+                <label class="no-placeholder-hide">Username</label><input type="text"  id='username' name="username" autocomplete="off" placeholder="Username" />
+                <label class="no-placeholder-hide">Password</label><input type="password"  id='password' name="password" autocomplete="off" placeholder="Password" />
                 <label class="no-placeholder-hide">Confirm Password</label><input type="password" style="display:none;" id='cnpassword' name="cnpassword" placeholder="Confirm Password" />
 				
                 <input type="submit" id='loginBtn' name='loginBtn' value="Login" onclick="return false;" />
@@ -504,8 +509,7 @@ if($logout=="true"){
 					
 					if( !$("#username").val() || !$("#password").val() ){
 							
-							$("#msg").html("Please provide valid username and password");
-							$("#msg").attr("class","error");
+							$("#msg").html("Please provide valid username and password").attr("class","error smallText");
 					}else{	
 					
 						$.ajax({

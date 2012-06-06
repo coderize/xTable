@@ -24,7 +24,7 @@ session_start();
 
 <html>
 	<head>
-		<title>UsableX</title>
+		<title>xTable</title>
 		<link href="css/home-style.css" rel="stylesheet" type="text/css" media="all" /><br/>
 		<script src="http://code.jquery.com/jquery-latest.js"></script>
 		<script src="js/jqueryUI/js/jqueryui.js"></script>
@@ -76,8 +76,8 @@ session_start();
 			///////////////////////////////////LOGOUT FUNCTION///////////////////////////////////////////////////////////////////////	
 			$("#logout").click(function(){
 							
-							window.location.reload();
-							window.location.href ="login.php?logout=true";
+						//	window.location.reload();
+						//	window.location.href ="login.php?logout=true";
 							
 								$.ajax({											
 								  type: "GET",

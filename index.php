@@ -159,8 +159,26 @@ $qstatus = mysql_query("SELECT status_id, status_name FROM  table_status");
 			echo substr($objst,0,-1);
 			echo  "};";
 	
-			echo "resultObj = {'0':'Pass','1':'Fail'}";
-			
+			echo "resultObj = {'0':'Pass','1':'Fail'};";
+
+
+
+
+$iq = @mysql_query("SELECT relation_id AS rel
+			FROM table_relation, table_vertical, table_client, table_project
+			WHERE r_vertical =  '{$vert}'
+			AND r_client =  '{$client}'
+			AND r_project =  '{$project}'
+			GROUP BY relation_id 
+			LIMIT 1");
+
+			$iq = mysql_fetch_object($iq);
+
+			echo "data = {'rel': $iq->rel }; "; 
+
+
+
+
 			echo "</script>";
 
 ?>
@@ -199,15 +217,13 @@ $qstatus = mysql_query("SELECT status_id, status_name FROM  table_status");
 		<option value=''>Client Selection</option>
 <?php				
 				$clients = mysql_query("SELECT client_id, client_name 
-											FROM table_client, table_vertical, table_relation
-											 
-											WHERE vertical_id = r_vertical
-											AND vertical_id= '{$vert}'
-											AND client_id = r_client
-											 
-											GROUP BY client_id
-											ORDER BY client_name ASC
-											");
+							FROM table_client, table_vertical, table_relation
+							WHERE vertical_id = r_vertical
+							AND vertical_id= '{$vert}'
+							AND client_id = r_client
+							GROUP BY client_id
+							ORDER BY client_name ASC
+							");
 		
 				while($qclients = mysql_fetch_object($clients)){
 ?>			
@@ -259,16 +275,7 @@ $qstatus = mysql_query("SELECT status_id, status_name FROM  table_status");
 
 
 <?php 
-////////////////////////////TODO: CHECK VALID SELECTIONS FIRST/////////////////////////////////////////////////////////////////
-$iq = @mysql_query("SELECT relation_id AS rel
-			FROM table_relation, table_vertical, table_client, table_project
-			WHERE r_vertical =  '{$vert}'
-			AND r_client =  '{$client}'
-			AND r_project =  '{$project}'
-			GROUP BY relation_id 
-			LIMIT 1"); //or die("UNABLE TO GET REL");
-
-$iq = mysql_fetch_object($iq);									
+									
 
 if( $_SESSION['role'] != 5 && $_SESSION['role'] != 4  ){
 											
@@ -404,6 +411,7 @@ Aw Snap, Looks like you have been logged out!
 </div>
 <div id="contactable"></div>
 <script charset="UTF-8">
+
 ///////////////////////////////////////////////session checker/////////////////////////////////////////////////////
 
 function is_loggedin(a){if(a=="INVALID_SESSION"){$("#logged-out").dialog({height:300,width:400,modal:true,resizable:false});function b(){window.location.reload();}setTimeout(b,2e3);return false}else{return true}}
@@ -421,10 +429,6 @@ function reload(){ddvert=document.getElementById("hvertical");ddclient=document.
 $('#search').keypress(function() { return event.keyCode != 13; });
 $('._filterText').keypress(function() { return event.keyCode != 13; });
  //////DISABLE CR/LF IN FIELDS///////
-
-/////////////////////////////////////////////////////////////JAVASCRIPT COOKIES///////////////////////////////////////////
-function setCookie(a,b,c){var d=new Date;d.setDate(d.getDate()+c);var e=escape(b)+(c==null?"":"; expires="+d.toUTCString());document.cookie=a+"="+e}function getCookie(a){var b,c,d,e=document.cookie.split(";");for(b=0;b<e.length;b++){c=e[b].substr(0,e[b].indexOf("="));d=e[b].substr(e[b].indexOf("=")+1);c=c.replace(/^\s+|\s+$/g,"");if(c==a){return unescape(d)}}}
-/////////////////////////////////////////////////////////////END JAVASCRIPT COOKIES//////////////////////////////////
 
 /////////////////////////////////////////////////////////////EDITING AJAX////////////////////////////////////////////////////////////
 <?php
