@@ -441,12 +441,12 @@ function strip_tags(a,b){b=(((b||"")+"").toLowerCase().match(/<[a-z][a-z0-9]*>/g
 function editAjax(par){
 
 	var parent = $(par).parent().parent();	 
-	var mid  =$(parent).children("td:nth-child(1)").html();
+	var mid  = encodeURIComponent($(parent).children("td:nth-child(1)").html());
 	var func = encodeURIComponent($(parent).children("td:nth-child(2)").html());
-	var status = $(parent).children("td:nth-child(3)").html();
-	var tcid = $(parent).children("td:nth-child(4)").html();
-	var priority = $(parent).children("td:nth-child(5)").html();
-	var clas = $(parent).children("td:nth-child(6)").html();
+	var status = encodeURIComponent($(parent).children("td:nth-child(3)").html());
+	var tcid = encodeURIComponent($(parent).children("td:nth-child(4)").html());
+	var priority = encodeURIComponent($(parent).children("td:nth-child(5)").html());
+	var clas = encodeURIComponent($(parent).children("td:nth-child(6)").html());
 	var name = encodeURIComponent($(parent).children("td:nth-child(7)").html());
 	var prereq = encodeURIComponent($(parent).children("td:nth-child(8)").children("pre:nth-child(1)").html());
 	var steps = encodeURIComponent($(parent).children("td:nth-child(9)").children("pre:nth-child(1)").html());
@@ -485,64 +485,44 @@ function editAjax(par){
 
 
 /////////////////////////////////////////////////////////////ADD TESTCASE FIELDS VALIDITY/////////////////
-		function cFieldsCheck(){
-									
-									$(".cf").each(function(){
-									
-											if( $.trim($(this).val()) && $.trim($(this).val()) !='na'){
-													
-													$(this).parent().siblings(':first').html("<img class='success' src='img/accept.gif'/>");											
-											
-											}else{
-											
-													$(this).parent().siblings(':first').html("<img class='error' src='img/denied.gif'/>");
-											}
-									
-									});	  					
-								 
-									$(".cf").keyup(function(){
-									
-										
-											
-											if( $.trim($(this).val()) ){
-													
-													$(this).parent().siblings(':first').html("<img class='success' src='img/accept.gif'/>");											
-											
-											}else{
-											
-													$(this).parent().siblings(':first').html("<img class='error' src='img/denied.gif'/>");
-											}
-									
-									
-									});
-									
-								 	$(".cf").change(function(){
-									
-									
-									
-											if( $(this).val() != 'na' && $(this).val() != 'other450311'  && $.trim($(this).val()) ){
-													
-													
-													
-													$(this).parent().siblings(':first').first().html("<img class='success' src='img/accept.gif'/>");
-											
-											}else{
-													
-													if($(this).val() =='other450311' && $.trim($("#newfunction").val()) ){
-														
-														
-														$(this).parent().siblings(':first').html("<img class='success' src='img/accept.gif'/>");
-													
-													}else{														
-													
-														$(this).parent().siblings(':first').html("<img class='error' src='img/denied.gif'/>");
-													}
-											}
-									
-									
-									});	 
+	function cFieldsCheck(){
+		
+		$(".cf").each(function(){
 			
-		}
+			if( $.trim($(this).val()) && $.trim($(this).val()) !='na'){
+
+				$(this).parent().siblings(':first').html("<img class='success' src='img/accept.gif'/>");											
+			}else{
+				$(this).parent().siblings(':first').html("<img class='error' src='img/denied.gif'/>");
+			}
+		});	  					
+								 
+		$(".cf").keyup(function(){
+			
+			if( $.trim($(this).val()) ){
+
+				$(this).parent().siblings(':first').html("<img class='success' src='img/accept.gif'/>");											
+			}else{
+				$(this).parent().siblings(':first').html("<img class='error' src='img/denied.gif'/>");
+			}
+		});
+									
+		$(".cf").change(function(){
+			
+			if( $(this).val() != 'na' && $(this).val() != 'other450311'  && $.trim($(this).val()) ){
+				
+				$(this).parent().siblings(':first').first().html("<img class='success' src='img/accept.gif'/>");
+			}else{
+				if($(this).val() =='other450311' && $.trim($("#newfunction").val()) ){
+					
+					$(this).parent().siblings(':first').html("<img class='success' src='img/accept.gif'/>");
+													
+				}else{																		$(this).parent().siblings(':first').html("<img class='error' src='img/denied.gif'/>");
+				}
+			}
+		});	 
+			
+	}
 /////////////////////////////////////////////////////////////END ADD TESTCASE FIELDS VALIDITY///////////////////////////////////////////
 /////////////////////////////////////////////////////////////CREATE/ADD/ADD SIMILAR/ADD ANOTHER BUTTONS VALIDATION/////////////
 	
@@ -631,7 +611,7 @@ function editAjax(par){
 
 							$.ajax({
 								type: "POST",
-								url: "action.php",													  	 		   cache: false,	
+								url: "action.php",													  	 	cache: false,	
 								async: false,
 							        data: {"othertcid" : "true", "rel" : data.rel }
 								}).done(function( msg ) {							
@@ -712,15 +692,15 @@ function editSV(ele){
 				title: 'Modify',
 				resizable: false,
 				buttons: { "Save": function() {
-						ele.childNodes[0].innerHTML = strip_tags($("#myTextarea").val(), '<i><b>');																		    editAjax(ele.childNodes[0]);
-						$('input#search').quicksearch('#myTable tbody tr');	
-						$("#myTextarea").remove();																								    $(this).dialog("close"); 																								},"Cancel":function(){
-							
-							$("#myTextarea").remove();
-						}
-					},close: function(event, ui) {
-						$("#myTextarea").remove();
-					}
+				
+					ele.childNodes[0].innerHTML = strip_tags($("#myTextarea").val(), '<i><b>');
+					editAjax(ele.childNodes[0]);
+					$('input#search').quicksearch('#myTable tbody tr');
+					$("#myTextarea").remove();
+					$(this).dialog("close");
+
+					},"Cancel":function(){	$("#myTextarea").remove(); }
+					},close: function(event, ui) {	$("#myTextarea").remove(); }
 				});	
 	
 
@@ -741,7 +721,7 @@ function editSV(ele){
 				var typem = type;
 				var mlm = ml;
 
-			if(type==false){	
+			if( type == false ){	
 			
 					$("#mySelect").remove();
 					var seleEdit = document.createElement("select");
@@ -991,10 +971,8 @@ function editSV(ele){
 ?>
 							///////////////////////////////////END CREATE TESTCASE BUTTON/////////////////////////////////////////////////////						
 							
-			///////////////////////////////////EXECUTE BUTTON////////////////////////////////////////////////////////////////////////////
-<?php
-	if( $_SESSION['role'] != 5){
-?>						
+///////////////////////////////////EXECUTE BUTTON////////////////////////////////////////////////////////////////////////////
+						
 							
 							$("#execBtn").click(function(){				
 							
@@ -1030,10 +1008,8 @@ function editSV(ele){
 							
 							});//EXECUTION BUTTON	
 
-<?php
-}
-?>							
-							///////////////////////////////////END EXECUTE BUTTON////////////////////////////////////////////////////////////////////////////
+							
+///////////////////////////////////END EXECUTE BUTTON////////////////////////////////////////////////////////////////////////////
 
 
 			
