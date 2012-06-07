@@ -55,15 +55,15 @@ if( TRUE ){
 		
 	}
 
-	if($_GET['newtcid'] ){
+	if($_POST['newtcid'] == "true" ){
 
-		$funcname = $_GET['funcname'];
-		$rel =  mysql_real_escape_string($_GET['rel']);
+		$funcname = $_POST['funcname'];
+		$rel =  mysql_real_escape_string($_POST['rel']);
 
 		$q = mysql_query("SELECT MAX(manual_tcid) +.01 AS 'NEW_TCID'
-												FROM table_manual
-												WHERE manual_relation_id = {$rel}
-												AND manual_function_name  = '{$funcname}'");
+					FROM table_manual
+					WHERE manual_relation_id = {$rel}
+					AND manual_function_name  = '{$funcname}'");
 												
 
 		$newTCID = mysql_fetch_object($q);
@@ -74,22 +74,19 @@ if( TRUE ){
 
 
 
-	if($_GET['othertcid'] == "true" ){
+	if($_POST['othertcid'] == "true" ){
 
-		$rel = mysql_real_escape_string($_GET['rel']);
+		$rel = mysql_real_escape_string($_POST['rel']);
 		$q = mysql_query("SELECT FLOOR(MAX(manual_tcid)) + 1.01 AS 'OTH_TCID'
-													FROM table_manual
-													WHERE manual_relation_id = {$rel}") or die("Error: Other TCID SQL". mysql_error());
+					FROM table_manual
+					WHERE manual_relation_id = {$rel}") or die("Error: Other TCID SQL". mysql_error());
 													
 		$newTCID = @mysql_fetch_object($q);
 		$newTCID->OTH_TCID;
 		
-		if($newTCID->OTH_TCID){
-		
+		if($newTCID->OTH_TCID){		
 			
-			echo  $newTCID->OTH_TCID;
-
-										
+			echo  $newTCID->OTH_TCID;										
 											
 		}else{
 		

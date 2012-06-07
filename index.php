@@ -441,9 +441,9 @@ function strip_tags(a,b){b=(((b||"")+"").toLowerCase().match(/<[a-z][a-z0-9]*>/g
 function editAjax(par){
 
 	var parent = $(par).parent().parent();	 
-	var mid =$(parent).children("td:nth-child(1)").html();
+	var mid  =$(parent).children("td:nth-child(1)").html();
 	var func = encodeURIComponent($(parent).children("td:nth-child(2)").html());
-	var status =$(parent).children("td:nth-child(3)").html();
+	var status = $(parent).children("td:nth-child(3)").html();
 	var tcid = $(parent).children("td:nth-child(4)").html();
 	var priority = $(parent).children("td:nth-child(5)").html();
 	var clas = $(parent).children("td:nth-child(6)").html();
@@ -463,9 +463,9 @@ function editAjax(par){
 			if( is_loggedin(msg) ){					
 					
 					if(msg =='200'){
-						
-						$("editSuccess").css("display","block");
-						$("editSuccess").fadeOut(3000);
+					 	
+						$(".editSuccess").css("display","block");
+						$(".editSuccess").fadeOut(3000);
 
 					}else{
 					
@@ -632,11 +632,10 @@ function editAjax(par){
 				if( $(this).val() == "other450311") {
 
 							$.ajax({
-								type: "GET",													  
-								url: "action.php",													  
-								cache: false,	
+								type: "POST",
+								url: "action.php",													  	 		   cache: false,	
 								async: false,
-								data: "othertcid=true&rel=<?php echo $iq->rel; ?>"+"&crypto=<?php echo session_id() . 'zLsX7795d1d5AsCsD3wFGv'; ?>"											  
+							        data: {"othertcid" : "true", "rel" : data.rel }
 								}).done(function( msg ) {							
 								
 								if( is_loggedin(msg) ){	
@@ -655,11 +654,11 @@ function editAjax(par){
 				}else if( $(this).val() != 'na' && $(this).val() !='other450311' ){
 						
 					$.ajax({
-								type: "GET",													  
+								type: "POST",													  
 								url: "action.php",													  
 								cache: false,	
 								async: false,
-								data: "newtcid=true&funcname="+ custFunction +"&rel=<?php echo $iq->rel; ?>"+"&crypto=<?php echo session_id() . 'zLsX7795d1d5AsCsD3wFGv'; ?>"											  
+								data: {"newtcid" : "true", "funcname" : custFunction, "rel" : data.rel}
 								}).done(function( msg ) {
 								
 								if( is_loggedin(msg) ){	
