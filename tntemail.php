@@ -6,7 +6,7 @@ date_default_timezone_set('America/New_York');
 
 $now = time();
 $db = mysql_connect("localhost", "root", "eM45uGCc");
-$sdb = mysql_select_db("usablex");
+$sdb = mysql_select_db("test");
 
 //////NYC Creation////////
 
@@ -270,7 +270,7 @@ $ctime = date("gA");
 
 if ($ctime == '5PM'){
 	
-	//$distribution_list = array("joel.lassiter@usablenet.com");	
+	//$distribution_list = array("joel.lassiter@test.com");	
 	$distribution_list  = array();
 	$q = mysql_query("SELECT user_email  FROM  table_user WHERE user_status_id =1 AND user_location_id = 1 AND user_group_id < 3 AND user_rights_id = 1");	
 	while ($dis = mysql_fetch_array($q)){
@@ -288,16 +288,16 @@ if ($ctime == '5PM'){
 	$abbr = strtoupper($abbr);
 	
 	try {
-					  $mail->AddReplyTo("test@usablenet.com", "UsableX");
+					  $mail->AddReplyTo("test@test.com", "test");
 					  
 					  for($x=0;$x<count($distribution_list);$x++){
 					  
-							$mail->AddAddress("{$distribution_list[$x]}", "Usablenet Inc");
+							$mail->AddAddress("{$distribution_list[$x]}", "test Inc");
 					  
 					  }
 					  
-					  $mail->SetFrom("test@usablenet.com", "UsableX");
-					  $mail->Subject = "UsableX - $abbr Daily Report";
+					  $mail->SetFrom("test@test.com", "test");
+					  $mail->Subject = "test - $abbr Daily Report";
 					  $mail->AltBody = "To view the message, please use an HTML compatible email viewer!"; // optional - MsgHTML will create an alternate automatically
 					  
 					  $mail->MsgHTML("<html><head></head>
@@ -312,7 +312,7 @@ if ($ctime == '5PM'){
 					  Enjoy, 
 					  <br />
 					  <br />
-					  UsableX Team
+					  test Team
 					  </body>
 					  </html>
 					  ");
@@ -350,7 +350,7 @@ if ($ctime == '5PM'){
 
 if ($ctime == '11AM'){
 	
-	//$distribution_list = array("joel.lassiter@usablenet.com");
+	//$distribution_list = array("joel.lassiter@test.com");
 	$distribution_list = array();
  	$q = mysql_query("SELECT user_email FROM  table_user WHERE  user_status_id = 1 AND user_group_id < 4 AND user_rights_id = 1");	
 	//$distribution_list = mysql_fetch_array($q, MYSQL_NUM);
@@ -367,15 +367,15 @@ if ($ctime == '11AM'){
 	$abbr = strtoupper($abbr);
 	
 	try {
-					  $mail->AddReplyTo("test@usablenet.com", "UsableX");
+					  $mail->AddReplyTo("test@test.com", "test");
 					  
 					  for($x=0;$x<count($distribution_list);$x++){
 					  
-							$mail->AddAddress("{$distribution_list[$x]}", "Usablenet Inc");
+							$mail->AddAddress("{$distribution_list[$x]}", "test Inc");
 					  
 					  }							  
-					  $mail->SetFrom("test@usablenet.com", "UsableX");
-					  $mail->Subject = "UsableX - $abbr Daily Report";
+					  $mail->SetFrom("test@test.com", "test");
+					  $mail->Subject = "test - $abbr Daily Report";
 					  $mail->AltBody = "To view the message, please use an HTML compatible email viewer!"; // optional - MsgHTML will create an alternate automatically
 					  
 					  $mail->MsgHTML("<html><head></head>
@@ -390,7 +390,7 @@ if ($ctime == '11AM'){
 					  Enjoy, 
 					  <br />
 					  <br />
-					  UsableX Team
+					  test Team
 					  </body>
 					  </html>
 					  ");
@@ -430,9 +430,9 @@ if ($ctime == '11AM'){
 
 if ($ctime == '1PM'){
 	
-	//$distribution_list = array("joel.lassiter@usablenet.com");
+	//$distribution_list = array("joel.lassiter@test.com");
 	$distribution_list = array();
-	$q = mysql_query("SELECT user_email FROM  table_user WHERE  user_status_id = 1 AND user_rights_id = 1 AND user_group_id = 2 AND user_location_id = 2 OR user_email = 'joel.lassiter@usablenet.com'");	
+	$q = mysql_query("SELECT user_email FROM  table_user WHERE  user_status_id = 1 AND user_rights_id = 1 AND user_group_id = 2 AND user_location_id = 2 OR user_email = 'joel.lassiter@test.com'");	
 	//$distribution_list = mysql_fetch_array($q, MYSQL_NUM);
 	while ($dis = mysql_fetch_array($q)){
 		
@@ -448,15 +448,15 @@ if ($ctime == '1PM'){
 	$abbr = strtoupper($abbr);
 	
 	try {
-					  $mail->AddReplyTo("test@usablenet.com", "UsableX");
+					  $mail->AddReplyTo("test@test.com", "test");
 					  
 					  for($x=0;$x<count($distribution_list);$x++){
 					  
-							$mail->AddAddress("{$distribution_list[$x]}", "Usablenet Inc");
+							$mail->AddAddress("{$distribution_list[$x]}", "test Inc");
 					  
 					  }							  
-					  $mail->SetFrom("test@usablenet.com", "UsableX");
-					  $mail->Subject = "UsableX - $abbr Daily Report";
+					  $mail->SetFrom("test@test.com", "test");
+					  $mail->Subject = "test - $abbr Daily Report";
 					  $mail->AltBody = "To view the message, please use an HTML compatible email viewer!"; // optional - MsgHTML will create an alternate automatically
 					  
 					  $mail->MsgHTML("<html><head></head>
@@ -471,7 +471,7 @@ if ($ctime == '1PM'){
 					  Enjoy, 
 					  <br />
 					  <br />
-					  UsableX Team
+					  test Team
 					  </body>
 					  </html>
 					  ");
@@ -511,9 +511,9 @@ if ($ctime == '1PM'){
 
 if ($ctime == '12PM'){
 	
-	//$distribution_list = array("joel.lassiter@usablenet.com");
+	//$distribution_list = array("joel.lassiter@test.com");
 	$distribution_list = array();
-	$q = mysql_query("SELECT user_email FROM  table_user WHERE  user_status_id = 1 AND user_rights_id = 1 AND user_group_id < 3 AND user_location_id = 4 OR user_email = 'joel.lassiter@usablenet.com'");	
+	$q = mysql_query("SELECT user_email FROM  table_user WHERE  user_status_id = 1 AND user_rights_id = 1 AND user_group_id < 3 AND user_location_id = 4 OR user_email = 'joel.lassiter@test.com'");	
 	//$distribution_list = mysql_fetch_array($q, MYSQL_NUM);
 	while ($dis = mysql_fetch_array($q)){
 		
@@ -529,15 +529,15 @@ if ($ctime == '12PM'){
 	$abbr = strtoupper($abbr);
 	
 	try {
-					  $mail->AddReplyTo("test@usablenet.com", "UsableX");
+					  $mail->AddReplyTo("test@test.com", "test");
 					  
 					  for($x=0;$x<count($distribution_list);$x++){
 					  
-							$mail->AddAddress("{$distribution_list[$x]}", "Usablenet Inc");
+							$mail->AddAddress("{$distribution_list[$x]}", "test Inc");
 					  
 					  }							  
-					  $mail->SetFrom("test@usablenet.com", "UsableX");
-					  $mail->Subject = "UsableX - $abbr Daily Report";
+					  $mail->SetFrom("test@test.com", "test");
+					  $mail->Subject = "test - $abbr Daily Report";
 					  $mail->AltBody = "To view the message, please use an HTML compatible email viewer!"; // optional - MsgHTML will create an alternate automatically
 					  
 					  $mail->MsgHTML("<html><head></head>
@@ -552,7 +552,7 @@ if ($ctime == '12PM'){
 					  Enjoy, 
 					  <br />
 					  <br />
-					  UsableX Team
+					  test Team
 					  </body>
 					  </html>
 					  ");

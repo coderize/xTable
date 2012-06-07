@@ -35,7 +35,7 @@ if($_SESSION['user_id']){
 <body>
 <?php
 
-$rel = @mysql_real_escape_string($_GET['rel']);
+$rel = @mysql_real_escape_string($_POST['rel']);
 ?>
 
 <form id='execForm' name='execForm' action="<?php $_SERVER['PHP_SELF']; ?>" method="GET" />

@@ -903,112 +903,81 @@ function editSV(ele){
 							//////////////////////////////////END MAIN SEARCH//////////////////////////////////////////////////////////////////////
 							
 /////////////////////////////////// CREATE TESTCASE BUTTON/////////////////////////////////////////////////////		
-							
-<?php
-	if( $_SESSION['role'] != 5 &&  $_SESSION['role'] != 4){
-?>	
-					$("#addBtn").click(function(){
-					
-						pauser();
-							
-								 $.ajax({
-								type: "GET",													  
-								url: "action.php",
-								cache: false,													  
-								data: "popFuncs=true&rel=<?php echo $iq->rel; ?>&crypto=<?php echo session_id() . 'zLsX7795d1d5AsCsD3wFGv'; ?>",													  
-								}).done(function( msg ) {
-										
-								if( is_loggedin(msg) ){								
-									
-										$("#function").html(msg);			
-								
-											cFieldsCheck();
-											$("#createForm tr").css("display","table-row");
-											$("#createForm").css("display","block");
-											$("#test").css("display","block");
-											$("#indicator").css("display","none");
-										
-											$( "#createForm" ).dialog({
-												
-													height: 527,
-													width: 800,
-													modal: true,
-													resizable: false
-													
-												});										
-												
-												 $("#cancel").click(function(){
-												
-													$("#createForm").dialog( "close" );												
-												
-												});	 					
-											
-											validCreate();
-											cleanCreate();
-											
-												$.ajax({
-												type: "GET",													  
-												url: "time.php",													  
-												cache: false,													  
-												data: "test=test",													  
-												}).done(function( msg ) {
-																
-														$("#sCreateTime").html(msg);
-														
-													});		
+	$("#addBtn").click(function(){
+		pauser();
+		$.ajax({
+			type: "POST",
+			url: "action.php",
+			cache: false,
+			data: {"popFuncs":"true", "rel":data.rel}
+			}).done(function( msg ) {
 
-									}
-						});				
+				if( is_loggedin(msg) ){								
+			
+					$("#function").html(msg);			
+					cFieldsCheck();
+					$("#createForm tr").css("display","table-row");
+					$("#createForm").css("display","block");
+					$("#test").css("display","block");
+					$("#indicator").css("display","none");
+
+					$( "#createForm" ).dialog({
+								height: 527,
+								width: 800,
+								modal: true,
+								resizable: false
+							});										
+												
+							 $("#cancel").click(function(){
+							 
+								 $("#createForm").dialog( "close" );									
+							});	 					
+							
+							validCreate();
+							cleanCreate();
+											
+							$.ajax({
+								type: "GET",
+								url: "time.php",
+								cache: false,
+								data: "test=test"
+							}).done(function( msg ) {
+								
+								$("#sCreateTime").html(msg);
+								});
+				}
+			});				
 										
 										
 		});
-							
-							
-	
-							
-<?php
-}
-?>
-							///////////////////////////////////END CREATE TESTCASE BUTTON/////////////////////////////////////////////////////						
+///////////////////////////////////END CREATE TESTCASE BUTTON/////////////////////////////////////////////////////						
 							
 ///////////////////////////////////EXECUTE BUTTON////////////////////////////////////////////////////////////////////////////
-						
+	$("#execBtn").click(function(){				
 							
-							$("#execBtn").click(function(){				
-							
-											$.ajax({											
-													  type: "GET",													  
-													  url: "execution.php",													  
-													  cache: false,													  
-													  data: "rel=<?php echo $iq->rel; ?>",													  
-													}).done(function( msg ) {
-													
-														if( is_loggedin(msg) ){	
-													
-															$("#iframeContainer").html(msg); 
+		$.ajax({											
+			type: "POST",
+			url: "execution.php",
+			cache: false,
+			data: {"rel":data.rel}								  
+			}).done(function( msg ) {
+				
+				if( is_loggedin(msg) ){	
+		
+					$("#iframeContainer").html(msg); 
+					$("#iframeContainer").dialog({
+						autoOpen: true,
+						height: 580,
+						width: 1010,
+						modal: true,
+						resizable: false
+					});	
 															
-															
-															 $( "#iframeContainer" ).dialog({
-										
-																			autoOpen: true,
-																			height: 580,
-																			width: 1010,
-																			modal: true,
-																			resizable: false
-																			
-																});	
-															
-															
-														}
-													  
-													});								
+				}
+			});								
 							
 										
-
-							
-							});//EXECUTION BUTTON	
-
-							
+		});							
 ///////////////////////////////////END EXECUTE BUTTON////////////////////////////////////////////////////////////////////////////
 
 

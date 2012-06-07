@@ -192,9 +192,9 @@ if( TRUE ){
 
 	///////////////////////////////////////////////////// POP FUNCTIONS  /////////////////////////////////////////////////////
 	
-	if( $_GET['popFuncs'] == 'true' ){
+	if( $_POST['popFuncs'] == 'true' ){
 
-$rel = mysql_real_escape_string($_GET['rel']);
+$rel = mysql_real_escape_string($_POST['rel']);
 
 $qfunctions = mysql_query("SELECT DISTINCT manual_function_name FROM table_manual WHERE manual_relation_id = {$rel}");
 
@@ -211,11 +211,6 @@ while($fns = mysql_fetch_object($qfunctions)){
 	echo '<option id="other" value="other450311">Other</option>';
 	
 }
-	
-	
-	
-	
-	
 	///////////////////////////////////////////////////// POP FUNCTIONS  /////////////////////////////////////////////////////
 	
 	
