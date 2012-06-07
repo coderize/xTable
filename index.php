@@ -389,12 +389,8 @@ $q = @mysql_query("SELECT manual_function_name AS 'FUNCTION'
 </div><!-- end main container -->
 
 <?php
-if( $_SESSION['role'] != 5 && $_SESSION['role'] != 4  ){
 // TESTCASE CREATION HTML TEMPLATE>
-
-	require("create_testcase_template.html");
-
-}
+require("create_testcase_template.html");
 
 ?>
 								
@@ -852,22 +848,10 @@ $(".t_fixed_header_main_wrapper").append("<div id='pager'></div>");
 $("#pager").html("Total number of testcases: " + $(".mid").length) ;							
 ///////////////////////////////////NEW UI JAVASCRIPT//////////////////////////////////////////////
 $(".t_fixed_header_caption").prepend( "<div id='hnav'><select name='hvertical' id='hvertical' onchange='javascript:reload();'>" + $("#vertical").html() + "</select> <select name='hclient' id='hclient' onchange='javascript:reload();'>"+$("#client").html()+"</select>"+" <select name='hproject' id='hproject' onchange='javascript:reload();'>" + $("#project").html() + "</select></div>" );	$("#hnav").css("float","left");
-								
-							<?php 
-								if( $_SESSION['role'] != 5 &&  $_SESSION['role'] != 4){
-								?>
-											$(".t_fixed_header_caption").append("<div id='hNavBtn'><button id='addBtn'>Create Testcase</button><button id='execBtn'>Execute</button></div>");
-							
-											$("#hNavBtn").css("float","right");
-							<?php
-								}
-								?>
-								
-							
-								
 
-							
-							$("#pager").append("<div id='searchForm'><form id='search-form' name='search-form' method='#' action='#' onsubmit='javascript:return false;'><input value='Search...' type='text' id='search' style='text-align: left !important;' name='search'></form></div>");
+$(".t_fixed_header_caption").append("<div id='hNavBtn'><button id='addBtn'>Create Testcase</button><button id='execBtn'>Execute</button></div>");
+$("#hNavBtn").css("float","right");
+$("#pager").append("<div id='searchForm'><form id='search-form' name='search-form' method='#' action='#' onsubmit='javascript:return false;'><input value='Search...' type='text' id='search' style='text-align: left !important;' name='search'></form></div>");
 							$("#search").blur(function(){
 									this.value = 'Search...';
 							});		
@@ -1008,35 +992,20 @@ $(".t_fixed_header_caption").prepend( "<div id='hnav'><select name='hvertical' i
 ///////////////////////////////////END LOGOUT FUNCTION///////////////////////////////////////////////////////////////////////
 	
 ///////////////////////////////////SHOW TABLE IF ALL VCP///////////////////////////////////////////////////////////////////////	
-									<?php
-									 //  if($vert && $client && $project){
-			
-											echo '$("#bodyContainer").css("visibility","visible");';
-											echo  '$("#search").css("display","block");';
+$("#bodyContainer").css("visibility","visible");
+$("#search").css("display","block");
 	   
-										//}								
-									?>
-									<?php
-										  if($vert && $client && $project){
-										  
-												echo '$("#graph-all").css("visibility","visible");';
-										  }
-									?>
-								///////////////////////////////////END SHOW TABLE IF ALL VCP///////////////////////////////////////////////////////////////////////
-			
- <?php
-	if( $_SESSION['role'] != 5 &&  $_SESSION['role'] != 4){
-?>  						
-					///////////////////////////////////ADD NEW FUNCTION////////////////////////////////////////////////////////////////////////////
-						$("#function").change(function(){
 							
-							if( $(this).val() == "other450311"  &&  $("#newfunction").length < 1 ) {
+///////////////////////////////////END SHOW TABLE IF ALL VCP///////////////////////////////////////////////////////////////////////
+///////////////////////////////////ADD NEW FUNCTION////////////////////////////////////////////////////////////////////////////
+	$("#function").change(function(){
+	
+		if( $(this).val() == "other450311"  &&  $("#newfunction").length < 1 ) {
 
-						
-										$(this).parent().append("<input type='text'  id='newfunction' class='cf pauser' name='newfunction' style='position:absolute; text-align:left; right:55px; top:25px; width:290px;' />");		
-										$('input:text, input:password').button().addClass('inpField');
+			$(this).parent().append("<input type='text'  id='newfunction' class='cf pauser' name='newfunction' style='position:absolute; text-align:left; right:55px; top:25px; width:290px;' />");
+			$('input:text, input:password').button().addClass('inpField');
 										
-										validCreate();
+			validCreate();
 								
 								 $(".cf").keyup(function(){
 										
@@ -1061,12 +1030,9 @@ $(".t_fixed_header_caption").prepend( "<div id='hnav'><select name='hvertical' i
 							}
 						
 						}); 
-					///////////////////////////////////END ADD NEW FUNCTION////////////////////////////////////////////////////////////////////////////		
-			
-			/////////////////////////////////////////////////////////////INSERT NEW TESTCASE///////////////////////////////////////////	
-
-
-		function addCreate(action){
+///////////////////////////////////END ADD NEW FUNCTION////////////////////////////////////////////////////////////////////////////		
+/////////////////////////////////////////////////////////////INSERT NEW TESTCASE///////////////////////////////////////////	
+	function addCreate(action){
 
 			//VALID CREATE//
 			validCreate();	
@@ -1105,80 +1071,66 @@ $(".t_fixed_header_caption").prepend( "<div id='hnav'><select name='hvertical' i
 				type: "GET",													  
 				url: "action.php",
 				cache: false,													  
-				data: "cTestcase=true&tcid="+ encodeURIComponent($("#tcid").val()) +"&rel=<?php echo $iq->rel; ?>&function="+ encodeURIComponent(custFunction) +"&name="+ encodeURIComponent($("#testname").val()) +"&priority="+ encodeURIComponent($("#priority").val()) +"&class="+ encodeURIComponent($("#class").val()) +"&prereq="+ encodeURIComponent($("#preConditions").val()) +"&scenario="+ encodeURIComponent($("#scenario").val()) +"&expected="+ encodeURIComponent($("#verification").val()) +"&stime="+ encodeURIComponent($("#sCreateTime").html()) +"&etime="+ encodeURIComponent($("#eCreateTime").html()) + "&pc="+ encodeURIComponent(pc) + "&ptd=" + encodeURIComponent(ptd) + "&status="+ encodeURIComponent($("#status").val()) +"&crypto=<?php echo session_id() . 'zLsX7795d1d5AsCsD3wFGv'; ?>",													  
+				data: "cTestcase=true&tcid="+ encodeURIComponent($("#tcid").val()) +"&rel=<?php echo $iq->rel; ?>&function="+ encodeURIComponent(custFunction) +"&name="+ encodeURIComponent($("#testname").val()) +"&priority="+ encodeURIComponent($("#priority").val()) +"&class="+ encodeURIComponent($("#class").val()) +"&prereq="+ encodeURIComponent($("#preConditions").val()) +"&scenario="+ encodeURIComponent($("#scenario").val()) +"&expected="+ encodeURIComponent($("#verification").val()) +"&stime="+ encodeURIComponent($("#sCreateTime").html()) +"&etime="+ encodeURIComponent($("#eCreateTime").html()) + "&pc="+ encodeURIComponent(pc) + "&ptd=" + encodeURIComponent(ptd) + "&status="+ encodeURIComponent($("#status").val()) 
 				}).done(function( msg ) {
 				
 					if( is_loggedin(msg) ){	
 				
 						var myObj =  jQuery.parseJSON(msg);
 
-							if(myObj.code == '200'){
-							
-								$("#function").change();
+						if(myObj.code == '200'){
+							$("#function").change();
+							$("#indicator").css("display","block");					
 								
-								$("#indicator").css("display","block");					
-								
-									$("#indicator").fadeOut(2000, function(){
+								$("#indicator").fadeOut(2000, function(){
+
+									//VALID CREATE BUTTONS
+									validCreate();
 											
-										
-										//VALID CREATE BUTTONS
-										validCreate();
-											
-											if(action == "close"){
-											
-												$("#createForm").dialog( "close" ); 												
-												
-											}
-											
-											if(action == 'aa'){
-											
-												if ( $("#function").val() == 'other450311' ){
-															 $.ajax({
-																	type: "GET",													  
-																	url: "action.php",
-																	cache: false,													  
-																	data: "popFuncs=true&rel=<?php echo $iq->rel; ?>&crypto=<?php echo session_id() . 'zLsX7795d1d5AsCsD3wFGv'; ?>",													  
-																	}).done(function( msg ) {	
-																		
-																		$("#function").html(msg);
-																		
-																					$("#createForm select").selectmenu('destroy');
-																					$("#createForm select").selectmenu({style: 'dropdown', maxHeight: 400});															
-																});																
-												}
-											
+									if(action == "close"){	$("#createForm").dialog( "close" );}
+									if(action == 'aa'){						
+											if ( $("#function").val() == 'other450311' ){
+												 $.ajax({
+													type: "GET",
+													url: "action.php",
+													cache: false,
+													data: {"popFuncs":"true","rel":data.rel}					  
+												}).done(function( msg ) {	
+													
+													$("#function").html(msg);
+													$("#createForm select").selectmenu('destroy');
+													$("#createForm select").selectmenu({style: 'dropdown', maxHeight: 400});															
+												});																
+											}										
 												cleanCreate();												
 											
-											}										
-											
-											if(action == 'as'){
-											
-												if ( $("#function").val() == 'other450311' ){
-															 $.ajax({
-																	type: "GET",													  
-																	url: "action.php",
-																	cache: false,													  
-																	data: "popFuncs=true&rel=<?php echo $iq->rel; ?>&crypto=<?php echo session_id() . 'zLsX7795d1d5AsCsD3wFGv'; ?>",													  
-																	}).done(function( msg ) {	
-																		
-																		$("#function").html(msg);
-																		
-																					$("#createForm select").selectmenu('destroy');
-																					$("#createForm select").selectmenu({style: 'dropdown', maxHeight: 400});	
+									}										
+									if(action == 'as'){
+										
+										if ( $("#function").val() == 'other450311' ){
+											$.ajax({
+												type: "GET",
+												url: "action.php",
+												cache: false,
+												data: {"popFuncs":"true","rel":data.rel}
+											}).done(function( msg ) {
+												$("#function").html(msg);
+												$("#createForm select").selectmenu('destroy');
+												$("#createForm select").selectmenu({style: 'dropdown', maxHeight: 400});	
 														
-																});
+											});
 																
-												}
+										}
 
-											}
+									}
 									
 									});
 									 
 									 
 									$("input").removeClass("ui-state-hover");								
 									
-									/////////////////////////////////////Insert into  table info///////////////////////////////////
-									$('#myTable tbody').prepend('<tr><td class="mid ui-widget-content">' + myObj.mysql_last_id + '</td><td style="text-transform:uppercase;" ondblclick="javascript:editElement(this,priorityObj,true,75);" class=" function rhw ui-widget-content" style="text-align:center;">' + custFunction + '</td><td ondblclick="javascript:editElement(this,statusObj,false,8);" class="tdw center ui-widget-content"  style="text-align:center;">' + 	$("#status option:selected").text() + '</td><td ondblclick="javascript:editElement(this,priorityObj,true,5);" class="tdw center  ui-widget-content"  style="text-align:center;">' +	defaultTCID	 + '</td><td ondblclick="javascript:editElement(this,priorityObj,false,8);" class="tdw center ui-widget-content"  style="text-align:center;">' + 	$("#priority option:selected").text() + '</td><td ondblclick="javascript:editElement(this,classObj,false,25);"  class="tdw center  ui-widget-content"  style="text-align:center;">' + $("#class option:selected").text() + '</td><td  ondblclick="javascript:editElement(this,priorityObj,true,100);"  class="tdw center  ui-widget-content"  style="text-align:left;">' +$("#testname").val()+'</td><td  ondblclick="javascript:editSV(this);"  class="tdw tdh  ui-widget-content"><pre>' +  strip_tags($("#preConditions").val(), '<i><b>') +'</pre></td><td ondblclick="javascript:editSV(this);" class="tdw tdh  ui-widget-content"><pre>'+ 	strip_tags($("#scenario").val(), '<i><b>') +'</pre></td><td  ondblclick="javascript:editSV(this);" class="tdw tdh  ui-widget-content"><pre>'+   strip_tags($("#verification").val(), '<i><b>')	+'</pre></td></tr>');	
+/////////////////////////////////////Insert into  table info///////////////////////////////////
+$('#myTable tbody').prepend('<tr><td class="mid ui-widget-content">' + myObj.mysql_last_id + '</td><td style="text-transform:uppercase;" ondblclick="javascript:editElement(this,priorityObj,true,75);" class=" function rhw ui-widget-content" style="text-align:center;">' + custFunction + '</td><td ondblclick="javascript:editElement(this,statusObj,false,8);" class="tdw center ui-widget-content"  style="text-align:center;">' + 	$("#status option:selected").text() + '</td><td ondblclick="javascript:editElement(this,priorityObj,true,5);" class="tdw center  ui-widget-content"  style="text-align:center;">' +	defaultTCID	 + '</td><td ondblclick="javascript:editElement(this,priorityObj,false,8);" class="tdw center ui-widget-content"  style="text-align:center;">' + 	$("#priority option:selected").text() + '</td><td ondblclick="javascript:editElement(this,classObj,false,25);"  class="tdw center  ui-widget-content"  style="text-align:center;">' + $("#class option:selected").text() + '</td><td  ondblclick="javascript:editElement(this,priorityObj,true,100);"  class="tdw center  ui-widget-content"  style="text-align:left;">' +$("#testname").val()+'</td><td  ondblclick="javascript:editSV(this);"  class="tdw tdh  ui-widget-content"><pre>' +  strip_tags($("#preConditions").val(), '<i><b>') +'</pre></td><td ondblclick="javascript:editSV(this);" class="tdw tdh  ui-widget-content"><pre>'+ 	strip_tags($("#scenario").val(), '<i><b>') +'</pre></td><td  ondblclick="javascript:editSV(this);" class="tdw tdh  ui-widget-content"><pre>'+   strip_tags($("#verification").val(), '<i><b>')	+'</pre></td></tr>');	
 									
 									$('input#search').quicksearch('#myTable tbody tr');	
 
@@ -1198,46 +1150,16 @@ $(".t_fixed_header_caption").prepend( "<div id='hnav'><select name='hvertical' i
 	
 /////////////////////////////////////////////////////////////END INSERT NEW TESTCASE//////////////////////////////////////////
 /////////////////////////////////////////ADD NEW / SIMILAR / ANOTHER////////////////////////////////////	
-							
-							$("#add").click(function(){		addCreate("close");	});	
-								
-								$("#addAnother").click(function(){		addCreate("aa");		pauser(); 	});	
-							
-							$("#addSimilar").click(function(){	addCreate("as"); 	pauser();  });	
+$("#add").click(function(){		addCreate("close");	});	
+$("#addAnother").click(function(){		addCreate("aa");		pauser(); 	});	
+$("#addSimilar").click(function(){	addCreate("as"); 	pauser();  });	
 							
 							
-				/////////////////////////////////////////END ADD NEW / SIMILAR / ANOTHER//////////////////////////////////	
-
-<?php
-	}
-?>	
- 
- 
-			$("#loading").ajaxStart(function(){	$(this).show(); });			
-			$("#loading").ajaxStop(function(){	$(this).hide(); });
+/////////////////////////////////////////END ADD NEW / SIMILAR / ANOTHER//////////////////////////////////	
+$("#loading").ajaxStart(function(){	$(this).show(); });			
+$("#loading").ajaxStop(function(){	$(this).hide(); });
 		
 
-	//$("#genReport").click(function(){
-			
-			//window.open( "reportgen.php?vertical=<?php echo $vert; ?>&client=<?php echo $client; ?>", "reportWin", "status = 1, height = 440, width = 600, toolbars=no,menubar=no,location=no,scrollbars=no,resizable=no,status=no" );
-			
-		
-		//});
-			
-		$("#genPdf").click(function(){
-	/*	
-			var cproj= $.trim($("#project option:selected").text());
-			cproj = cproj.replace(/\s+/g," ");
-			cproj = cproj.split('%20').join("_");
-			
-			var ccli = $.trim($("#client option:selected").text()) 
-			ccli = ccli.replace(/\s+/g," ");
-			ccli = ccli.split('%20').join("_");
-			
-			window.open( "localhost/xtable/exporter.php?project="+ cproj +"&client="+ ccli +"&rel=<?php echo $iq->rel; ?>", "PDFWin", "status = 1, height = 440, width = 600, toolbars=no,menubar=no,location=no,scrollbars=no,resizable=no,status=no" );
-			
-	 */	
-		});
 		
 		
 		$("#_filterText1").click(function(){
@@ -1278,14 +1200,5 @@ $(".t_fixed_header_caption").prepend( "<div id='hnav'><select name='hvertical' i
 	
 
 </script>
-<?php
-
-//	setcookie("vertical", $vert, time()+3600);
-//	setcookie("client", $client, time()+3600);
-//	setcookie("project", $project, time()+3600);
-	
-?>
-
-
 </body>
 </html>
