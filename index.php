@@ -611,11 +611,12 @@ function editAjax(par){
 
 							$.ajax({
 								type: "POST",
-								url: "action.php",													  	 	cache: false,	
+								url: "action.php",
+								cache: false,	
 								async: false,
 							        data: {"othertcid" : "true", "rel" : data.rel }
-								}).done(function( msg ) {							
-								
+								}).done(function( msg ) {
+
 								if( is_loggedin(msg) ){	
 								
 									if(msg){
@@ -771,7 +772,7 @@ function editSV(ele){
 					}
 
 
-			}else if(type==true){	
+			}else if( type == true ){	
 					
 					$("#inpt").remove();
 					var inp = document.createElement("input");
@@ -842,20 +843,15 @@ function editSV(ele){
 								minColWidth    : 75
 								
 							});   	
-							
-							//////////////////////////////////DRAG AND DROP/////////////////////////////////////////////////////////////////////////
-								//$("#myTable").tableDnD( { onDragClass: "dragging"} );	
-							//////////////////////////////////END DRAG AND DROP////////////////////////////////////////////////////////////////		
+//////////////////////////////////DRAG AND DROP/////////////////////////////////////////////////////////////////////////
+//$("#myTable").tableDnD( { onDragClass: "dragging"} );	
+//////////////////////////////////END DRAG AND DROP////////////////////////////////////////////////////////////////		
 
-							///////////////////////////////////FIX PAGINATION PROBLEM///////////////////////////////////////////////////////
-							$(".t_fixed_header_main_wrapper").append("<div id='pager'></div>");							
-							$("#pager").html("Total number of testcases: " + $(".mid").length) ;							
-							///////////////////////////////////NEW UI JAVASCRIPT//////////////////////////////////////////////
-		
-							
-							$(".t_fixed_header_caption").prepend( "<div id='hnav'><select name='hvertical' id='hvertical' onchange='javascript:reload();'>" + $("#vertical").html() + "</select> <select name='hclient' id='hclient' onchange='javascript:reload();'>"+$("#client").html()+"</select>"+" <select name='hproject' id='hproject' onchange='javascript:reload();'>" + $("#project").html() + "</select></div>" );
-							
-							$("#hnav").css("float","left");
+///////////////////////////////////FIX PAGINATION PROBLEM///////////////////////////////////////////////////////
+$(".t_fixed_header_main_wrapper").append("<div id='pager'></div>");							
+$("#pager").html("Total number of testcases: " + $(".mid").length) ;							
+///////////////////////////////////NEW UI JAVASCRIPT//////////////////////////////////////////////
+$(".t_fixed_header_caption").prepend( "<div id='hnav'><select name='hvertical' id='hvertical' onchange='javascript:reload();'>" + $("#vertical").html() + "</select> <select name='hclient' id='hclient' onchange='javascript:reload();'>"+$("#client").html()+"</select>"+" <select name='hproject' id='hproject' onchange='javascript:reload();'>" + $("#project").html() + "</select></div>" );	$("#hnav").css("float","left");
 								
 							<?php 
 								if( $_SESSION['role'] != 5 &&  $_SESSION['role'] != 4){
@@ -867,15 +863,7 @@ function editSV(ele){
 								}
 								?>
 								
-								<?php 
-								if($_SESSION['role'] == 4){
-								?>
-											$(".t_fixed_header_caption").append("<div id='hNavBtn'><button id='execBtn'>Execute</button></div>");
 							
-											$("#hNavBtn").css("float","right");
-							<?php
-								}
-								?>
 								
 
 							
@@ -979,62 +967,47 @@ function editSV(ele){
 										
 		});							
 ///////////////////////////////////END EXECUTE BUTTON////////////////////////////////////////////////////////////////////////////
-
-
-			
-							
-<?php
-	if( $_SESSION['role'] != 5 &&  $_SESSION['role'] != 4){
-?>
-							addEdit();	
-							cFieldsCheck();							
-<?php
-}
-?>							
-							$( "button, input:submit, input:reset" ).button();
-							
+	addEdit();	
+	cFieldsCheck();							
+	$( "button, input:submit, input:reset" ).button();
+				
 					
 								
-							///////////////////////////////////LOGOUT FUNCTION///////////////////////////////////////////////////////////////////////	
-								$("#logout").click(function(){
-									
-									$( "#logout-confirm" ).dialog({
-											resizable: false,
-											height:140,
-											modal: true,
-											buttons: {
-												"Log out from xTable": function() {
-													$.ajax({											
-													  type: "GET",
-													  url: "login_mod.php",
-													  cache: false,
-													  data: "kill=kill",
-													}).done(function( msg ) {
+///////////////////////////////////LOGOUT FUNCTION///////////////////////////////////////////////////////////////////////	
+	$("#logout").click(function(){
+	
+		$( "#logout-confirm" ).dialog({
+					resizable: false,
+					height:140,
+					modal: true,
+					buttons: {
+						"Log out from xTable": function() {
+										$.ajax({											
+											type: "POST",
+											url: "login_mod.php",
+											cache: false,
+											data: {"kill":"kill"}
+											}).done(function( msg ) {
 													
-														if( is_loggedin(msg) ){		
-														
-															if (msg == "true"){
-															
-																window.location.href ="login.php?logout=true";
+												if( is_loggedin(msg) ){		
+												
+													if (msg == "true"){
+														window.location.href ="login.php?logout=true";
 																
-															}else{
+													}else{	alert("Error logging out, try again");	}
+												}												
 															
-																alert("Error logging out, try again");																
-															}
-														}																
-															
-													});		
+											});		
 												},
 												Cancel: function() {
 													$( this ).dialog( "close" );
 												}
-											}
-									});
-
-								});// END LOGOUT 
-							///////////////////////////////////END LOGOUT FUNCTION///////////////////////////////////////////////////////////////////////	
-								
-								///////////////////////////////////SHOW TABLE IF ALL VCP///////////////////////////////////////////////////////////////////////	
+						}
+					});
+	});// END LOGOUT 
+///////////////////////////////////END LOGOUT FUNCTION///////////////////////////////////////////////////////////////////////
+	
+///////////////////////////////////SHOW TABLE IF ALL VCP///////////////////////////////////////////////////////////////////////	
 									<?php
 									 //  if($vert && $client && $project){
 			
