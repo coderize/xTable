@@ -158,18 +158,18 @@ if( TRUE ){
 	}
 
 
-	if ( $_GET['tableEdit'] == 'true' ) {
+	if ( $_POST['tableEdit'] == 'true' ) {
 
-		$mid = mysql_real_escape_string( $_GET['mid'] );
-		$func = mysql_real_escape_string($_GET['func']);
-		$status = mysql_real_escape_string($_GET['status']);
-		$tcid = mysql_real_escape_string($_GET['tcid']);
-		$priority = mysql_real_escape_string($_GET['priority']);
-		$clas = mysql_real_escape_string($_GET['clas']);
-		$name = mysql_real_escape_string($_GET['name']);
-		$prereq = mysql_real_escape_string($_GET['prereq']);
-		$steps = mysql_real_escape_string($_GET['steps']);
-		$expected =mysql_real_escape_string($_GET['expected']);
+		$mid = mysql_real_escape_string( $_POST['mid'] );
+		$func = mysql_real_escape_string($_POST['func']);
+		$status = mysql_real_escape_string($_POST['status']);
+		$tcid = mysql_real_escape_string($_POST['tcid']);
+		$priority = mysql_real_escape_string($_POST['priority']);
+		$clas = mysql_real_escape_string($_POST['clas']);
+		$name = mysql_real_escape_string($_POST['name']);
+		$prereq = mysql_real_escape_string($_POST['prereq']);
+		$steps = mysql_real_escape_string($_POST['steps']);
+		$expected =mysql_real_escape_string($_POST['expected']);
 		$prereq = strip_tags($prereq, '<i><b>');
 		$steps = strip_tags($steps, '<i><b>');
 		$expected = strip_tags($expected, '<i><b>');

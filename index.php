@@ -453,11 +453,13 @@ function editAjax(par){
 	var expected = encodeURIComponent($(parent).children("td:nth-child(10)").children("pre:nth-child(1)").html());
 
 	 $.ajax({
-			type: "GET",													  
+			type: "POST",													  
 			url: "action.php",													  
 			cache: false,	
 			async: true,
-			data: "tableEdit=true&mid="+mid+"&func="+func+"&status="+status+"&tcid="+tcid+"&priority="+priority+"&clas="+clas+"&name="+name+"&prereq="+prereq+"&steps="+steps+"&expected="+expected+"&crypto=<?php echo session_id() . 'zLsX7795d1d5AsCsD3wFGv'; ?>"
+			data: {"tableEdit":"true", "mid":mid, "func":func, "status":status,
+				 "tcid":tcid, "priority":priority, "clas":clas, "name":name,
+				 "prereq":prereq, "steps":steps, "expected":expected}
 			}).done(function( msg ) {
 			
 			if( is_loggedin(msg) ){					
@@ -564,13 +566,11 @@ function editAjax(par){
 							
 							if( $("#priority").val() != 'na' &&  $("#class").val() != 'na' &&  $.trim($("#status").val()) !='na' && $.trim(fval) != 'na' && $.trim(fval) !='' && $("#tcid").val() != '' && $.trim($("#testname").val()) != '' && $.trim($("#preConditions").val()) != '' && $.trim($("#scenario").val()) != '' && $.trim($("#verification").val()) != ''){
 									
-										//alert("not disabled");
 										$("#add").removeAttr("disabled");
 										$("#addAnother").removeAttr("disabled");
 										$("#addSimilar").removeAttr("disabled");									
 
 									}else{
-											//alert("disabled");
 											$("#add").attr("disabled","true");
 											$("#addAnother").attr("disabled","true");
 											$("#addSimilar").attr("disabled","true");									
@@ -595,13 +595,11 @@ function editAjax(par){
 									
 					if( $("#priority").val() != 'na' &&  $("#class").val() != 'na' && $.trim(fval) != 'na' && $.trim($("#status").val()) !='na' && $.trim(fval) !='' && $.trim($("#tcid").val()) != '' && $.trim($("#testname").val()) != '' && $.trim($("#preConditions").val()) != '' && $.trim($("#scenario").val()) != '' && $.trim($("#verification").val()) != ''){
 									
-										//alert("not disabled");
 										$("#add").removeAttr("disabled");
 										$("#addAnother").removeAttr("disabled");
 										$("#addSimilar").removeAttr("disabled");									
 
 									}else{
-											//alert("disabled");
 											$("#add").attr("disabled","true");
 											$("#addAnother").attr("disabled","true");
 											$("#addSimilar").attr("disabled","true");									
