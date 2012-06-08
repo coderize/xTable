@@ -30,7 +30,7 @@ if($vert == '' && $client == '' && $project == ''){
 
 <meta http-equiv="Content-Encoding" content="gzip">
 <meta http-equiv="Accept-Encoding" content="gzip, deflate">
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
 <style>
@@ -174,7 +174,7 @@ $iq = @mysql_query("SELECT relation_id AS rel
 
 			$iq = mysql_fetch_object($iq);
 
-			echo "data = {'rel': $iq->rel }; "; 
+			echo "data = {'rel': $iq->rel, 'fisrtName' : \"$_SESSION['fname']\", 'lastName': \'$_SESSION['lname']\' }; "; 
 
 
 
@@ -427,9 +427,9 @@ $('._filterText').keypress(function() { return event.keyCode != 13; });
  //////DISABLE CR/LF IN FIELDS///////
 
 /////////////////////////////////////////////////////////////EDITING AJAX////////////////////////////////////////////////////////////
-<?php
-	if( $_SESSION['role'] != 5 &&  $_SESSION['role'] != 4){
-?>	
+
+
+	
 ///////////STRIP TAGS//////////////////
 function strip_tags(a,b){b=(((b||"")+"").toLowerCase().match(/<[a-z][a-z0-9]*>/g)||[]).join("");var c=/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi,d=/<!--[\s\S]*?-->|<\?(?:php)?[\s\S]*?\?>/gi;return a.replace(d,"").replace(c,function(a,c){return b.indexOf("<"+c.toLowerCase()+">")>-1?a:""})}
 ///////////STRIP TAGS//////////////////
@@ -1178,7 +1178,7 @@ $("#loading").ajaxStop(function(){	$(this).hide(); });
 		$("#_filterText1").val("Search...");		
 				
 					
-				$("#welcome").html("Welcome, <?php echo $_SESSION['fname']; ?>");
+				$("#welcome").html("Welcome, " + data.firstName );
 				$('#switcher').themeswitcher();
 				
 			document.getElementById("hvertical").value = "<?php  echo $vert;  ?>";
