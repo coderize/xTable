@@ -414,7 +414,20 @@ function reload(){ddvert=document.getElementById("hvertical");ddclient=document.
  //////DISABLE CR/LF IN FIELDS///////
 $('#search').keypress(function() { return event.keyCode != 13; });
 $('._filterText').keypress(function() { return event.keyCode != 13; });
- //////DISABLE CR/LF IN FIELDS///////
+//////DISABLE CR/LF IN FIELDS///////
+
+function relCheck(error){
+
+		if(data.rel === 0 || data.rel === undefined){
+			alert("Error: " + error);
+			return true;
+
+		}
+	return false;
+}
+
+
+
 
 /////////////////////////////////////////////////////////////EDITING AJAX////////////////////////////////////////////////////////////
 
@@ -841,20 +854,20 @@ $(".t_fixed_header_caption").prepend( "<div id='hnav'><select name='hvertical' i
 $(".t_fixed_header_caption").append("<div id='hNavBtn'><button id='addBtn'>Create Testcase</button><button id='execBtn'>Execute</button></div>");
 $("#hNavBtn").css("float","right");
 $("#pager").append("<div id='searchForm'><form id='search-form' name='search-form' method='#' action='#' onsubmit='javascript:return false;'><input value='Search...' type='text' id='search' style='text-align: left !important;' name='search'></form></div>");
-							$("#search").blur(function(){
-									this.value = 'Search...';
-							});		
-							$("#search").focus(function(){
-									this.value = '';
-							});
+
+$("#search").blur(function(){
+	this.value = 'Search...';
+});		
+
+$("#search").focus(function(){
+	this.value = '';
+});
 							
-							$("#navigation select").selectmenu({style: 'dropdown', maxHeight: 400});							
-							$("#createForm select").selectmenu({style: 'dropdown',maxHeight: 400});								
-							$('input:text, input:password').button().addClass('inpField');	
-							
-							$('#contactable').contactable();
+$("#navigation select").selectmenu({style: 'dropdown', maxHeight: 400});							
+$("#createForm select").selectmenu({style: 'dropdown',maxHeight: 400});								
+$('input:text, input:password').button().addClass('inpField');	
+$('#contactable').contactable();
 ///////////////////////////////////END NEW UI JAVASCRIPT//////////////////////////////////////////////
-							
 //////////////////////////////////CUSTOM COLUMN FILTERS//////////////////////////////////////////////////////
 columnFilter();		
 //////////////////////////////////CUSTOM COLUMN FILTERS//////////////////////////////////////////////////////
@@ -865,6 +878,11 @@ $('input#search').quicksearch('#myTable tbody tr');
 							
 /////////////////////////////////// CREATE TESTCASE BUTTON/////////////////////////////////////////////////////		
 	$("#addBtn").click(function(){
+
+		if( relCheck("Select a component first!") ){
+			return;
+		}
+
 		pauser();
 		$.ajax({
 			type: "POST",
@@ -915,7 +933,12 @@ $('input#search').quicksearch('#myTable tbody tr');
 							
 ///////////////////////////////////EXECUTE BUTTON////////////////////////////////////////////////////////////////////////////
 	$("#execBtn").click(function(){				
-							
+	
+		if( relCheck("Select a component first!") ){
+		
+			return;
+		}
+
 		$.ajax({											
 			type: "POST",
 			url: "execution.php",
@@ -1067,7 +1090,9 @@ $("#function").change(function(){
 									validCreate();
 											
 									if(action == "close"){	$("#createForm").dialog( "close" );}
-									if(action == 'aa'){						
+						
+										if(action == 'aa'){
+
 											if ( $("#function").val() == 'other450311' ){
 												 $.ajax({
 													type: "GET",
@@ -1115,8 +1140,8 @@ $('#myTable tbody').prepend('<tr><td class="mid ui-widget-content">' + myObj.mys
 
 							}else{
 								
-										alert("Error contacting server");						
-										$("#add").click(function(){ $("#createForm").dialog( "close" ); });
+									alert("Could not contact server");						
+									$("#add").click(function(){ $("#createForm").dialog( "close" ); });
 										
 							} 
 							
@@ -1149,7 +1174,7 @@ $("#loading").ajaxStop(function(){	$(this).hide(); });
 		
 		$("#_filterText1").blur(function(){
 				
-			$(this).val("Search--");
+			$(this).val("Search..");
 
 		});
 		
@@ -1172,7 +1197,7 @@ $("#loading").ajaxStop(function(){	$(this).hide(); });
 			
 			
 			
-	}); //DOM Ready
+}); //DOM Ready
 	
 							
 		
