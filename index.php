@@ -513,7 +513,8 @@ function editAjax(par){
 					
 					$(this).parent().siblings(':first').html("<img class='success' src='img/accept.gif'/>");
 													
-				}else{																		$(this).parent().siblings(':first').html("<img class='error' src='img/denied.gif'/>");
+				}else{
+					$(this).parent().siblings(':first').html("<img class='error' src='img/denied.gif'/>");
 				}
 			}
 		});	 
@@ -864,15 +865,15 @@ $("#pager").append("<div id='searchForm'><form id='search-form' name='search-for
 							$('input:text, input:password').button().addClass('inpField');	
 							
 							$('#contactable').contactable();
-							///////////////////////////////////END NEW UI JAVASCRIPT//////////////////////////////////////////////
+///////////////////////////////////END NEW UI JAVASCRIPT//////////////////////////////////////////////
 							
-							//////////////////////////////////CUSTOM COLUMN FILTERS//////////////////////////////////////////////////////
-								columnFilter();		
-							//////////////////////////////////CUSTOM COLUMN FILTERS//////////////////////////////////////////////////////
+//////////////////////////////////CUSTOM COLUMN FILTERS//////////////////////////////////////////////////////
+columnFilter();		
+//////////////////////////////////CUSTOM COLUMN FILTERS//////////////////////////////////////////////////////
 							
-							//////////////////////////////////MAIN SEARCH///////////////////////////////////////////////////////////////////////////////
-								$('input#search').quicksearch('#myTable tbody tr');							
-							//////////////////////////////////END MAIN SEARCH//////////////////////////////////////////////////////////////////////
+//////////////////////////////////MAIN SEARCH///////////////////////////////////////////////////////////////////////////////
+$('input#search').quicksearch('#myTable tbody tr');							
+//////////////////////////////////END MAIN SEARCH//////////////////////////////////////////////////////////////////////
 							
 /////////////////////////////////// CREATE TESTCASE BUTTON/////////////////////////////////////////////////////		
 	$("#addBtn").click(function(){
@@ -953,10 +954,7 @@ $("#pager").append("<div id='searchForm'><form id='search-form' name='search-for
 ///////////////////////////////////END EXECUTE BUTTON////////////////////////////////////////////////////////////////////////////
 	addEdit();	
 	cFieldsCheck();							
-	$( "button, input:submit, input:reset" ).button();
-				
-					
-								
+	$( "button, input:submit, input:reset" ).button();				
 ///////////////////////////////////LOGOUT FUNCTION///////////////////////////////////////////////////////////////////////	
 	$("#logout").click(function(){
 	
@@ -998,38 +996,31 @@ $("#search").css("display","block");
 							
 ///////////////////////////////////END SHOW TABLE IF ALL VCP///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////ADD NEW FUNCTION////////////////////////////////////////////////////////////////////////////
-	$("#function").change(function(){
+$("#function").change(function(){
 	
-		if( $(this).val() == "other450311"  &&  $("#newfunction").length < 1 ) {
+ if( $(this).val() == "other450311"  &&  $("#newfunction").length < 1 ) {
 
-			$(this).parent().append("<input type='text'  id='newfunction' class='cf pauser' name='newfunction' style='position:absolute; text-align:left; right:55px; top:25px; width:290px;' />");
-			$('input:text, input:password').button().addClass('inpField');
+	$(this).parent().append("<input type='text'  id='newfunction' class='cf pauser' name='newfunction' style='position:absolute; text-align:left; right:55px; top:25px; width:290px;' />");
+	$('input:text, input:password').button().addClass('inpField');
+	validCreate();
+	
+		$(".cf").keyup(function(){
+			
+			if( $.trim($(this).val()) ){
+				
+				$(this).parent().siblings(':first').html("<img class='success' src='img/accept.gif'/>");											
+			}else{
+				$(this).parent().siblings(':first').html("<img class='error' src='img/denied.gif'/>");
+			}
 										
-			validCreate();
-								
-								 $(".cf").keyup(function(){
-										
-												if( $.trim($(this).val()) ){
-														
-														$(this).parent().siblings(':first').html("<img class='success' src='img/accept.gif'/>");											
-												
-												}else{
-												
-														$(this).parent().siblings(':first').html("<img class='error' src='img/denied.gif'/>");
-												}
-										
-										
-										}); 
+		}); 
 											
+ }else{
+	$("#newfunction").remove();
+	validCreate();
+ }
 
-							}else{
-							
-									$("#newfunction").remove();
-									validCreate();
-							
-							}
-						
-						}); 
+}); 
 ///////////////////////////////////END ADD NEW FUNCTION////////////////////////////////////////////////////////////////////////////		
 /////////////////////////////////////////////////////////////INSERT NEW TESTCASE///////////////////////////////////////////	
 	function addCreate(action){
