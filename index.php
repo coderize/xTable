@@ -97,14 +97,7 @@ body,pre{font-family:Verdana,Helvetica,san-serif,Arial;font-size:.6em}*{padding:
 <link rel="stylesheet" type="text/css" href="css/selectmenu.css" />
 <!-- <link rel="stylesheet" type="text/css" href="css/calendar.css" /> -->
 <link rel="stylesheet" type="text/css" href="css/contactable.css" />
-<?php
-	if( $_SESSION['role'] != 5 &&  $_SESSION['role'] != 4){
-?>
-
 <script src="js/addEdit.js" charset="UTF-8"></script>
-<?php
-}
-?>
 <script src="js/userEdit.js" charset="UTF-8"></script>
 <script src="js/deviceEdit.js" charset="UTF-8"></script>
 <script src="js/jquery.min.js" charset="UTF-8"></script>
@@ -173,11 +166,8 @@ $iq = @mysql_query("SELECT relation_id AS rel
 			LIMIT 1");
 
 			$iq = mysql_fetch_object($iq);
-
-			echo "data = {'rel': $iq->rel, 'fisrtName' : \"$_SESSION['fname']\", 'lastName': \'$_SESSION['lname']\' }; "; 
-
-
-
+			$rel = ($iq->rel) ? $iq->rel : '0';
+			echo " data = {'rel': $rel, 'fisrtName' : '{$_SESSION['fname']}', 'lastName': '{$_SESSION['lname']}' }; "; 
 
 			echo "</script>";
 
@@ -800,9 +790,7 @@ function editSV(ele){
 			
 		}//END EDIT ELEMENT	
 		
-<?php
-}
-?>	
+	
 ////////////////////////////////////////////////////END OTHER ELEMENTS EDITING////////////////////////////////////////////////////				
 	
 ////////////////////////////////////////////////////SET SELECTED DROPDOWN OPTIONS////////////////////////////////////////////////////			
@@ -1059,10 +1047,10 @@ $("#function").change(function(){
 			
 			////INSERT RECORD TO THE DATABASE////			
 		 	 $.ajax({
-				type: "GET",													  
+				type: "POST",										  
 				url: "action.php",
-				cache: false,													  
-				data: "cTestcase=true&tcid="+ encodeURIComponent($("#tcid").val()) +"&rel=<?php echo $iq->rel; ?>&function="+ encodeURIComponent(custFunction) +"&name="+ encodeURIComponent($("#testname").val()) +"&priority="+ encodeURIComponent($("#priority").val()) +"&class="+ encodeURIComponent($("#class").val()) +"&prereq="+ encodeURIComponent($("#preConditions").val()) +"&scenario="+ encodeURIComponent($("#scenario").val()) +"&expected="+ encodeURIComponent($("#verification").val()) +"&stime="+ encodeURIComponent($("#sCreateTime").html()) +"&etime="+ encodeURIComponent($("#eCreateTime").html()) + "&pc="+ encodeURIComponent(pc) + "&ptd=" + encodeURIComponent(ptd) + "&status="+ encodeURIComponent($("#status").val()) 
+				cache: false,										  
+				data: "cTestcase=true&tcid="+ encodeURIComponent($("#tcid").val()) +"&rel="+ data.rel +"&function="+ encodeURIComponent(custFunction) +"&name="+ encodeURIComponent($("#testname").val()) +"&priority="+ encodeURIComponent($("#priority").val()) +"&class="+ encodeURIComponent($("#class").val()) +"&prereq="+ encodeURIComponent($("#preConditions").val()) +"&scenario="+ encodeURIComponent($("#scenario").val()) +"&expected="+ encodeURIComponent($("#verification").val()) +"&stime="+ encodeURIComponent($("#sCreateTime").html()) +"&etime="+ encodeURIComponent($("#eCreateTime").html()) + "&pc="+ encodeURIComponent(pc) + "&ptd=" + encodeURIComponent(ptd) + "&status="+ encodeURIComponent($("#status").val()) 
 				}).done(function( msg ) {
 				
 					if( is_loggedin(msg) ){	

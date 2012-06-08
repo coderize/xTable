@@ -11,28 +11,28 @@ session_start();
 
 
 	 //if( $crypto == session_id()  && $_SESSION['user_id']){
-if( TRUE ){
+if( $_SESSION['loggedIn'] === TRUE ){
 
-	if( $_GET['cTestcase']=='true' ){
+	if( $_POST['cTestcase']=='true' ){
 
-		$tcid = @mysql_real_escape_string($_GET['tcid']);
-		$rel = @mysql_real_escape_string($_GET['rel']);
-		$function = @mysql_real_escape_string($_GET['function']);
-		$name = @mysql_real_escape_string($_GET['name']);
-		$priority = @mysql_real_escape_string($_GET['priority']);
-		$class = @mysql_real_escape_string($_GET['class']);
-		$prereq = @mysql_real_escape_string($_GET['prereq']);
-		$scenario = @mysql_real_escape_string($_GET['scenario']);
-		$expected = @mysql_real_escape_string($_GET['expected']);
-		$stime = @mysql_real_escape_string($_GET['stime']);
-		$etime = @mysql_real_escape_string($_GET['etime']);
-		$status = @mysql_real_escape_string($_GET['status']);
+		$tcid = @mysql_real_escape_string($_POST['tcid']);
+		$rel = @mysql_real_escape_string($_POST['rel']);
+		$function = @mysql_real_escape_string($_POST['function']);
+		$name = @mysql_real_escape_string($_POST['name']);
+		$priority = @mysql_real_escape_string($_POST['priority']);
+		$class = @mysql_real_escape_string($_POST['class']);
+		$prereq = @mysql_real_escape_string($_POST['prereq']);
+		$scenario = @mysql_real_escape_string($_POST['scenario']);
+		$expected = @mysql_real_escape_string($_POST['expected']);
+		$stime = @mysql_real_escape_string($_POST['stime']);
+		$etime = @mysql_real_escape_string($_POST['etime']);
+		$status = @mysql_real_escape_string($_POST['status']);
 		$author = @mysql_real_escape_string($_SESSION['user_id']);
 		$prereq = strip_tags($prereq, '<i><b>');
 		$scenario = strip_tags($scenario, '<i><b>');
 		$expected = strip_tags($expected, '<i><b>');
-		$pc = @mysql_real_escape_string($_GET['pc']);
-		$ptd = @mysql_real_escape_string($_GET['ptd']);
+		$pc = @mysql_real_escape_string($_POST['pc']);
+		$ptd = @mysql_real_escape_string($_POST['ptd']);
 		
 
 

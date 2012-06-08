@@ -43,7 +43,7 @@ if($email && $password){
 					$_SESSION['user_id'] = $user->user_id;
 					$_SESSION['role'] = $user->user_group_id;
 					$_SESSION['loc'] = $user->user_location_id;
-					$_SESSION['email'] = $user->user_email;			
+					$_SESSION['email'] = $user->user_email;							$_SESSION['loggedIn'] = TRUE;
 					
 
 					//check for un_ in $password
