@@ -872,7 +872,7 @@ $('input#search').quicksearch('#myTable tbody tr');
 /////////////////////////////////// CREATE TESTCASE BUTTON/////////////////////////////////////////////////////		
 	$("#addBtn").click(function(){
 
-		if( relCheck("Select a component first!") ){
+		if( xTable.relCheck("Select a component first!") ){
 			return;
 		}
 
@@ -927,7 +927,7 @@ $('input#search').quicksearch('#myTable tbody tr');
 ///////////////////////////////////EXECUTE BUTTON////////////////////////////////////////////////////////////////////////////
 	$("#execBtn").click(function(){				
 	
-		if( relCheck("Select a component first!") ){
+		if( xTable.relCheck("Select a component first!") ){
 		
 			return;
 		}
