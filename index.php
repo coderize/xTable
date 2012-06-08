@@ -396,27 +396,19 @@ Aw Snap, Looks like you have been logged out!
 <br/>
 </div>
 <div id="contactable"></div>
-<script charset="UTF-8">
+<script type="text/javascript" charset="utf-8">
 
-///////////////////////////////////////////////session checker/////////////////////////////////////////////////////
+(function () {
+xTable = {
+is_loggedin : function(a){if(a=="INVALID_SESSION"){$("#logged-out").dialog({height:300,width:400,modal:true,resizable:false});function b(){window.location.reload();}setTimeout(b,2e3);return false}else{return true}},
 
-function is_loggedin(a){if(a=="INVALID_SESSION"){$("#logged-out").dialog({height:300,width:400,modal:true,resizable:false});function b(){window.location.reload();}setTimeout(b,2e3);return false}else{return true}}
-///////////////////////////////////////////////session checker/////////////////////////////////////////////////////
+pauser : function(){function a(){var a=Math.round(+(new Date)/1e3);return a}$("#pauseIni").html(a());$("#pauseCur").html("0");$("#pauseDur").html("0");$("#pauseTotalDur").html("0");$("#pauseCount").html("0");$(".pauser, #addSimilar, #addAnother, #add").bind("click",function(){$("#pauseCur").html(a());var b=parseInt($("#pauseIni").html());var c=parseInt($("#pauseCur").html());var d=c-b;$("#pauseDur").html(d);var e=300;if(d<e){$("#pauseIni").html($("#pauseCur").html());validCreate()}else{var f=parseInt($("#pauseTotalDur").html());var f=f==0?d:f+d;var g=parseInt($("#pauseCount").html());var g=g==0?1:g+1;$("#pauseIni").html($("#pauseCur").html());$("#pauseTotalDur").html(f);$("#pauseCount").html(g)}})},
 
-//////////////////////////////////////PAUSER FUNCTION////////////////////////////////////////////////////
-function pauser(){function a(){var a=Math.round(+(new Date)/1e3);return a}$("#pauseIni").html(a());$("#pauseCur").html("0");$("#pauseDur").html("0");$("#pauseTotalDur").html("0");$("#pauseCount").html("0");$(".pauser, #addSimilar, #addAnother, #add").bind("click",function(){$("#pauseCur").html(a());var b=parseInt($("#pauseIni").html());var c=parseInt($("#pauseCur").html());var d=c-b;$("#pauseDur").html(d);var e=300;if(d<e){$("#pauseIni").html($("#pauseCur").html());validCreate()}else{var f=parseInt($("#pauseTotalDur").html());var f=f==0?d:f+d;var g=parseInt($("#pauseCount").html());var g=g==0?1:g+1;$("#pauseIni").html($("#pauseCur").html());$("#pauseTotalDur").html(f);$("#pauseCount").html(g)}})}
-//////////////////////////////////////END PAUSER FUNCTION////////////////////////////////////////////////////
+reload : function(){ddvert=document.getElementById("hvertical");ddclient=document.getElementById("hclient");ddproject=document.getElementById("hproject");vertpath="index.php?vertical="+ddvert.value;window.location=vertpath;clientpath=vertpath+"&client="+ddclient.value;window.location=clientpath;projectpath=clientpath+"&project="+ddproject.value;window.location=projectpath},
 
- /////////////////////////////////////////////////////////////HOME DROPDOWNS -VCP///////////////////////////////////////////
-function reload(){ddvert=document.getElementById("hvertical");ddclient=document.getElementById("hclient");ddproject=document.getElementById("hproject");vertpath="index.php?vertical="+ddvert.value;window.location=vertpath;clientpath=vertpath+"&client="+ddclient.value;window.location=clientpath;projectpath=clientpath+"&project="+ddproject.value;window.location=projectpath}
- /////////////////////////////////////////////////////////////END HOME DROPDOWNS -VCP///////////////////////////////////////////	
- 
- //////DISABLE CR/LF IN FIELDS///////
-$('#search').keypress(function() { return event.keyCode != 13; });
-$('._filterText').keypress(function() { return event.keyCode != 13; });
-//////DISABLE CR/LF IN FIELDS///////
 
-function relCheck(error){
+
+relCheck : function(error){
 
 		if(data.rel === 0 || data.rel === undefined){
 			alert("Error: " + error);
@@ -424,9 +416,10 @@ function relCheck(error){
 
 		}
 	return false;
-}
+}}})();
 
-
+$('#search').keypress(function() { return event.keyCode != 13; });
+$('._filterText').keypress(function() { return event.keyCode != 13; });
 
 
 /////////////////////////////////////////////////////////////EDITING AJAX////////////////////////////////////////////////////////////
@@ -461,7 +454,7 @@ function editAjax(par){
 				 "prereq":prereq, "steps":steps, "expected":expected}
 			}).done(function( msg ) {
 			
-			if( is_loggedin(msg) ){					
+			if( xTable.is_loggedin(msg) ){					
 					
 					if(msg =='200'){
 					 	
@@ -617,7 +610,7 @@ function editAjax(par){
 							        data: {"othertcid" : "true", "rel" : data.rel }
 								}).done(function( msg ) {
 
-								if( is_loggedin(msg) ){	
+								if( xTable.is_loggedin(msg) ){	
 								
 									if(msg){
 									
@@ -640,7 +633,7 @@ function editAjax(par){
 								data: {"newtcid" : "true", "funcname" : custFunction, "rel" : data.rel}
 								}).done(function( msg ) {
 								
-								if( is_loggedin(msg) ){	
+								if( xTable.is_loggedin(msg) ){	
 								
 									$("#tcid").val(msg);	
 									$("#tcid").change();
@@ -883,7 +876,7 @@ $('input#search').quicksearch('#myTable tbody tr');
 			return;
 		}
 
-		pauser();
+		xTable.pauser();
 		$.ajax({
 			type: "POST",
 			url: "action.php",
@@ -891,7 +884,7 @@ $('input#search').quicksearch('#myTable tbody tr');
 			data: {"popFuncs":"true", "rel":data.rel}
 			}).done(function( msg ) {
 
-				if( is_loggedin(msg) ){								
+				if( xTable.is_loggedin(msg) ){								
 			
 					$("#function").html(msg);			
 					cFieldsCheck();
@@ -946,7 +939,7 @@ $('input#search').quicksearch('#myTable tbody tr');
 			data: {"rel":data.rel}								  
 			}).done(function( msg ) {
 				
-				if( is_loggedin(msg) ){	
+				if( xTable.is_loggedin(msg) ){	
 		
 					$("#iframeContainer").html(msg); 
 					$("#iframeContainer").dialog({
@@ -982,7 +975,7 @@ $('input#search').quicksearch('#myTable tbody tr');
 											data: {"kill":"kill"}
 											}).done(function( msg ) {
 													
-												if( is_loggedin(msg) ){		
+												if( xTable.is_loggedin(msg) ){		
 												
 													if (msg == "true"){
 														window.location.href ="login.php?logout=true";
@@ -1050,7 +1043,7 @@ $("#function").change(function(){
 			data: "test=test",													  
 			}).done(function( msg ) {
 			
-				if( is_loggedin(msg) ){	$("#eCreateTime").html(msg); }
+				if( xTable.is_loggedin(msg) ){	$("#eCreateTime").html(msg); }
 				
 			});		
 
@@ -1076,7 +1069,7 @@ $("#function").change(function(){
 				data: "cTestcase=true&tcid="+ encodeURIComponent($("#tcid").val()) +"&rel="+ data.rel +"&function="+ encodeURIComponent(custFunction) +"&name="+ encodeURIComponent($("#testname").val()) +"&priority="+ encodeURIComponent($("#priority").val()) +"&class="+ encodeURIComponent($("#class").val()) +"&prereq="+ encodeURIComponent($("#preConditions").val()) +"&scenario="+ encodeURIComponent($("#scenario").val()) +"&expected="+ encodeURIComponent($("#verification").val()) +"&stime="+ encodeURIComponent($("#sCreateTime").html()) +"&etime="+ encodeURIComponent($("#eCreateTime").html()) + "&pc="+ encodeURIComponent(pc) + "&ptd=" + encodeURIComponent(ptd) + "&status="+ encodeURIComponent($("#status").val()) 
 				}).done(function( msg ) {
 				
-					if( is_loggedin(msg) ){	
+					if( xTable.is_loggedin(msg) ){	
 				
 						var myObj =  jQuery.parseJSON(msg);
 
@@ -1155,8 +1148,8 @@ $('#myTable tbody').prepend('<tr><td class="mid ui-widget-content">' + myObj.mys
 /////////////////////////////////////////////////////////////END INSERT NEW TESTCASE//////////////////////////////////////////
 /////////////////////////////////////////ADD NEW / SIMILAR / ANOTHER////////////////////////////////////	
 $("#add").click(function(){		addCreate("close");	});	
-$("#addAnother").click(function(){		addCreate("aa");		pauser(); 	});	
-$("#addSimilar").click(function(){	addCreate("as"); 	pauser();  });	
+$("#addAnother").click(function(){		addCreate("aa");		xTable.pauser(); 	});	
+$("#addSimilar").click(function(){	addCreate("as"); 	xTable.pauser();  });	
 							
 							
 /////////////////////////////////////////END ADD NEW / SIMILAR / ANOTHER//////////////////////////////////	
