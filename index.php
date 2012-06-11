@@ -754,26 +754,30 @@ footerCount : function (){
 
 
 columnFilter : function(colNum){
+	
 	var rows = $("#myTable tr");
-	this.colNum = colNum;
+	this.colNum = colNum || 0;
 
-	 $("#_filterText1").keyup( function(){
-		rows.children("td:nth-child(2)").each(function() {									
-			var reg = document.getElementById("_filterText1").value;										
-			var html = this.childNodes[0].nodeValue;
-			var patt = new RegExp(""+ reg +"","i");
-			var res = patt.test(""+html+""); 		
-			if ( res ) {
-				 $(this).parent().css("display","table-row");							
-			}else{
-				 $(this).parent().css("display","none");										 
-			} 							
-										
-		}); 
-	});//END KEYUP
+	for (var i = 1; i <= this.colNum; i++ ){
+		
+		var c = i + 1;
+		 $("#_filterText" + i).keyup( function(){
+			rows.children("td:nth-child(" + c + ")").each(function() {									
+				var reg = document.getElementById("_filterText" + i).value;										
+				var html = this.childNodes[0].nodeValue;
+				var patt = new RegExp(""+ reg +"","i");
+				var res = patt.test(""+html+""); 		
+				if ( res ) {
+					 $(this).parent().css("display","table-row");							
+				}else{
+					 $(this).parent().css("display","none");										 
+				} 							
+											
+			}); 
+		});//END KEYUP
 							
-							
-	 $("#_filterText2").keyup( function(){
+}						
+/*	 $("#_filterText2").keyup( function(){
 		rows.children("td:nth-child(3)").each(function() {									
 			var reg = document.getElementById("_filterText2").value;										
 			var html = this.childNodes[0].nodeValue;
@@ -891,7 +895,7 @@ columnFilter : function(colNum){
 			} 							
 		}); 
 	});//END KEYUP	
-							
+*/							
 							
 },
 
@@ -948,7 +952,7 @@ $("#hNavBtn").css("float","right");
 	$('input:text, input:password').button().addClass('inpField');	
 
 	//adds columb filtering ability
-	this.columnFilter();		
+	this.columnFilter(9);		
 
 
 
