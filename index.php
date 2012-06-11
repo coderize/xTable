@@ -461,72 +461,8 @@ editAjax : function (par){
 
 },
 
-bootstrap: function(){
-	this.is_loggedin();
-	this.pauser();
-	this.reload();
-	$('#search').keypress(function() { return event.keyCode != 13; });
-	$('._filterText').keypress(function() { return event.keyCode != 13; });
 
-}
-
-
-}})();
-
-//xTable.bootstrap();
-
-
-
-/////////////////////////////////////////////////////////////EDITING AJAX////////////////////////////////////////////////////////////
-
-function editAjax(par){
-
-	var parent = $(par).parent().parent();	 
-	var mid  = encodeURIComponent($(parent).children("td:nth-child(1)").html());
-	var func = encodeURIComponent($(parent).children("td:nth-child(2)").html());
-	var status = encodeURIComponent($(parent).children("td:nth-child(3)").html());
-	var tcid = encodeURIComponent($(parent).children("td:nth-child(4)").html());
-	var priority = encodeURIComponent($(parent).children("td:nth-child(5)").html());
-	var clas = encodeURIComponent($(parent).children("td:nth-child(6)").html());
-	var name = encodeURIComponent($(parent).children("td:nth-child(7)").html());
-	var prereq = encodeURIComponent($(parent).children("td:nth-child(8)").children("pre:nth-child(1)").html());
-	var steps = encodeURIComponent($(parent).children("td:nth-child(9)").children("pre:nth-child(1)").html());
-	var expected = encodeURIComponent($(parent).children("td:nth-child(10)").children("pre:nth-child(1)").html());
-
-	 $.ajax({
-			type: "POST",													  
-			url: "action.php",													  
-			cache: false,	
-			async: true,
-			data: {"tableEdit":"true", "mid":mid, "func":func, "status":status,
-				 "tcid":tcid, "priority":priority, "clas":clas, "name":name,
-				 "prereq":prereq, "steps":steps, "expected":expected}
-			}).done(function( msg ) {
-			
-			if( xTable.is_loggedin(msg) ){					
-					
-					if(msg =='200'){
-					 	
-						$(".editSuccess").css("display","block");
-						$(".editSuccess").fadeOut(3000);
-
-					}else{
-					
-						alert ("Something went wrong while saving, try again");
-						
-					}
-			
-			}
-							
-			}); 
-
-}
-
-/////////////////////////////////////////////////////////////END EDITING AJAX///////////////////////////////////////////
-
-
-/////////////////////////////////////////////////////////////ADD TESTCASE FIELDS VALIDITY/////////////////
-	function cFieldsCheck(){
+cFieldsCheck : function (){
 		
 		$(".cf").each(function(){
 			
@@ -564,90 +500,80 @@ function editAjax(par){
 			}
 		});	 
 			
-	}
-/////////////////////////////////////////////////////////////END ADD TESTCASE FIELDS VALIDITY///////////////////////////////////////////
-/////////////////////////////////////////////////////////////CREATE/ADD/ADD SIMILAR/ADD ANOTHER BUTTONS VALIDATION/////////////
-	
-		function validCreate(){
+},
 
-				$("#add").attr("disabled","true");
-				$("#addAnother").attr("disabled","true");
-				$("#addSimilar").attr("disabled","true");									
+validCreate : function (){
+
+$("#add").attr("disabled","true");
+$("#addAnother").attr("disabled","true");
+$("#addSimilar").attr("disabled","true");									
 				
-				$('#priority,#class,#function,#status').change(function (){			
+	$('#priority,#class,#function,#status').change(function (){			
 
-					if( $("#function").val() == "other450311"){
-								
-									var fval = $("#newfunction").val();
-								
-								}else{
-								
-									var fval = $("#function").val();
-								}				
-			
+		 var fval = $("#function").val() == "other450311") ?  $("#newfunction").val() : $("#function").val();				
 							
-							if( $("#priority").val() != 'na' &&  $("#class").val() != 'na' &&  $.trim($("#status").val()) !='na' && $.trim(fval) != 'na' && $.trim(fval) !='' && $("#tcid").val() != '' && $.trim($("#testname").val()) != '' && $.trim($("#preConditions").val()) != '' && $.trim($("#scenario").val()) != '' && $.trim($("#verification").val()) != ''){
+			if( $("#priority").val() != 'na' &&  $("#class").val() != 'na' &&  $.trim($("#status").val()) !='na' && $.trim(fval) != 'na' && $.trim(fval) !='' && $("#tcid").val() != '' && $.trim($("#testname").val()) != '' && $.trim($("#preConditions").val()) != '' && $.trim($("#scenario").val()) != '' && $.trim($("#verification").val()) != ''){
 									
 										$("#add").removeAttr("disabled");
 										$("#addAnother").removeAttr("disabled");
 										$("#addSimilar").removeAttr("disabled");									
 
 									}else{
-											$("#add").attr("disabled","true");
-											$("#addAnother").attr("disabled","true");
-											$("#addSimilar").attr("disabled","true");									
+										$("#add").attr("disabled","true");
+										$("#addAnother").attr("disabled","true");
+										$("#addSimilar").attr("disabled","true");									
 									}				
 				
 					  });		
 				
 				
-				 $('.cf').bind("keyup click", function() {
+	$('.cf').bind("keyup click", function() {
 						
-						
-						if( $("#function").val() == "other450311"){
-									
-										var fval = $("#newfunction").val();
-									
-									}else{
-									
-										var fval = $("#function").val();
-									}				
-				
-				
-									
-					if( $("#priority").val() != 'na' &&  $("#class").val() != 'na' && $.trim(fval) != 'na' && $.trim($("#status").val()) !='na' && $.trim(fval) !='' && $.trim($("#tcid").val()) != '' && $.trim($("#testname").val()) != '' && $.trim($("#preConditions").val()) != '' && $.trim($("#scenario").val()) != '' && $.trim($("#verification").val()) != ''){
+		var fval =  $("#function").val() == "other450311") ? $("#newfunction").val() :  $("#function").val();				
+										
+			if( $("#priority").val() != 'na' &&  $("#class").val() != 'na' && $.trim(fval) != 'na' && $.trim($("#status").val()) !='na' && $.trim(fval) !='' && $.trim($("#tcid").val()) != '' && $.trim($("#testname").val()) != '' && $.trim($("#preConditions").val()) != '' && $.trim($("#scenario").val()) != '' && $.trim($("#verification").val()) != ''){
 									
 										$("#add").removeAttr("disabled");
 										$("#addAnother").removeAttr("disabled");
 										$("#addSimilar").removeAttr("disabled");									
 
 									}else{
-											$("#add").attr("disabled","true");
-											$("#addAnother").attr("disabled","true");
-											$("#addSimilar").attr("disabled","true");									
+										$("#add").attr("disabled","true");
+										$("#addAnother").attr("disabled","true");
+										$("#addSimilar").attr("disabled","true");									
 									}				
 						
 				
 					  });			 
-		}
-		
+},
 
-/////////////////////////////////////////////////////////////END CREATE/ADD/ADD SIMILAR/ADD ANOTHER BUTTONS VALIDATION///////////////////////////////////////////		
+
+
+
+
+
+bootstrap: function(){
+
+	this.is_loggedin();
+	this.pauser();
+	this.reload();
+	$('#search').keypress(function() { return event.keyCode != 13; });
+	$('._filterText').keypress(function() { return event.keyCode != 13; });
+
+}
+
+
+}})();
+
+//xTable.bootstrap();
 
 /////////////////////////////////////////////////////////////TCID LOGIC /////////////////////////////////////////////////////////////////////	
 	
  $("#function").change(function(){	
 
-			if( $("#newfunction").val() ){
-			
-				var custFunction =  encodeURIComponent($("#newfunction").val());
-				
-			}else{
-			
-				var custFunction =  encodeURIComponent($("#function").val());
-			}
-				cFieldsCheck();
-				validCreate();
+	var custFunction =  ( $("#newfunction").val() ) ? encodeURIComponent($("#newfunction").val()) :  encodeURIComponent($("#function").val());
+	this.cFieldsCheck();
+	this.validCreate();
 				
 				if( $(this).val() == "other450311") {
 
