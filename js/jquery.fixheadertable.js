@@ -273,7 +273,7 @@
 						
 						_objectTable = tableToObject(table);											
 						//CALL CUSTOM ROW FILTERS
-						columnFilter();
+						xTable.columnFilter();
 			
 								/*
                                 * Function inspired by jqGrid
@@ -338,12 +338,12 @@
 				if(sens == 'DESC'){
 					
 					_objectTable.reverse();
-					columnFilter();
+					xTable.columnFilter();
 				}
 				
 				(options.pager) ? moveToPage(table) : objectToTable(_objectTable, table);
 				
-				columnFilter();
+				xTable.columnFilter();
 			}
 			
 			function objectToTable(objectArray, table) {

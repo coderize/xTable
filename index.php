@@ -106,7 +106,7 @@ body,pre{font-family:Verdana,Helvetica,san-serif,Arial;font-size:.6em}*{padding:
 <script src="http://jqueryui.com/themeroller/themeswitchertool/" charset="UTF-8"></script>
 <script src="js/jquery.fixheadertable.js" charset="UTF-8"></script>
 <script src="js/jquery.columnfilters.js" charset="UTF-8"></script>
-<script src="js/columnFilters.js" charset="UTF-8"></script>
+<!--<script src="js/columnFilters.js" charset="UTF-8"></script> -->
 <script src="js/jquery.js" charset="UTF-8"></script>
 <!-- <script src="js/calendar_db.js" charset="UTF-8"></script> -->
 <script src="js/jquery.contactable.js" charset="UTF-8"></script>
@@ -693,23 +693,21 @@ editElement : function (ele,obj,type,ml){
 					  
 						var ms  = $("#mySelect option:selected").text();
 						$(elem).html(ms);																	
-						editAjax(elem.childNodes[0]);	
+						this.editAjax(elem.childNodes[0]);	
 						$('input#search').quicksearch('#myTable tbody tr');	
 					}  			
 					
 					 seleEdit.onblur = function(){				
 						
 						 var ms  = $("#mySelect option:selected").text();
-						$(elem).html(ms);
-										
+						 $(elem).html(ms);
+					 }
 
-					}  
 					 seleEdit.onkeyup = function(){		
 					  	var ms  = $("#mySelect option:selected").text();
 						$(elem).html(ms);																	
 						this.editAjax(elem.childNodes[0]);		
-						$('input#search').quicksearch('#myTable tbody tr');	
-									
+						$('input#search').quicksearch('#myTable tbody tr');									
 					}
 
 
@@ -737,36 +735,236 @@ editElement : function (ele,obj,type,ml){
 							
 							ele.innerHTML = inp.value;
 							this.editAjax(ele.childNodes[0]);
-							$('input#search').quicksearch('#myTable tbody tr');	
-
+							$('input#search').quicksearch('#myTable tbody tr');
 						}				
 			}			
 			
-		},
+},
+
+
+footerCount : function (){
+
+							
+	$("#pager").html("Total number of testcases: " + $(".mid").length) ;
+
+},
+	
 
 
 
 
+columnFilter : function(colNum){
+	var rows = $("#myTable tr");
+	this.colNum = colNum;
 
-
+	 $("#_filterText1").keyup( function(){
+		rows.children("td:nth-child(2)").each(function() {									
+			var reg = document.getElementById("_filterText1").value;										
+			var html = this.childNodes[0].nodeValue;
+			var patt = new RegExp(""+ reg +"","i");
+			var res = patt.test(""+html+""); 		
+			if ( res ) {
+				 $(this).parent().css("display","table-row");							
+			}else{
+				 $(this).parent().css("display","none");										 
+			} 							
+										
+		}); 
+	});//END KEYUP
+							
+							
+	 $("#_filterText2").keyup( function(){
+		rows.children("td:nth-child(3)").each(function() {									
+			var reg = document.getElementById("_filterText2").value;										
+			var html = this.childNodes[0].nodeValue;
+			var patt = new RegExp(""+ reg +"","i");
+			var res = patt.test(""+html+""); 		
+			if ( res ) {
+				 $(this).parent().css("display","table-row");	
+			}else{
+				 $(this).parent().css("display","none");										 
+			} 							
+		}); 							
+	});//END KEYUP
+       
+	$("#_filterText3").keyup( function(){
+		rows.children("td:nth-child(4)").each(function() {									
+			var reg = document.getElementById("_filterText3").value;										
+			var html = this.childNodes[0].nodeValue;
+			var patt = new RegExp(""+ reg +"","i");
+			var res = patt.test(""+html+""); 		
+			if ( res ) {
+				$(this).parent().css("display","table-row");	
+			}else{
+				$(this).parent().css("display","none");										 
+			} 							
+		}); 
+	});//END KEYUP
+							
+							
+	$("#_filterText4").keyup( function(){
+		rows.children("td:nth-child(5)").each(function() {									
+			var reg = document.getElementById("_filterText4").value;										
+			var html = this.childNodes[0].nodeValue;
+			var patt = new RegExp(""+ reg +"","i");
+			var res = patt.test(""+html+""); 		
+			if ( res ) {
+				$(this).parent().css("display","table-row");	
+			}else{
+				$(this).parent().css("display","none");										 
+			} 							
+		}); 
+	});//END KEYUP
+							
+	$("#_filterText5").keyup( function(){
+		rows.children("td:nth-child(6)").each(function() {									
+			var reg = document.getElementById("_filterText5").value;										
+			var html = this.childNodes[0].nodeValue;
+			var patt = new RegExp(""+ reg +"","i");
+			var res = patt.test(""+html+""); 		
+			if ( res ) {
+				$(this).parent().css("display","table-row");	
+			}else{
+				$(this).parent().css("display","none");										 
+			} 							
+		}); 
+							
+	});//END KEYUP
+							
+							
+	$("#_filterText6").keyup( function(){
+		rows.children("td:nth-child(7)").each(function() {									
+			var reg = document.getElementById("_filterText6").value;										
+			var html = this.childNodes[0].nodeValue;
+			var patt = new RegExp(""+ reg +"","i");
+			var res = patt.test(""+html+""); 		
+			if ( res ) {
+				$(this).parent().css("display","table-row");	
+			}else{
+				$(this).parent().css("display","none");										 
+			} 							
+		}); 
+	});//END KEYUP
+							
+							
+							
+	$("#_filterText7").keyup( function(){
+		rows.children("td:nth-child(8)").each(function() {									
+			var reg = document.getElementById("_filterText7").value;										
+			var html = this.childNodes[0].childNodes[0].nodeValue;
+			var patt = new RegExp(""+ reg +"","i");
+			var res = patt.test(""+html+""); 		
+			if ( res ) {
+				$(this).parent().css("display","table-row");	
+			}else{
+				$(this).parent().css("display","none");										 
+			} 							
+		}); 
+	});//END KEYUP
+							
+	
+       	$("#_filterText8").keyup( function(){
+		rows.children("td:nth-child(9)").each(function() {									
+			var reg = document.getElementById("_filterText8").value;										
+			var html = this.childNodes[0].childNodes[0].nodeValue;
+			var patt = new RegExp(""+ reg +"","i");
+			var res = patt.test(""+html+""); 		
+			if ( res ) {
+				$(this).parent().css("display","table-row");	
+			}else{
+				$(this).parent().css("display","none");										 
+			} 							
+		}); 
+							
+	});//END KEYUP
+							
+	$("#_filterText9").keyup( function(){
+		rows.children("td:nth-child(10)").each(function() {									
+			var reg = document.getElementById("_filterText9").value;										
+			var html = this.childNodes[0].childNodes[0].nodeValue;
+			var patt = new RegExp(""+ reg +"","i");
+			var res = patt.test(""+html+""); 		
+			if ( res ) {
+				$(this).parent().css("display","table-row");																				
+			}else{
+				$(this).parent().css("display","none");										 
+			} 							
+		}); 
+	});//END KEYUP	
+							
+							
+},
 
 
 bootstrap: function(){
 
-	this.is_loggedin();
-	this.pauser();
-	this.reload();
-	$('#search').keypress(function() { return event.keyCode != 13; });
-	$('._filterText').keypress(function() { return event.keyCode != 13; });
 
-}
+	$('#myTable').columnFilters();
+	var hght = ($(".mid").length==0) ? 125 : 157
+	$('#myTable').fixheadertable({ 
+		caption     : ' ', 
+		colratio    : [1,150,80, 65, 78, 140,150, 150, 260, 260],
+		height      : window.innerHeight - hght,
+		zebra       : false,
+		sortable    : true,
+		sortedColId : 2, 
+		sortType    : ['integer','string', 'string', 'integer', 'string', 'string', 'string', 'string', 'string', 'string'],
+		dateFormat  : 'm/d/Y',
+		pager       : false,
+		rowsPerPage : 100, 
+		showhide       : true,
+		whiteSpace     : 'normal',
+		resizeCol	: true,
+		addTitles      : true,
+		minColWidth    : 75
+		}); 
+	//remove enter key from textfields
+	$('#search, .filterText').keypress(function() { return event.keyCode != 13; });
+
+
+	//adds header select menus
+	$(".t_fixed_header_caption").prepend( "<div id='hnav'><select name='hvertical' id='hvertical' onchange='javascript:xTable.reload();'>" + $("#vertical").html() + "</select> <select name='hclient' id='hclient' onchange='javascript:xTable.reload();'>"+$("#client").html()+"</select>"+" <select name='hproject' id='hproject' onchange='javascript:xTable.reload();'>" + $("#project").html() + "</select></div>" );	$("#hnav").css("float","left");
+
+
+
+	//adds CT and Execute buttons
+$(".t_fixed_header_caption").append("<div id='hNavBtn'><button id='addBtn'>Create Testcase</button><button id='execBtn'>Execute</button></div>");
+$("#hNavBtn").css("float","right");
+
+
+	//adds footer div for count
+	$(".t_fixed_header_main_wrapper").append("<div id='pager'></div>");	
+	this.footerCount();
+
+	//adds footer search
+	$("#pager").append("<div id='searchForm'><form id='search-form' name='search-form' method='#' action='#' onsubmit='javascript:return false;'><input value='Search...' type='text' id='search' style='text-align: left !important;' name='search'></form></div>")
+
+
+	//adds search blur & focus methods
+	$("#search").blur(function(){ this.value = 'Search...';}).focus(function(){ this.value = '';});
+							
+	//$("#navigation select").selectmenu({style: 'dropdown', maxHeight: 400});							
+	$("#createForm select").selectmenu({style: 'dropdown',maxHeight: 400});								
+	$('input:text, input:password').button().addClass('inpField');	
+
+	//adds columb filtering ability
+	this.columnFilter();		
+
+
+
+}//end BOOTSTRAP
 
 
 }})();
 
-//xTable.bootstrap();
+$(document).ready(function(){
 
+	xTable.bootstrap();
+	//$("#myTable").tableDnD( { onDragClass: "dragging"} );
+	$('#contactable').contactable();
+	
 
+});
 
 ////////////////////////////////////////////////////OTHER ELEMENTS EDITING////////////////////////////////////////////////////			
 //END EDIT ELEMENT	
@@ -786,58 +984,14 @@ bootstrap: function(){
 ////////////////////////////////////////////////////END SET SELECTED DROPDOWN OPTIONS////////////////////////////////////////////////////	
 
 	$(document).ready(function() { 							
-		
-						$('#myTable').columnFilters();
-							
-						var hght = ($(".mid").length==0) ? 125 : 157;
-							
-							$('#myTable').fixheadertable({ 
-								caption     : ' ', 
-								colratio    : [1,150,80, 65, 78, 140,150, 150, 260, 260],
-								height      : window.innerHeight - hght,
-								zebra       : false,
-								sortable    : true,
-								sortedColId : 2, 
-								sortType    : ['integer','string', 'string', 'integer', 'string', 'string', 'string', 'string', 'string', 'string'],
-								dateFormat  : 'm/d/Y',
-								pager       : false,
-								rowsPerPage : 100, 
-								showhide       : true,
-								whiteSpace     : 'normal',
-								resizeCol	: true,
-								addTitles      : true,
-								minColWidth    : 75
-								
-							});   	
-//////////////////////////////////DRAG AND DROP/////////////////////////////////////////////////////////////////////////
-//$("#myTable").tableDnD( { onDragClass: "dragging"} );	
-//////////////////////////////////END DRAG AND DROP////////////////////////////////////////////////////////////////		
 
-///////////////////////////////////FIX PAGINATION PROBLEM///////////////////////////////////////////////////////
-$(".t_fixed_header_main_wrapper").append("<div id='pager'></div>");							
-$("#pager").html("Total number of testcases: " + $(".mid").length) ;							
-///////////////////////////////////NEW UI JAVASCRIPT//////////////////////////////////////////////
-$(".t_fixed_header_caption").prepend( "<div id='hnav'><select name='hvertical' id='hvertical' onchange='javascript:reload();'>" + $("#vertical").html() + "</select> <select name='hclient' id='hclient' onchange='javascript:reload();'>"+$("#client").html()+"</select>"+" <select name='hproject' id='hproject' onchange='javascript:reload();'>" + $("#project").html() + "</select></div>" );	$("#hnav").css("float","left");
 
-$(".t_fixed_header_caption").append("<div id='hNavBtn'><button id='addBtn'>Create Testcase</button><button id='execBtn'>Execute</button></div>");
-$("#hNavBtn").css("float","right");
-$("#pager").append("<div id='searchForm'><form id='search-form' name='search-form' method='#' action='#' onsubmit='javascript:return false;'><input value='Search...' type='text' id='search' style='text-align: left !important;' name='search'></form></div>");
 
-$("#search").blur(function(){
-	this.value = 'Search...';
-});		
 
-$("#search").focus(function(){
-	this.value = '';
-});
-							
-$("#navigation select").selectmenu({style: 'dropdown', maxHeight: 400});							
-$("#createForm select").selectmenu({style: 'dropdown',maxHeight: 400});								
-$('input:text, input:password').button().addClass('inpField');	
-$('#contactable').contactable();
+
 ///////////////////////////////////END NEW UI JAVASCRIPT//////////////////////////////////////////////
 //////////////////////////////////CUSTOM COLUMN FILTERS//////////////////////////////////////////////////////
-columnFilter();		
+
 //////////////////////////////////CUSTOM COLUMN FILTERS//////////////////////////////////////////////////////
 							
 //////////////////////////////////MAIN SEARCH///////////////////////////////////////////////////////////////////////////////
@@ -932,7 +1086,7 @@ $('input#search').quicksearch('#myTable tbody tr');
 		});							
 ///////////////////////////////////END EXECUTE BUTTON////////////////////////////////////////////////////////////////////////////
 	addEdit();	
-	cFieldsCheck();							
+	xTable.cFieldsCheck();							
 	$( "button, input:submit, input:reset" ).button();				
 ///////////////////////////////////LOGOUT FUNCTION///////////////////////////////////////////////////////////////////////	
 	$("#logout").click(function(){
