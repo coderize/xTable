@@ -5,11 +5,19 @@ require "includes/config.php";
 require "includes/sess.php";
 session_start();
 
- if( !$_SESSION['fname'] ){
-	header('Refresh: 0; URL=login.php');
+ if( !$_SESSION['loggedIn'] === TRUE){
+	header('Refresh: 0; URL=login.php?logout=true');
 	exit;
 } 
 ?>
+
+<html>
+	<head>
+		<title>xTable</title>
+		<link href="css/home-style.css" rel="stylesheet" type="text/css" media="all" /><br/>
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<script src="js/jqueryUI/js/jqueryui.js"></script>
+
 
 <style>
 
@@ -21,17 +29,9 @@ session_start();
 }
 
 </style>
-
-<html>
-	<head>
-		<title>xTable</title>
-		<link href="css/home-style.css" rel="stylesheet" type="text/css" media="all" /><br/>
-		<script src="http://code.jquery.com/jquery-latest.js"></script>
-		<script src="js/jqueryUI/js/jqueryui.js"></script>
 	</head>
-
 	<body>
-	<a onClick="window.location.href ='login.php?logout=true'" style="text-decoration:none">
+	<a href="login.php?logout=true" style="text-decoration:none">
 		<button name="logout" id="logout" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false">
 		<span class="ui-button-text">Logout</span></button>
 	</a>
@@ -71,37 +71,4 @@ session_start();
 	</div>
 	</body>
 
-	<script charset="UTF-8">
-	
-			///////////////////////////////////LOGOUT FUNCTION///////////////////////////////////////////////////////////////////////	
-			$("#logout").click(function(){
-							
-						//	window.location.reload();
-						//	window.location.href ="login.php?logout=true";
-							
-								$.ajax({											
-								  type: "GET",
-								  url: "login_mod.php",
-								  cache: false,
-								  data: "kill=kill",
-								}).done(function( msg ) {
-								
-									if( is_loggedin(msg) ){		
-									
-										if (msg == "true"){
-										
-											window.location.href ="login.php?logout=true";
-											
-										}else{
-										
-											alert("Error logging out, try again");																
-										}
-									}																
-										
-								});		
-
-			});// END LOGOUT 
-	
-	</script>
-	
 </html>

@@ -184,7 +184,7 @@ $iq = @mysql_query("SELECT relation_id AS rel
 
 <div id='navigation'>
 <form name='naviForm' id='naviForm' action="index.php" method="GET">
-	<select name='vertical' id='vertical' onchange="javascript:reload();">
+	<select name='vertical' id='vertical'>
 	<option value='na'>Vertical Selection</option>
 	
 <?php	 while($qverts = mysql_fetch_object($verts)){ 
@@ -203,7 +203,7 @@ $iq = @mysql_query("SELECT relation_id AS rel
 		
 		if($vert){
 ?>		
-		<select name='client' id='client' onchange="javascript:reload();">	
+		<select name='client' id='client'>	
 		<option value=''>Client Selection</option>
 <?php				
 				$clients = mysql_query("SELECT client_id, client_name 
@@ -232,7 +232,7 @@ $iq = @mysql_query("SELECT relation_id AS rel
 		
 		
 ?>		
-		<select name='project' id='project' onchange="javascript:reload();">	
+		<select name='project' id='project'>	
 		<option value=''>Project Selection</option>
 <?php				
 	$projects = mysql_query("SELECT project_id, project_name
@@ -406,8 +406,6 @@ pauser : function(){function a(){var a=Math.round(+(new Date)/1e3);return a}$("#
 
 reload : function(){ddvert=document.getElementById("hvertical");ddclient=document.getElementById("hclient");ddproject=document.getElementById("hproject");vertpath="index.php?vertical="+ddvert.value;window.location=vertpath;clientpath=vertpath+"&client="+ddclient.value;window.location=clientpath;projectpath=clientpath+"&project="+ddproject.value;window.location=projectpath},
 
-
-
 relCheck : function(error){
 
 		if(data.rel === 0 || data.rel === undefined){
@@ -416,19 +414,70 @@ relCheck : function(error){
 
 		}
 	return false;
-}}})();
+}, 
 
-$('#search').keypress(function() { return event.keyCode != 13; });
-$('._filterText').keypress(function() { return event.keyCode != 13; });
+strip_tags : function (a,b){b=(((b||"")+"").toLowerCase().match(/<[a-z][a-z0-9]*>/g)||[]).join("");var c=/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi,d=/<!--[\s\S]*?-->|<\?(?:php)?[\s\S]*?\?>/gi;return a.replace(d,"").replace(c,function(a,c){return b.indexOf("<"+c.toLowerCase()+">")>-1?a:""})},
+
+editAjax : function (par){
+
+	var parent = $(par).parent().parent();	 
+	var mid  = encodeURIComponent($(parent).children("td:nth-child(1)").html());
+	var func = encodeURIComponent($(parent).children("td:nth-child(2)").html());
+	var status = encodeURIComponent($(parent).children("td:nth-child(3)").html());
+	var tcid = encodeURIComponent($(parent).children("td:nth-child(4)").html());
+	var priority = encodeURIComponent($(parent).children("td:nth-child(5)").html());
+	var clas = encodeURIComponent($(parent).children("td:nth-child(6)").html());
+	var name = encodeURIComponent($(parent).children("td:nth-child(7)").html());
+	var prereq = encodeURIComponent($(parent).children("td:nth-child(8)").children("pre:nth-child(1)").html());
+	var steps = encodeURIComponent($(parent).children("td:nth-child(9)").children("pre:nth-child(1)").html());
+	var expected = encodeURIComponent($(parent).children("td:nth-child(10)").children("pre:nth-child(1)").html());
+
+	$.ajax({
+		type: "POST",													  
+		url: "action.php",													  
+		cache: false,	
+		async: true,
+		data: {"tableEdit":"true", "mid":mid, "func":func, "status":status,
+				 "tcid":tcid, "priority":priority, "clas":clas, "name":name,
+				 "prereq":prereq, "steps":steps, "expected":expected}
+		}).done(function( msg ) {
+			
+			if( this.is_loggedin(msg) ){					
+						
+				if(msg =='200'){
+					 	
+					$(".editSuccess").css("display","block");
+					$(".editSuccess").fadeOut(3000);
+
+				}else{
+					
+					alert ("Something went wrong while saving, try again");
+						
+				}
+			
+			}
+							
+			}); 
+
+},
+
+bootstrap: function(){
+	this.is_loggedin();
+	this.pauser();
+	this.reload();
+	$('#search').keypress(function() { return event.keyCode != 13; });
+	$('._filterText').keypress(function() { return event.keyCode != 13; });
+
+}
+
+
+}})();
+
+//xTable.bootstrap();
+
 
 
 /////////////////////////////////////////////////////////////EDITING AJAX////////////////////////////////////////////////////////////
-
-
-	
-///////////STRIP TAGS//////////////////
-function strip_tags(a,b){b=(((b||"")+"").toLowerCase().match(/<[a-z][a-z0-9]*>/g)||[]).join("");var c=/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi,d=/<!--[\s\S]*?-->|<\?(?:php)?[\s\S]*?\?>/gi;return a.replace(d,"").replace(c,function(a,c){return b.indexOf("<"+c.toLowerCase()+">")>-1?a:""})}
-///////////STRIP TAGS//////////////////
 
 function editAjax(par){
 
