@@ -510,7 +510,7 @@ $("#addSimilar").attr("disabled","true");
 				
 	$('#priority,#class,#function,#status').change(function (){			
 
-		 var fval = $("#function").val() == "other450311") ?  $("#newfunction").val() : $("#function").val();				
+		 var fval = ($("#function").val() == "other450311") ?  $("#newfunction").val() : $("#function").val();				
 							
 			if( $("#priority").val() != 'na' &&  $("#class").val() != 'na' &&  $.trim($("#status").val()) !='na' && $.trim(fval) != 'na' && $.trim(fval) !='' && $("#tcid").val() != '' && $.trim($("#testname").val()) != '' && $.trim($("#preConditions").val()) != '' && $.trim($("#scenario").val()) != '' && $.trim($("#verification").val()) != ''){
 									
@@ -529,7 +529,7 @@ $("#addSimilar").attr("disabled","true");
 				
 	$('.cf').bind("keyup click", function() {
 						
-		var fval =  $("#function").val() == "other450311") ? $("#newfunction").val() :  $("#function").val();				
+		var fval =  ($("#function").val() == "other450311") ? $("#newfunction").val() :  $("#function").val();				
 										
 			if( $("#priority").val() != 'na' &&  $("#class").val() != 'na' && $.trim(fval) != 'na' && $.trim($("#status").val()) !='na' && $.trim(fval) !='' && $.trim($("#tcid").val()) != '' && $.trim($("#testname").val()) != '' && $.trim($("#preConditions").val()) != '' && $.trim($("#scenario").val()) != '' && $.trim($("#verification").val()) != ''){
 									
@@ -548,28 +548,9 @@ $("#addSimilar").attr("disabled","true");
 },
 
 
+tcidLogic : function(){
 
-
-
-
-bootstrap: function(){
-
-	this.is_loggedin();
-	this.pauser();
-	this.reload();
-	$('#search').keypress(function() { return event.keyCode != 13; });
-	$('._filterText').keypress(function() { return event.keyCode != 13; });
-
-}
-
-
-}})();
-
-//xTable.bootstrap();
-
-/////////////////////////////////////////////////////////////TCID LOGIC /////////////////////////////////////////////////////////////////////	
-	
- $("#function").change(function(){	
+$("#function").change(function(){	
 
 	var custFunction =  ( $("#newfunction").val() ) ? encodeURIComponent($("#newfunction").val()) :  encodeURIComponent($("#function").val());
 	this.cFieldsCheck();
@@ -585,14 +566,14 @@ bootstrap: function(){
 							        data: {"othertcid" : "true", "rel" : data.rel }
 								}).done(function( msg ) {
 
-								if( xTable.is_loggedin(msg) ){	
+								if( this.is_loggedin(msg) ){	
 								
 									if(msg){
 									
 										$("#tcid").val(msg);
 										$("#tcid").change();									
-										cFieldsCheck();
-										validCreate();										
+										this.cFieldsCheck();
+										this.validCreate();										
 									}
 								}
 								
@@ -608,12 +589,12 @@ bootstrap: function(){
 								data: {"newtcid" : "true", "funcname" : custFunction, "rel" : data.rel}
 								}).done(function( msg ) {
 								
-								if( xTable.is_loggedin(msg) ){	
+								if( this.is_loggedin(msg) ){	
 								
 									$("#tcid").val(msg);	
 									$("#tcid").change();
-									cFieldsCheck();					
-									validCreate();
+									this.cFieldsCheck();					
+									this.validCreate();
 									
 								}
 									
@@ -623,34 +604,30 @@ bootstrap: function(){
 				
 				}
 
-});
- 
-	
+})},
 
-/////////////////////////////////////////////////////////////END TCID LOGIC /////////////////////////////////////////////////////////////////////		
 
-////////////////////////////////////////////////////CLEAN CREATE FORM FIELDS////////////////////////////////////////////////////		
-	function cleanCreate(){		
-			$("#function").val("");
-			$("#tcid").val("");
-			$("#status").val("");
-			$("#priority").val("na");
-			$("#class").val("na");
-			$("#testname").val("");
-			$("#preConditions").val("");
-			$("#scenario").val("");
-			$("#verification").val(""); 
-			$("#createForm select").selectmenu('destroy');
-			$("#createForm select").selectmenu({style: 'dropdown', maxHeight: 400});				
-			$("#newfunction").remove();		
-			cFieldsCheck();
+cleanCreate : function(){		
+
+$("#function").val("");
+$("#tcid").val("");
+$("#status").val("");
+$("#priority").val("na");
+$("#class").val("na");
+$("#testname").val("");
+$("#preConditions").val("");
+$("#scenario").val("");
+$("#verification").val(""); 
+$("#createForm select").selectmenu('destroy');
+$("#createForm select").selectmenu({style: 'dropdown', maxHeight: 400});				
+$("#newfunction").remove();		
+this.cFieldsCheck();
 			
-		}	
-////////////////////////////////////////////////////END CLEAN CREATE FORM FIELDS////////////////////////////////////////////////////	
+},
 
-////////////////////////////////////////////////////SCENARIO / VERIFICATION EDITING////////////////////////////////////////////////////	
-	
-function editSV(ele){	
+
+
+editSV : function (ele){	
 
 	$("<textarea id='myTextarea'></textarea>").html(ele.childNodes[0].innerHTML).appendTo("body");
 	$( "#myTextarea" ).dialog({
@@ -662,8 +639,8 @@ function editSV(ele){
 				resizable: false,
 				buttons: { "Save": function() {
 				
-					ele.childNodes[0].innerHTML = strip_tags($("#myTextarea").val(), '<i><b>');
-					editAjax(ele.childNodes[0]);
+					ele.childNodes[0].innerHTML = this.strip_tags($("#myTextarea").val(), '<i><b>');
+					this.editAjax(ele.childNodes[0]);
 					$('input#search').quicksearch('#myTable tbody tr');
 					$("#myTextarea").remove();
 					$(this).dialog("close");
@@ -678,12 +655,10 @@ function editSV(ele){
 	$("#myTextarea").css("max-width","780px");
 	$("#myTextarea").css("max-height","450px");
 	$("#myTextarea").css("font-size","1.2em");
-}//END EDITSV
-	
-////////////////////////////////////////////////////END SCENARIO / VERIFICATION EDITING////////////////////////////////////////////////////	
+},
 
-////////////////////////////////////////////////////OTHER ELEMENTS EDITING////////////////////////////////////////////////////			
-		function editElement(ele,obj,type,ml){			
+
+editElement : function (ele,obj,type,ml){			
 				
 				var elem = ele;
 				var objm = obj;
@@ -714,28 +689,26 @@ function editSV(ele){
 					elem.removeChild(elem.firstChild);						
 					seleEdit.focus();
 
-					  seleEdit.onchange = function(){		
+					 seleEdit.onchange = function(){		
 					  
-									var ms  = $("#mySelect option:selected").text();
-									$(elem).html(ms);																	
-									editAjax(elem.childNodes[0]);	
-									$('input#search').quicksearch('#myTable tbody tr');	
-									
+						var ms  = $("#mySelect option:selected").text();
+						$(elem).html(ms);																	
+						editAjax(elem.childNodes[0]);	
+						$('input#search').quicksearch('#myTable tbody tr');	
 					}  			
 					
-							 seleEdit.onblur = function(){				
-
-									var ms  = $("#mySelect option:selected").text();
-									$(elem).html(ms);
+					 seleEdit.onblur = function(){				
+						
+						 var ms  = $("#mySelect option:selected").text();
+						$(elem).html(ms);
 										
 
 					}  
-							  seleEdit.onkeyup = function(){		
-					  
-								 	var ms  = $("#mySelect option:selected").text();
-									$(elem).html(ms);																	
-									editAjax(elem.childNodes[0]);		
-									$('input#search').quicksearch('#myTable tbody tr');	
+					 seleEdit.onkeyup = function(){		
+					  	var ms  = $("#mySelect option:selected").text();
+						$(elem).html(ms);																	
+						this.editAjax(elem.childNodes[0]);		
+						$('input#search').quicksearch('#myTable tbody tr');	
 									
 					}
 
@@ -763,13 +736,40 @@ function editSV(ele){
 						inp.onchange = function(){
 							
 							ele.innerHTML = inp.value;
-							editAjax(ele.childNodes[0]);
+							this.editAjax(ele.childNodes[0]);
 							$('input#search').quicksearch('#myTable tbody tr');	
 
 						}				
 			}			
 			
-		}//END EDIT ELEMENT	
+		},
+
+
+
+
+
+
+
+
+bootstrap: function(){
+
+	this.is_loggedin();
+	this.pauser();
+	this.reload();
+	$('#search').keypress(function() { return event.keyCode != 13; });
+	$('._filterText').keypress(function() { return event.keyCode != 13; });
+
+}
+
+
+}})();
+
+//xTable.bootstrap();
+
+
+
+////////////////////////////////////////////////////OTHER ELEMENTS EDITING////////////////////////////////////////////////////			
+//END EDIT ELEMENT	
 		
 	
 ////////////////////////////////////////////////////END OTHER ELEMENTS EDITING////////////////////////////////////////////////////				
