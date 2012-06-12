@@ -794,6 +794,7 @@ columnFilter : function(colNum){
 		//	console.log( posTD + " - posTD");
 		//	var reg = document.getElementById(filId).value;
 			var reg = that.value;
+
 			var html = this.childNodes[0].nodeValue;
 		//	console.log(html);
 			var patt = new RegExp(""+ reg +"","i");
