@@ -877,6 +877,32 @@ executeTestcase : function (){
 
 },	
 
+
+logout : function(){
+	var that = this;
+	$( "#logout-confirm" ).dialog({
+		resizable: false,
+		height:140,
+		modal: true,
+		buttons: {"Log out from xTable": function() {
+					$.ajax({											
+						type: "POST",
+						url: "login_mod.php",
+						cache: false,
+						data: {"kill":"kill"}
+						}).done(function( msg ) {
+							if( that.is_loggedin(msg) ){		
+								if (msg == "true"){
+									window.location.href ="login.php?logout=true";
+								}else{	alert("Error logging out, try again");	}
+							}												
+						});		
+			},
+		Cancel: function() {	$( this ).dialog( "close" );	}
+		}
+	});	
+},
+
 bootstrap: function(){
 
 	$('#myTable').columnFilters();
@@ -905,8 +931,6 @@ bootstrap: function(){
 
 	//adds header select menus
 	$(".t_fixed_header_caption").prepend( "<div id='hnav'><select name='hvertical' id='hvertical' onchange='javascript:xTable.reload();'>" + $("#vertical").html() + "</select> <select name='hclient' id='hclient' onchange='javascript:xTable.reload();'>"+$("#client").html()+"</select>"+" <select name='hproject' id='hproject' onchange='javascript:xTable.reload();'>" + $("#project").html() + "</select></div>" );	$("#hnav").css("float","left");
-
-
 
 	//adds CT and Execute buttons
 	$(".t_fixed_header_caption").append("<div id='hNavBtn'><button id='addBtn'>Create Testcase</button><button id='execBtn'>Execute</button></div>");
@@ -940,7 +964,9 @@ bootstrap: function(){
 
 	//click event handler for execute testcase
 	$("#execBtn").click(function(){	xTable.executeTestcase(); });
-
+	
+	//click event handler for logout
+	$("#logout").click(function() { xTable.logout(); });
 
 
 }//end BOOTSTRAP
@@ -984,7 +1010,7 @@ $(document).ready(function(){
 	xTable.cFieldsCheck();							
 	$( "button, input:submit, input:reset" ).button();				
 ///////////////////////////////////LOGOUT FUNCTION///////////////////////////////////////////////////////////////////////	
-	$("#logout").click(function(){
+
 	
 		$( "#logout-confirm" ).dialog({
 					resizable: false,
@@ -1014,7 +1040,7 @@ $(document).ready(function(){
 												}
 						}
 					});
-	});// END LOGOUT 
+ 
 ///////////////////////////////////END LOGOUT FUNCTION///////////////////////////////////////////////////////////////////////
 	
 ///////////////////////////////////SHOW TABLE IF ALL VCP///////////////////////////////////////////////////////////////////////	
