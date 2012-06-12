@@ -768,12 +768,8 @@ columnFilter : function(){
 			var html = this.childNodes[0].nodeValue || this.childNodes[0].childNodes[0].nodeValue;
 			var patt = new RegExp(""+ reg +"","i");
 			var res = patt.test(""+html+""); 		
-			if ( res ) {
-				 $(this).parent().css("display","table-row");							
-			}else{
-				 $(this).parent().css("display","none");										 
-			} 							
-											
+			var matches = ( res ) ?  $(this).parent().css("display","table-row") : $(this).parent().css("display","none");
+													
 		});
 
 
