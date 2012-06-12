@@ -769,13 +769,8 @@ columnFilter : function(){
 			var patt = new RegExp(""+ reg +"","i");
 			var res = patt.test(""+html+""); 		
 			var matches = ( res ) ?  $(this).parent().css("display","table-row") : $(this).parent().css("display","none");
-													
 		});
-
-
 	});
-
-
 					
 },
 
@@ -839,6 +834,49 @@ createTestcase : function(){
 },	
 
 
+
+executeTestcase : function (){
+
+
+	
+		if( xTable.relCheck("Select a component first!") ){
+		
+			return;
+		}
+	
+		var that = this;
+
+		$.ajax({											
+			type: "POST",
+			url: "execution.php",
+			cache: false,
+			data: {"rel":data.rel}								  
+			}).done(function( msg ) {
+				
+				if( that.is_loggedin(msg) ){	
+		
+					$("#iframeContainer").html(msg); 
+					$("#iframeContainer").dialog({
+						autoOpen: true,
+						height: 580,
+						width: 1010,
+						modal: true,
+						resizable: false
+					});	
+															
+				}
+			});								
+							
+										
+		
+
+
+
+
+
+
+},	
+
 bootstrap: function(){
 
 	$('#myTable').columnFilters();
@@ -898,10 +936,10 @@ bootstrap: function(){
 
 
 	//click event handler for create testcase method
-	
 	$("#addBtn").click(function(){ xTable.createTestcase();  });
 
-
+	//click event handler for execute testcase
+	$("#execBtn").click(function(){	xTable.executeTestcase(); });
 
 
 
@@ -938,54 +976,10 @@ $(document).ready(function(){
 ////////////////////////////////////////////////////END SET SELECTED DROPDOWN OPTIONS////////////////////////////////////////////////////	
 
 	$(document).ready(function() { 							
-
-
-
-
-
-///////////////////////////////////END NEW UI JAVASCRIPT//////////////////////////////////////////////
-//////////////////////////////////CUSTOM COLUMN FILTERS//////////////////////////////////////////////////////
-
-//////////////////////////////////CUSTOM COLUMN FILTERS//////////////////////////////////////////////////////
-							
-//////////////////////////////////MAIN SEARCH///////////////////////////////////////////////////////////////////////////////
-							
-//////////////////////////////////END MAIN SEARCH//////////////////////////////////////////////////////////////////////
-							
+						
 				
 							
-///////////////////////////////////EXECUTE BUTTON////////////////////////////////////////////////////////////////////////////
-	$("#execBtn").click(function(){				
-	
-		if( xTable.relCheck("Select a component first!") ){
-		
-			return;
-		}
 
-		$.ajax({											
-			type: "POST",
-			url: "execution.php",
-			cache: false,
-			data: {"rel":data.rel}								  
-			}).done(function( msg ) {
-				
-				if( xTable.is_loggedin(msg) ){	
-		
-					$("#iframeContainer").html(msg); 
-					$("#iframeContainer").dialog({
-						autoOpen: true,
-						height: 580,
-						width: 1010,
-						modal: true,
-						resizable: false
-					});	
-															
-				}
-			});								
-							
-										
-		});							
-///////////////////////////////////END EXECUTE BUTTON////////////////////////////////////////////////////////////////////////////
 	addEdit();	
 	xTable.cFieldsCheck();							
 	$( "button, input:submit, input:reset" ).button();				
