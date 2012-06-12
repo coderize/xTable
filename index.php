@@ -753,46 +753,17 @@ footerCount : function (){
 
 
 
-columnFilter : function(colNum){
+columnFilter : function(){
 	
-	//var rows = $("#myTable tr");
-	//this.colNum = colNum || 0;
-/*
-		$("#_filterText1" ).keyup( function(){
 
-			rows.children("td:nth-child(2)").each(function() {
-				
-				console.log(this.innerHTML);		
-
-				var reg = document.getElementById("_filterText1").value;										
-				var html = this.childNodes[0].nodeValue;
-				var patt = new RegExp(""+ reg +"","i");
-				var res = patt.test(""+html+""); 		
-				if ( res ) {
-					 $(this).parent().css("display","table-row");							
-				}else{
-					 $(this).parent().css("display","none");										 
-				} 							
-											
-			});
-
-		});//END KEYUP
- */
 	$("#_filterText1, #_filterText2, #_filterText3, #_filterText4, #_filterText5, #_filterText6, #_filterText7, #_filterText8, #_filterText9").keyup(function(){    
 		var that = this;	
-		var filId = this.id;
-		var txtVal = this.value;
 		var position = this.id[this.id.length - 1];
 		var posTD = parseInt(position) + 1;
 		var rows = $("#myTable tr");
-		console.log("in keyup " + posTD);
 
 		rows.children("td:nth-child("+ posTD +")").each(function() {
-			
-		//	console.log(this.nodeType);
-		//	alert( that.value );
-		//	console.log( posTD + " - posTD");
-		//	var reg = document.getElementById(filId).value;
+	
 			var reg = that.value;
 			var html = this.childNodes[0].nodeValue || this.childNodes[0].childNodes[0].nodeValue;
 			console.log(html);
@@ -810,130 +781,67 @@ columnFilter : function(colNum){
 	});
 
 
-
-
-//}						
-/*	 $("#_filterText2").keyup( function(){
-		rows.children("td:nth-child(3)").each(function() {									
-			var reg = document.getElementById("_filterText2").value;										
-			var html = this.childNodes[0].nodeValue;
-			var patt = new RegExp(""+ reg +"","i");
-			var res = patt.test(""+html+""); 		
-			if ( res ) {
-				 $(this).parent().css("display","table-row");	
-			}else{
-				 $(this).parent().css("display","none");										 
-			} 							
-		}); 							
-	});//END KEYUP
-       
-	$("#_filterText3").keyup( function(){
-		rows.children("td:nth-child(4)").each(function() {									
-			var reg = document.getElementById("_filterText3").value;										
-			var html = this.childNodes[0].nodeValue;
-			var patt = new RegExp(""+ reg +"","i");
-			var res = patt.test(""+html+""); 		
-			if ( res ) {
-				$(this).parent().css("display","table-row");	
-			}else{
-				$(this).parent().css("display","none");										 
-			} 							
-		}); 
-	});//END KEYUP
-							
-							
-	$("#_filterText4").keyup( function(){
-		rows.children("td:nth-child(5)").each(function() {									
-			var reg = document.getElementById("_filterText4").value;										
-			var html = this.childNodes[0].nodeValue;
-			var patt = new RegExp(""+ reg +"","i");
-			var res = patt.test(""+html+""); 		
-			if ( res ) {
-				$(this).parent().css("display","table-row");	
-			}else{
-				$(this).parent().css("display","none");										 
-			} 							
-		}); 
-	});//END KEYUP
-							
-	$("#_filterText5").keyup( function(){
-		rows.children("td:nth-child(6)").each(function() {									
-			var reg = document.getElementById("_filterText5").value;										
-			var html = this.childNodes[0].nodeValue;
-			var patt = new RegExp(""+ reg +"","i");
-			var res = patt.test(""+html+""); 		
-			if ( res ) {
-				$(this).parent().css("display","table-row");	
-			}else{
-				$(this).parent().css("display","none");										 
-			} 							
-		}); 
-							
-	});//END KEYUP
-							
-							
-	$("#_filterText6").keyup( function(){
-		rows.children("td:nth-child(7)").each(function() {									
-			var reg = document.getElementById("_filterText6").value;										
-			var html = this.childNodes[0].nodeValue;
-			var patt = new RegExp(""+ reg +"","i");
-			var res = patt.test(""+html+""); 		
-			if ( res ) {
-				$(this).parent().css("display","table-row");	
-			}else{
-				$(this).parent().css("display","none");										 
-			} 							
-		}); 
-	});//END KEYUP
-							
-							
-							
-	$("#_filterText7").keyup( function(){
-		rows.children("td:nth-child(8)").each(function() {									
-			var reg = document.getElementById("_filterText7").value;										
-			var html = this.childNodes[0].childNodes[0].nodeValue;
-			var patt = new RegExp(""+ reg +"","i");
-			var res = patt.test(""+html+""); 		
-			if ( res ) {
-				$(this).parent().css("display","table-row");	
-			}else{
-				$(this).parent().css("display","none");										 
-			} 							
-		}); 
-	});//END KEYUP
-							
-	
-       	$("#_filterText8").keyup( function(){
-		rows.children("td:nth-child(9)").each(function() {									
-			var reg = document.getElementById("_filterText8").value;										
-			var html = this.childNodes[0].childNodes[0].nodeValue;
-			var patt = new RegExp(""+ reg +"","i");
-			var res = patt.test(""+html+""); 		
-			if ( res ) {
-				$(this).parent().css("display","table-row");	
-			}else{
-				$(this).parent().css("display","none");										 
-			} 							
-		}); 
-							
-	});//END KEYUP
-							
-	$("#_filterText9").keyup( function(){
-		rows.children("td:nth-child(10)").each(function() {									
-			var reg = document.getElementById("_filterText9").value;										
-			var html = this.childNodes[0].childNodes[0].nodeValue;
-			var patt = new RegExp(""+ reg +"","i");
-			var res = patt.test(""+html+""); 		
-			if ( res ) {
-				$(this).parent().css("display","table-row");																				
-			}else{
-				$(this).parent().css("display","none");										 
-			} 							
-		}); 
-	});//END KEYUP	
-*/							
-							
+					
 },
+
+createTestcase : function(){
+
+		if( this.relCheck("Select a component first!") ){
+			return;
+		}
+		
+		var that = this;
+
+		this.pauser();
+
+		$.ajax({
+			type: "POST",
+			url: "action.php",
+			cache: false,
+			data: {"popFuncs":"true", "rel":data.rel}
+			}).done(function( msg ) {
+
+				if( that.is_loggedin(msg) ){								
+			
+					$("#function").html(msg);			
+					that.cFieldsCheck();
+					$("#createForm tr").css("display","table-row");
+					$("#createForm").css("display","block");
+					$("#test").css("display","block");
+					$("#indicator").css("display","none");
+
+					$( "#createForm" ).dialog({
+								height: 527,
+								width: 800,
+								modal: true,
+								resizable: false
+							});										
+												
+							 $("#cancel").click(function(){
+							 
+								 $("#createForm").dialog( "close" );									
+							});	 					
+							
+							that.validCreate();
+							that.cleanCreate();
+											
+							$.ajax({
+								type: "GET",
+								url: "time.php",
+								cache: false,
+								data: "test=test"
+							}).done(function( msg ) {
+								
+									$("#sCreateTime").html(msg);
+
+								});
+				}
+			});				
+										
+										
+
+
+},	
 
 
 bootstrap: function(){
@@ -983,16 +891,22 @@ bootstrap: function(){
 	//adds search blur & focus methods
 	$("#search").blur(function(){ this.value = 'Search...';}).focus(function(){ this.value = '';});
 							
-	//$("#navigation select").selectmenu({style: 'dropdown', maxHeight: 400});							
 	$("#createForm select").selectmenu({style: 'dropdown',maxHeight: 400});								
 	$('input:text, input:password').button().addClass('inpField');	
 
 
+	//adds column filtering ability
+	this.columnFilter();		
+
+	//Search functionality for global search
+	$('input#search').quicksearch('#myTable tbody tr');
 
 
+	//click event handler for create testcase method
+	
+	$("#addBtn").click(function(){ xTable.createTestcase();  });
 
-	//adds columb filtering ability
-	this.columnFilter(9);		
+
 
 
 
@@ -1040,63 +954,10 @@ $(document).ready(function(){
 //////////////////////////////////CUSTOM COLUMN FILTERS//////////////////////////////////////////////////////
 							
 //////////////////////////////////MAIN SEARCH///////////////////////////////////////////////////////////////////////////////
-$('input#search').quicksearch('#myTable tbody tr');							
+							
 //////////////////////////////////END MAIN SEARCH//////////////////////////////////////////////////////////////////////
 							
-/////////////////////////////////// CREATE TESTCASE BUTTON/////////////////////////////////////////////////////		
-	$("#addBtn").click(function(){
-
-		if( xTable.relCheck("Select a component first!") ){
-			return;
-		}
-
-		xTable.pauser();
-		$.ajax({
-			type: "POST",
-			url: "action.php",
-			cache: false,
-			data: {"popFuncs":"true", "rel":data.rel}
-			}).done(function( msg ) {
-
-				if( xTable.is_loggedin(msg) ){								
-			
-					$("#function").html(msg);			
-					cFieldsCheck();
-					$("#createForm tr").css("display","table-row");
-					$("#createForm").css("display","block");
-					$("#test").css("display","block");
-					$("#indicator").css("display","none");
-
-					$( "#createForm" ).dialog({
-								height: 527,
-								width: 800,
-								modal: true,
-								resizable: false
-							});										
-												
-							 $("#cancel").click(function(){
-							 
-								 $("#createForm").dialog( "close" );									
-							});	 					
-							
-							validCreate();
-							cleanCreate();
-											
-							$.ajax({
-								type: "GET",
-								url: "time.php",
-								cache: false,
-								data: "test=test"
-							}).done(function( msg ) {
-								
-								$("#sCreateTime").html(msg);
-								});
-				}
-			});				
-										
-										
-		});
-///////////////////////////////////END CREATE TESTCASE BUTTON/////////////////////////////////////////////////////						
+				
 							
 ///////////////////////////////////EXECUTE BUTTON////////////////////////////////////////////////////////////////////////////
 	$("#execBtn").click(function(){				
