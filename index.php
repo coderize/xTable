@@ -398,7 +398,7 @@ Aw Snap, Looks like you have been logged out!
 <div id="contactable"></div>
 <script type="text/javascript" charset="utf-8">
 
-(function () {
+
 xTable = {
 is_loggedin : function(a){if(a=="INVALID_SESSION"){$("#logged-out").dialog({height:300,width:400,modal:true,resizable:false});function b(){window.location.reload();}setTimeout(b,2e3);return false}else{return true}},
 
@@ -777,24 +777,31 @@ columnFilter : function(colNum){
 			});
 
 		});//END KEYUP
-
  */
-	$("#_filterText1").keyup(function(){    
-	 	var filId = this.id;
+	$("#_filterText1, #_filterText2, #_filterText3, #_filterText4, #_filterText5, #_filterText6, #_filterText7, #_filterText8, #_filterText9").keyup(function(){    
+		var that = this;	
+		var filId = this.id;
 		var txtVal = this.value;
 		var position = this.id[this.id.length - 1];
-		var posTD = position + 1;
+		var posTD = parseInt(position) + 1;
 		var rows = $("#myTable tr");
+		console.log("in keyup " + posTD);
+
 		rows.children("td:nth-child("+ posTD +")").each(function() {
-			console.log(filId);
-			var reg = document.getElementById(filId).value;									
+			
+		//	console.log(this.nodeType);
+		//	alert( that.value );
+		//	console.log( posTD + " - posTD");
+		//	var reg = document.getElementById(filId).value;
+			var reg = that.value;
 			var html = this.childNodes[0].nodeValue;
+		//	console.log(html);
 			var patt = new RegExp(""+ reg +"","i");
 			var res = patt.test(""+html+""); 		
 			if ( res ) {
 				 $(this).parent().css("display","table-row");							
 			}else{
-					 $(this).parent().css("display","none");										 
+				 $(this).parent().css("display","none");										 
 			} 							
 											
 		});
@@ -931,8 +938,8 @@ columnFilter : function(colNum){
 
 bootstrap: function(){
 
-
 	$('#myTable').columnFilters();
+
 	var hght = ($(".mid").length==0) ? 125 : 157
 	$('#myTable').fixheadertable({ 
 		caption     : ' ', 
@@ -961,8 +968,8 @@ bootstrap: function(){
 
 
 	//adds CT and Execute buttons
-$(".t_fixed_header_caption").append("<div id='hNavBtn'><button id='addBtn'>Create Testcase</button><button id='execBtn'>Execute</button></div>");
-$("#hNavBtn").css("float","right");
+	$(".t_fixed_header_caption").append("<div id='hNavBtn'><button id='addBtn'>Create Testcase</button><button id='execBtn'>Execute</button></div>");
+	$("#hNavBtn").css("float","right");
 
 
 	//adds footer div for count
@@ -980,6 +987,10 @@ $("#hNavBtn").css("float","right");
 	$("#createForm select").selectmenu({style: 'dropdown',maxHeight: 400});								
 	$('input:text, input:password').button().addClass('inpField');	
 
+
+
+
+
 	//adds columb filtering ability
 	this.columnFilter(9);		
 
@@ -988,7 +999,8 @@ $("#hNavBtn").css("float","right");
 }//end BOOTSTRAP
 
 
-}})();
+
+}
 
 $(document).ready(function(){
 

@@ -5,7 +5,7 @@ require "includes/config.php";
 require "includes/sess.php";
 session_start();
 
- if( !$_SESSION['loggedIn'] === TRUE){
+ if( $_SESSION['loggedIn'] !== TRUE){
 	header('Refresh: 0; URL=login.php?logout=true');
 	exit;
 } 
@@ -31,7 +31,7 @@ session_start();
 </style>
 	</head>
 	<body>
-	<a href="login.php?logout=true" style="text-decoration:none">
+	<a style="text-decoration:none">
 		<button name="logout" id="logout" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false">
 		<span class="ui-button-text">Logout</span></button>
 	</a>
@@ -69,6 +69,33 @@ session_start();
 }
 ?>
 	</div>
+
+<script>
+
+$("#logout").click(function(){
+
+	$.ajax({											
+		type: "POST",
+		url: "login_mod.php",
+		cache: false,
+		data: {"kill":"kill"}
+		}).done(function( msg ) {
+			
+			if( msg ){		
+			
+				if (msg == "true"){
+					window.location.href ="login.php?logout=true";
+																
+				}else{	alert("Error logging out, try again");	}
+			
+			}					
+		});
+});
+</script>
+
+
+
+
 	</body>
 
 </html>

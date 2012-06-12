@@ -51,6 +51,7 @@
 			unset($_SESSION['user_id']);
 			unset($_SESSION['role']);
 			unset($_SESSION['loc']);
+			unset($_SESSION['loggedIn']);
 		
         return true;
     }

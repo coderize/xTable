@@ -5,7 +5,7 @@ require "includes/config.php";
 require "includes/sess.php";
 session_start();
 
-if( $_SESSION['fname'] ){
+if( $_SESSION['loggedIn'] === TRUE ){
 	header('Refresh: 0; URL=home.php');
 	exit;
 } 
@@ -362,7 +362,7 @@ html {
 <?php
 $logout = @mysql_real_escape_string($_GET['logout']);
 
-if($logout=="true"){
+if($logout == "true"){
 	
 	echo "<div id='logout'>You have been logged out!</div>";
 } 

@@ -4,7 +4,7 @@ require "includes/config.php";
 require "includes/sess.php";
 session_start();
 
-$kill = @mysql_real_escape_string($_GET['kill']);
+$kill = @mysql_real_escape_string($_POST['kill']);
 
 
 if( $kill ){
