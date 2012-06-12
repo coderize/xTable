@@ -1009,39 +1009,7 @@ $(document).ready(function(){
 	addEdit();	
 	xTable.cFieldsCheck();							
 	$( "button, input:submit, input:reset" ).button();				
-///////////////////////////////////LOGOUT FUNCTION///////////////////////////////////////////////////////////////////////	
 
-	
-		$( "#logout-confirm" ).dialog({
-					resizable: false,
-					height:140,
-					modal: true,
-					buttons: {
-						"Log out from xTable": function() {
-										$.ajax({											
-											type: "POST",
-											url: "login_mod.php",
-											cache: false,
-											data: {"kill":"kill"}
-											}).done(function( msg ) {
-													
-												if( xTable.is_loggedin(msg) ){		
-												
-													if (msg == "true"){
-														window.location.href ="login.php?logout=true";
-																
-													}else{	alert("Error logging out, try again");	}
-												}												
-															
-											});		
-												},
-												Cancel: function() {
-													$( this ).dialog( "close" );
-												}
-						}
-					});
- 
-///////////////////////////////////END LOGOUT FUNCTION///////////////////////////////////////////////////////////////////////
 	
 ///////////////////////////////////SHOW TABLE IF ALL VCP///////////////////////////////////////////////////////////////////////	
 $("#bodyContainer").css("visibility","visible");
