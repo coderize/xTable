@@ -549,14 +549,12 @@ $("#addSimilar").attr("disabled","true");
 
 
 tcidLogic : function(){
-
-$("#function").change(function(){	
-
+	var that = this;
 	var custFunction =  ( $("#newfunction").val() ) ? encodeURIComponent($("#newfunction").val()) :  encodeURIComponent($("#function").val());
 	this.cFieldsCheck();
 	this.validCreate();
 				
-				if( $(this).val() == "other450311") {
+				if( $("#function").val() == "other450311") {
 
 							$.ajax({
 								type: "POST",
@@ -566,20 +564,20 @@ $("#function").change(function(){
 							        data: {"othertcid" : "true", "rel" : data.rel }
 								}).done(function( msg ) {
 
-								if( this.is_loggedin(msg) ){	
+								if( that.is_loggedin(msg) ){	
 								
 									if(msg){
 									
 										$("#tcid").val(msg);
 										$("#tcid").change();									
-										this.cFieldsCheck();
-										this.validCreate();										
+										that.cFieldsCheck();
+										that.validCreate();										
 									}
 								}
 								
 							});		
 
-				}else if( $(this).val() != 'na' && $(this).val() !='other450311' ){
+				}else if( $("#function").val() != 'na' && $("#function").val() !='other450311' ){
 						
 					$.ajax({
 								type: "POST",													  
@@ -589,12 +587,12 @@ $("#function").change(function(){
 								data: {"newtcid" : "true", "funcname" : custFunction, "rel" : data.rel}
 								}).done(function( msg ) {
 								
-								if( this.is_loggedin(msg) ){	
+								if( that.is_loggedin(msg) ){	
 								
 									$("#tcid").val(msg);	
 									$("#tcid").change();
-									this.cFieldsCheck();					
-									this.validCreate();
+									that.cFieldsCheck();					
+									that.validCreate();
 									
 								}
 									
@@ -604,7 +602,7 @@ $("#function").change(function(){
 				
 				}
 
-})},
+},
 
 
 cleanCreate : function(){		
@@ -963,6 +961,31 @@ cellEdit : function(){
 },
 
 
+createFunc : function(){
+
+	 if( $("#function").val() == "other450311"  &&  $("#newfunction").length < 1 ) {
+
+		$("#function").parent().append("<input type='text'  id='newfunction' class='cf pauser' name='newfunction' style='position:absolute; text-align:left; right:55px; top:25px; width:290px;' />");
+		$('input:text, input:password').button().addClass('inpField');
+		this.validCreate();
+	
+		$(".cf").keyup(function(){
+			
+			if( $.trim($(this).val()) ){
+				
+				$(this).parent().siblings(':first').html("<img class='success' src='img/accept.gif'/>");											
+			}else{
+				$(this).parent().siblings(':first').html("<img class='error' src='img/denied.gif'/>");
+			}
+										
+		}); 
+											
+ }else{
+	$("#newfunction").remove();
+	this.validCreate();
+ }
+
+},
 
 bootstrap: function(){
 
@@ -1030,7 +1053,11 @@ bootstrap: function(){
 	
 	//click event handler for logout
 	$("#logout").click(function() { xTable.logout(); });
+	
+	//change event handler for createForm function selection
+	$("#function").change(function(){ xTable.createFunc(); xTable.tcidLogic(); });
 
+	
 
 }//end BOOTSTRAP
 
@@ -1068,7 +1095,7 @@ $(document).ready(function(){
 	$(document).ready(function() { 							
 				
 
-	addEdit();	
+	//addEdit();	
 	$( "button, input:submit, input:reset" ).button();				
 
 	
@@ -1079,7 +1106,7 @@ $("#search").css("display","block");
 							
 ///////////////////////////////////END SHOW TABLE IF ALL VCP///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////ADD NEW FUNCTION////////////////////////////////////////////////////////////////////////////
-$("#function").change(function(){
+/*$("#function").change(function(){
 	
  if( $(this).val() == "other450311"  &&  $("#newfunction").length < 1 ) {
 
@@ -1103,7 +1130,7 @@ $("#function").change(function(){
 	validCreate();
  }
 
-}); 
+	}); */
 ///////////////////////////////////END ADD NEW FUNCTION////////////////////////////////////////////////////////////////////////////		
 /////////////////////////////////////////////////////////////INSERT NEW TESTCASE///////////////////////////////////////////	
 	function addCreate(action){
