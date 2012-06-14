@@ -276,7 +276,7 @@ if( $startExec == 'true' ){
 										  data: "create_date=<?php echo $create_date; ?>&creator=<?php echo $creator; ?>",												  
 										}).done(function( msg ) {
 										
-												if( is_loggedin(msg) ){	
+												if( xTable.is_loggedin(msg) ){	
 										
 													$("#iframeContainer").html(msg); 
 														

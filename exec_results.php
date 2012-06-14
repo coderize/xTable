@@ -124,10 +124,11 @@ function strip_tags(a,b){b=(((b||"")+"").toLowerCase().match(/<[a-z][a-z0-9]*>/g
 					url: "action.php",													  
 					cache: false,
 					async: true,
-					data: "resultsEdit=true&eid=" + eid + "&result=" + result + "&crypto=<?php echo session_id() . 'zLsX7795d1d5AsCsD3wFGv'; ?>"
+					data: {"resultsEdit":"true","eid":eid,"result":result}
 		}).done(function( msg ) {
 				
-					if( is_loggedin(msg) ){			
+					if( xTable.is_loggedin(msg) ){			
+
 							
 							if(msg =='200'){
 								
@@ -294,7 +295,7 @@ function strip_tags(a,b){b=(((b||"")+"").toLowerCase().match(/<[a-z][a-z0-9]*>/g
 						type: "GET",													  
 						url: "action.php",													  
 						cache: false,													  
-						data: "execute=true&testcasearray="+ testCaseArray +"&devicearray="+deviceArray+"&crypto=<?php echo session_id() . 'zLsX7795d1d5AsCsD3wFGv'; ?>",													  
+						data: {"execute":"true","testcasearray":testCaseArray,"devicearray":deviceArray}													  
 						}).done(function( msg ) {
 							//alert(msg);
 							returnedExecIds = msg;	
