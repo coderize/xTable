@@ -630,7 +630,7 @@ this.cFieldsCheck();
 
 
 editSV : function (ele){	
-
+	var that = this;
 	$("<textarea id='myTextarea'></textarea>").html(ele.childNodes[0].innerHTML).appendTo("body");
 	$( "#myTextarea" ).dialog({
 				autoOpen: true,
@@ -641,8 +641,8 @@ editSV : function (ele){
 				resizable: false,
 				buttons: { "Save": function() {
 				
-					ele.childNodes[0].innerHTML = this.strip_tags($("#myTextarea").val(), '<i><b>');
-					this.editAjax(ele.childNodes[0]);
+					ele.childNodes[0].innerHTML = that.strip_tags($("#myTextarea").val(), '<i><b>');
+					that.editAjax(ele.childNodes[0]);
 					$('input#search').quicksearch('#myTable tbody tr');
 					$("#myTextarea").remove();
 					$(this).dialog("close");
@@ -736,7 +736,7 @@ editElement : function (ele,obj,type,ml){
 						inp.onchange = function(){
 							
 							ele.innerHTML = inp.value;
-							this.editAjax(ele.childNodes[0]);
+							that.editAjax(ele.childNodes[0]);
 							$('input#search').quicksearch('#myTable tbody tr');
 						}				
 			}			
