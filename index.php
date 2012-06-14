@@ -402,7 +402,11 @@ Aw Snap, Looks like you have been logged out!
 xTable = {
 is_loggedin : function(a){if(a=="INVALID_SESSION"){$("#logged-out").dialog({height:300,width:400,modal:true,resizable:false});function b(){window.location.reload();}setTimeout(b,2e3);return false}else{return true}},
 
-pauser : function(){function a(){var a=Math.round(+(new Date)/1e3);return a}$("#pauseIni").html(a());$("#pauseCur").html("0");$("#pauseDur").html("0");$("#pauseTotalDur").html("0");$("#pauseCount").html("0");$(".pauser, #addSimilar, #addAnother, #add").bind("click",function(){$("#pauseCur").html(a());var b=parseInt($("#pauseIni").html());var c=parseInt($("#pauseCur").html());var d=c-b;$("#pauseDur").html(d);var e=300;if(d<e){$("#pauseIni").html($("#pauseCur").html());validCreate()}else{var f=parseInt($("#pauseTotalDur").html());var f=f==0?d:f+d;var g=parseInt($("#pauseCount").html());var g=g==0?1:g+1;$("#pauseIni").html($("#pauseCur").html());$("#pauseTotalDur").html(f);$("#pauseCount").html(g)}})},
+pauser : function(){
+var that = this;
+function a(){var a=Math.round(+(new Date)/1e3);return a}$("#pauseIni").html(a());$("#pauseCur").html("0");$("#pauseDur").html("0");$("#pauseTotalDur").html("0");$("#pauseCount").html("0");$(".pauser, #addSimilar, #addAnother, #add").bind("click",function(){$("#pauseCur").html(a());var b=parseInt($("#pauseIni").html());var c=parseInt($("#pauseCur").html());var d=c-b;$("#pauseDur").html(d);var e=300;if(d<e){$("#pauseIni").html($("#pauseCur").html());that.validCreate()}else{var f=parseInt($("#pauseTotalDur").html());var f=f==0?d:f+d;var g=parseInt($("#pauseCount").html());var g=g==0?1:g+1;$("#pauseIni").html($("#pauseCur").html());$("#pauseTotalDur").html(f);$("#pauseCount").html(g)}})
+
+},
 
 reload : function(){ddvert=document.getElementById("hvertical");ddclient=document.getElementById("hclient");ddproject=document.getElementById("hproject");vertpath="index.php?vertical="+ddvert.value;window.location=vertpath;clientpath=vertpath+"&client="+ddclient.value;window.location=clientpath;projectpath=clientpath+"&project="+ddproject.value;window.location=projectpath},
 
@@ -987,6 +991,128 @@ createFunc : function(){
 
 },
 
+
+
+addTestcase : function (){
+
+	//validates TC creation
+	this.validCreate();	
+	
+	/////GET ETIME /////
+	$.ajax({
+		type: "GET",													  
+		url: "time.php",													  
+		cache: false,	
+		async: false,
+		data: "test=test",													  
+		}).done(function( msg ) {
+			
+			if( xTable.is_loggedin(msg) ){	$("#eCreateTime").html(msg); }
+				
+		});		
+
+
+	//////////VERIFY WHICH OTHER OR NEW FUNCTION///////////
+	var custFunction = ($("#newfunction").val() ) ? $("#newfunction").val() : $("#function").val();
+
+	//GETS TCID VAL
+	var defaultTCID = $("#tcid").val();
+	
+			
+	//UPDATE PAUSE DURATION & COUNT VALUES
+	document.getElementById("testname").click();
+			
+	//GET PAUSER VARS
+	var ptd = parseInt($("#pauseTotalDur").html());
+	var pc = parseInt($("#pauseCount").html());
+			
+	////INSERT RECORD TO THE DATABASE////			
+	 $.ajax({
+		type: "POST",										  
+		url: "action.php",
+		cache: false,										  
+		data: "cTestcase=true&tcid="+ encodeURIComponent($("#tcid").val()) +"&rel="+ data.rel +"&function="+ encodeURIComponent(custFunction) +"&name="+ encodeURIComponent($("#testname").val()) +"&priority="+ encodeURIComponent($("#priority").val()) +"&class="+ encodeURIComponent($("#class").val()) +"&prereq="+ encodeURIComponent($("#preConditions").val()) +"&scenario="+ encodeURIComponent($("#scenario").val()) +"&expected="+ encodeURIComponent($("#verification").val()) +"&stime="+ encodeURIComponent($("#sCreateTime").html()) +"&etime="+ encodeURIComponent($("#eCreateTime").html()) + "&pc="+ encodeURIComponent(pc) + "&ptd=" + encodeURIComponent(ptd) + "&status="+ encodeURIComponent($("#status").val()) 
+		}).done(function( msg ) {
+				
+					if( xTable.is_loggedin(msg) ){	
+				
+						var myObj =  jQuery.parseJSON(msg);
+
+						if(myObj.code == '200'){
+							$("#function").change();
+							$("#indicator").css("display","block");					
+								
+								$("#indicator").fadeOut(2000, function(){
+
+									//VALID CREATE BUTTONS
+									validCreate();
+											
+									if(action == "close"){	$("#createForm").dialog( "close" );}
+						
+										if(action == 'aa'){
+
+											if ( $("#function").val() == 'other450311' ){
+												 $.ajax({
+													type: "GET",
+													url: "action.php",
+													cache: false,
+													data: {"popFuncs":"true","rel":data.rel}					  
+												}).done(function( msg ) {	
+													
+													$("#function").html(msg);
+													$("#createForm select").selectmenu('destroy');
+													$("#createForm select").selectmenu({style: 'dropdown', maxHeight: 400});															
+												});																
+											}										
+												cleanCreate();												
+											
+									}										
+									if(action == 'as'){
+										
+										if ( $("#function").val() == 'other450311' ){
+											$.ajax({
+												type: "GET",
+												url: "action.php",
+												cache: false,
+												data: {"popFuncs":"true","rel":data.rel}
+											}).done(function( msg ) {
+												$("#function").html(msg);
+												$("#createForm select").selectmenu('destroy');
+												$("#createForm select").selectmenu({style: 'dropdown', maxHeight: 400});	
+														
+											});
+																
+										}
+
+									}
+									
+									});
+									 
+									 
+									$("input").removeClass("ui-state-hover");								
+									
+/////////////////////////////////////Insert into  table info///////////////////////////////////
+$('#myTable tbody').prepend('<tr><td class="mid ui-widget-content">' + myObj.mysql_last_id + '</td><td style="text-transform:uppercase;" ondblclick="javascript:editElement(this,priorityObj,true,75);" class=" function rhw ui-widget-content" style="text-align:center;">' + custFunction + '</td><td ondblclick="javascript:editElement(this,statusObj,false,8);" class="tdw center ui-widget-content"  style="text-align:center;">' + 	$("#status option:selected").text() + '</td><td ondblclick="javascript:editElement(this,priorityObj,true,5);" class="tdw center  ui-widget-content"  style="text-align:center;">' +	defaultTCID	 + '</td><td ondblclick="javascript:editElement(this,priorityObj,false,8);" class="tdw center ui-widget-content"  style="text-align:center;">' + 	$("#priority option:selected").text() + '</td><td ondblclick="javascript:editElement(this,classObj,false,25);"  class="tdw center  ui-widget-content"  style="text-align:center;">' + $("#class option:selected").text() + '</td><td  ondblclick="javascript:editElement(this,priorityObj,true,100);"  class="tdw center  ui-widget-content"  style="text-align:left;">' +$("#testname").val()+'</td><td  ondblclick="javascript:editSV(this);"  class="tdw tdh  ui-widget-content"><pre>' +  strip_tags($("#preConditions").val(), '<i><b>') +'</pre></td><td ondblclick="javascript:editSV(this);" class="tdw tdh  ui-widget-content"><pre>'+ 	strip_tags($("#scenario").val(), '<i><b>') +'</pre></td><td  ondblclick="javascript:editSV(this);" class="tdw tdh  ui-widget-content"><pre>'+   strip_tags($("#verification").val(), '<i><b>')	+'</pre></td></tr>');	
+									
+									$('input#search').quicksearch('#myTable tbody tr');	
+
+							}else{
+								
+									alert("Could not contact server");						
+									$("#add").click(function(){ $("#createForm").dialog( "close" ); });
+										
+							} 
+							
+					}		
+			
+			});	 
+
+	////GLOBAL SEARCH REINITIALIZATION///
+	$('input#search').quicksearch('table tbody tr');
+
+
+},
+
 bootstrap: function(){
 
 	$('#myTable').columnFilters();
@@ -1056,8 +1182,9 @@ bootstrap: function(){
 	
 	//change event handler for createForm function selection
 	$("#function").change(function(){ xTable.createFunc(); xTable.tcidLogic(); });
-
 	
+	//adds styling to buttons and inputs
+	$( "button, input:submit, input:reset" ).button();				
 
 }//end BOOTSTRAP
 
@@ -1096,7 +1223,7 @@ $(document).ready(function(){
 				
 
 	//addEdit();	
-	$( "button, input:submit, input:reset" ).button();				
+
 
 	
 ///////////////////////////////////SHOW TABLE IF ALL VCP///////////////////////////////////////////////////////////////////////	
