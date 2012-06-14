@@ -423,7 +423,7 @@ relCheck : function(error){
 strip_tags : function (a,b){b=(((b||"")+"").toLowerCase().match(/<[a-z][a-z0-9]*>/g)||[]).join("");var c=/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi,d=/<!--[\s\S]*?-->|<\?(?:php)?[\s\S]*?\?>/gi;return a.replace(d,"").replace(c,function(a,c){return b.indexOf("<"+c.toLowerCase()+">")>-1?a:""})},
 
 editAjax : function (par){
-
+	var that = this;
 	var parent = $(par).parent().parent();	 
 	var mid  = encodeURIComponent($(parent).children("td:nth-child(1)").html());
 	var func = encodeURIComponent($(parent).children("td:nth-child(2)").html());
@@ -446,7 +446,7 @@ editAjax : function (par){
 				 "prereq":prereq, "steps":steps, "expected":expected}
 		}).done(function( msg ) {
 			
-			if( this.is_loggedin(msg) ){					
+			if( that.is_loggedin(msg) ){					
 						
 				if(msg =='200'){
 					 	
@@ -661,7 +661,7 @@ editSV : function (ele){
 
 
 editElement : function (ele,obj,type,ml){			
-				
+				var that = this;
 				var elem = ele;
 				var objm = obj;
 				var typem = type;
@@ -695,7 +695,7 @@ editElement : function (ele,obj,type,ml){
 					  
 						var ms  = $("#mySelect option:selected").text();
 						$(elem).html(ms);																	
-						this.editAjax(elem.childNodes[0]);	
+						that.editAjax(elem.childNodes[0]);	
 						$('input#search').quicksearch('#myTable tbody tr');	
 					}  			
 					
@@ -708,7 +708,7 @@ editElement : function (ele,obj,type,ml){
 					 seleEdit.onkeyup = function(){		
 					  	var ms  = $("#mySelect option:selected").text();
 						$(elem).html(ms);																	
-						this.editAjax(elem.childNodes[0]);		
+						that.editAjax(elem.childNodes[0]);		
 						$('input#search').quicksearch('#myTable tbody tr');									
 					}
 
