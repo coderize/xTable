@@ -247,7 +247,7 @@ if( $startExec == 'true' ){
 						type: "GET",													  
 						url: "action.php",													  
 						cache: false,													  
-						data: "insertExec=true&exec_id="+ id +"&exec_start="+ stime +"&exec_result="+ result +"&exec_device_version="+ version +"&crypto=<?php echo session_id() . 'zLsX7795d1d5AsCsD3wFGv'; ?>",										  
+						data: {"insertExec":"true","exec_id": id,"exec_start":stime,"exec_result":result,"exec_device_version":version}										  
 						}).done(function( retTime ) {
 							
 							//execstime = retTime;
