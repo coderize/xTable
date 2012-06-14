@@ -97,7 +97,7 @@ body,pre{font-family:Verdana,Helvetica,san-serif,Arial;font-size:.6em}*{padding:
 <link rel="stylesheet" type="text/css" href="css/selectmenu.css" />
 <!-- <link rel="stylesheet" type="text/css" href="css/calendar.css" /> -->
 <link rel="stylesheet" type="text/css" href="css/contactable.css" />
-<script src="js/addEdit.js" charset="UTF-8"></script>
+<!--<script src="js/addEdit.js" charset="UTF-8"></script> -->
 <script src="js/userEdit.js" charset="UTF-8"></script>
 <script src="js/deviceEdit.js" charset="UTF-8"></script>
 <script src="js/jquery.min.js" charset="UTF-8"></script>
@@ -1120,7 +1120,7 @@ that.footerCount();
 			});	 
 
 	////GLOBAL SEARCH REINITIALIZATION///
-	$('input#search').quicksearch('table tbody tr');
+	$('input#search').quicksearch('#myTable tbody tr');
 
 
 },
@@ -1196,7 +1196,10 @@ bootstrap: function(){
 	$("#function").change(function(){ xTable.createFunc(); xTable.tcidLogic(); });
 	
 	//adds styling to buttons and inputs
-	$( "button, input:submit, input:reset" ).button();				
+	$( "button, input:submit, input:reset" ).button();	
+
+	$("#loading").ajaxStart(function(){	$(this).show(); });			
+	$("#loading").ajaxStop(function(){	$(this).hide(); });	
 
 }//end BOOTSTRAP
 
@@ -1246,23 +1249,14 @@ $("#search").css("display","block");
 ///////////////////////////////////END SHOW TABLE IF ALL VCP///////////////////////////////////////////////////////////////////////
 	
 	
-$("#loading").ajaxStart(function(){	$(this).show(); });			
-$("#loading").ajaxStop(function(){	$(this).hide(); });
+
 		
 
 		
 		
-		$("#_filterText1").click(function(){
-				
-			$(this).val("");
-
-		});
+		$("#_filterText1").click(function(){ $(this).val(""); });
 		
-		$("#_filterText1").blur(function(){
-				
-			$(this).val("Search..");
-
-		});
+		$("#_filterText1").blur(function(){ $(this).val("Search.."); });
 		
 			
 		$("#_filterText1").val("Search...");		
