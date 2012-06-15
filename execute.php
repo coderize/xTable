@@ -244,105 +244,92 @@ if( $startExec == 'true' ){
 		version = $("#dv b").html();
 		
 			$.ajax({
-						type: "GET",													  
-						url: "action.php",													  
-						cache: false,													  
-						data: {"insertExec":"true","exec_id": id,"exec_start":stime,"exec_result":result,"exec_device_version":version}										  
-						}).done(function( retTime ) {
-							
-							//execstime = retTime;
-							//alert( retTime);
-							
-							id = id+1;	
-			
-							 if ( id <= last){	
-								$.ajax({
-									type: "GET",													  
-									url: "execute.php",													  
-									cache: false,													  
-									data: "startExecution=true&curTC=" + id + "&eoa="+ last+"&stime="+ retTime,												  
-									}).done(function( msgz ) {
-										
-										$("#iframeContainer").html(msgz); 						
-										
-									});	
-
-							}else{ 
-										
-								$.ajax({											
-										  type: "GET",													  
-										  url: "exec_results.php",													  
-										  cache: false,													  
-										  data: "create_date=<?php echo $create_date; ?>&creator=<?php echo $creator; ?>",												  
-										}).done(function( msg ) {
-										
-												if( xTable.is_loggedin(msg) ){	
-										
-													$("#iframeContainer").html(msg); 
-														
-														$( "#iframeContainer" ).dialog({
-									
-																		autoOpen: true,
-																		height: 580,
-																		width: 1010,
-																		modal: true,
-																		resizable: false
-																		
-														});	
-												}
-										  
-										});
-											
-							} 
+				type: "GET",
+				url: "action.php",
+				cache: false,
+				data: {"insertExec":"true","exec_id": id,"exec_start":stime,"exec_result":result,"exec_device_version":version}									  
+			}).done(function( retTime ) {
+					
+					id = id+1;	
+					if ( id <= last){	
 						
+					$.ajax({
+						type: "GET", 
+						url: "execute.php", 
+						cache: false,
+						data: {"startExecution":"true","curTC": id,"eoa":last,"stime":retTime}
+						}).done(function( msgz ) {
+										
+							$("#iframeContainer").html(msgz);							
 						});	
 
+					}else{ 
+										
+						$.ajax({
+							type: "GET",
+							url: "exec_results.php",
+							cache: false,
+							data: {"create_date":"<?php echo $create_date; ?>","creator":"<?php echo $creator; ?>"}												  
+							}).done(function( msg ) {
+								
+								if( xTable.is_loggedin(msg) ){	
+											
+									$("#iframeContainer").html(msg); 
+									$( "#iframeContainer" ).dialog({
+										autoOpen: true,
+										height: 580,
+										width: 1010,
+										modal: true,
+										resizable: false
+									});	
+								}
+							});
+											
+					}	 
+						
+				});	
+					
+
+				
  } ///end function next 
 	
-	$(document).ready(function() 
-		{ 							
-					$('#executionTable').fixheadertable({ 
-								caption     : '', 
-								colratio    : [100, 30, 75, 480,100, 150],
-								height      : 0,
-								zebra       : false,
-								sortable    : false,
-								sortedColId : 1, 
-								sortType    : ['string', 'string', 'string', 'string', 'string', 'string'],
-								dateFormat  : 'm/d/Y',
-								pager       : false,
-								rowsPerPage : 100, 
-								showhide       : true,
-								whiteSpace     : 'normal',
-								addTitles      : false,
-								
-							});   		
+	$(document).ready(function(){ 							
+		
+		$('#executionTable').fixheadertable({ 
+			caption     : '', 
+			colratio    : [100, 30, 75, 480,100, 150],
+			height      : 0,
+			zebra       : false,
+			sortable    : false,
+			sortedColId : 1, 
+			sortType    : ['string', 'string', 'string', 'string', 'string', 'string'],
+			dateFormat  : 'm/d/Y',
+			pager       : false,
+			rowsPerPage : 100, 
+			showhide       : true,
+			whiteSpace     : 'normal',
+			addTitles      : false,
+		});   		
 							
-						$( "button, input:submit, input:reset" ).button();
+		$( "button, input:submit, input:reset" ).button();
 ////////////////////////////////////////////////////RE-SET CLASSES AND COLSPANS //////////////////////////////////////////////////////
-						 var rows = $("#executionTable tr");	
-						
-						rows.children("td:nth-child(1)").each(function() {						
+			var rows = $("#executionTable tr");	
+			rows.children("td:nth-child(1)").each(function() {
+				
+				if( $(this).children(".parent").attr("class") == "func parent" ){							
+					$(this).attr("class","ghead ui-widget-content");			
+				} 				 				
 									
-									if( $(this).children(".parent").attr("class") == "func parent" ){									
-										
-																		
-										$(this).attr("class","ghead ui-widget-content");			
-										
-									} 				 				
+				$(".ghead").each(function(){
+			
+					$(this).attr("colspan","4");	
+				});									
 									
-									$(".ghead").each(function(){
-										
-										$(this).attr("colspan","4");	
-											
-									
-									});									
-									
-									$("td:nth-child(2)").css("text-align","center");
-									$("td:nth-child(3)").css("text-align","center");
-									$("td:nth-child(5)").css("text-align","center");
-									$("td:nth-child(6)").css("text-align","center");							
-							});
+				$("td:nth-child(2)").css("text-align","center");
+				$("td:nth-child(3)").css("text-align","center");
+				$("td:nth-child(5)").css("text-align","center");
+				$("td:nth-child(6)").css("text-align","center");							
+			});
 //////////////////////////////////////////////////// END RE-SET CLASSES AND COLSPANS //////////////////////////////////////////////////////
 	
 		$("#execCancel").click(function(){

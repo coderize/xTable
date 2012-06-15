@@ -398,6 +398,7 @@ Aw Snap, Looks like you have been logged out!
 <div id="contactable"></div>
 <script type="text/javascript" charset="utf-8">
 
+xTable = window.xTable || {};
 
 xTable = {
 is_loggedin : function(a){if(a=="INVALID_SESSION"){$("#logged-out").dialog({height:300,width:400,modal:true,resizable:false});function b(){window.location.reload();}setTimeout(b,2e3);return false}else{return true}},
@@ -437,10 +438,10 @@ editAjax : function (par){
 	var expected = encodeURIComponent($(parent).children("td:nth-child(10)").children("pre:nth-child(1)").html());
 
 	$.ajax({
-		type: "POST",													  
-		url: "action.php",													  
+		type: "POST",												  
+		url: "action.php",												
 		cache: false,	
-		async: true,
+		async: false,
 		data: {"tableEdit":"true", "mid":mid, "func":func, "status":status,
 				 "tcid":tcid, "priority":priority, "clas":clas, "name":name,
 				 "prereq":prereq, "steps":steps, "expected":expected}
@@ -1103,7 +1104,7 @@ addTestcase : function (action){
 $("input").removeClass("ui-state-hover");								
 									
 /////////////////////////////////////Insert into  table info///////////////////////////////////
-$('#myTable tbody').prepend('<tr><td class="mid ui-widget-content">' + myObj.mysql_last_id + '</td><td style="text-transform:uppercase;" ondblclick="javascript:editElement(this,priorityObj,true,75);" class=" function rhw ui-widget-content" style="text-align:center;">' + custFunction + '</td><td ondblclick="javascript:editElement(this,statusObj,false,8);" class="tdw center ui-widget-content"  style="text-align:center;">' +$("#status option:selected").text() + '</td><td ondblclick="javascript:editElement(this,priorityObj,true,5);" class="tdw center  ui-widget-content"  style="text-align:center;">' +defaultTCID + '</td><td ondblclick="javascript:editElement(this,priorityObj,false,8);" class="tdw center ui-widget-content"  style="text-align:center;">' + $("#priority option:selected").text() + '</td><td ondblclick="javascript:editElement(this,classObj,false,25);"  class="tdw center  ui-widget-content"  style="text-align:center;">' + $("#class option:selected").text() + '</td><td  ondblclick="javascript:editElement(this,priorityObj,true,100);"  class="tdw center  ui-widget-content"  style="text-align:left;">' +$("#testname").val()+'</td><td  ondblclick="javascript:editSV(this);"  class="tdw tdh  ui-widget-content"><pre>' +  that.strip_tags($("#preConditions").val(), '<i><b>') +'</pre></td><td ondblclick="javascript:editSV(this);" class="tdw tdh  ui-widget-content"><pre>'+ that.strip_tags($("#scenario").val(), '<i><b>') +'</pre></td><td ondblclick="javascript:editSV(this);" class="tdw tdh  ui-widget-content"><pre>'+ that.strip_tags($("#verification").val(), '<i><b>') + '</pre></td></tr>');	
+$('#myTable tbody').prepend('<tr><td class="mid ui-widget-content">' + myObj.mysql_last_id + '</td><td style="text-transform:uppercase;" ondblclick="javascript:xTable.editElement(this,priorityObj,true,75);" class=" function rhw ui-widget-content" style="text-align:center;">' + custFunction + '</td><td ondblclick="javascript:xTable.editElement(this,statusObj,false,8);" class="tdw center ui-widget-content"  style="text-align:center;">' +$("#status option:selected").text() + '</td><td ondblclick="javascript:xTable.editElement(this,priorityObj,true,5);" class="tdw center  ui-widget-content"  style="text-align:center;">' +defaultTCID + '</td><td ondblclick="javascript:xTable.editElement(this,priorityObj,false,8);" class="tdw center ui-widget-content"  style="text-align:center;">' + $("#priority option:selected").text() + '</td><td ondblclick="javascript:xTable.editElement(this,classObj,false,25);"  class="tdw center  ui-widget-content"  style="text-align:center;">' + $("#class option:selected").text() + '</td><td  ondblclick="javascript:xTable.editElement(this,priorityObj,true,100);"  class="tdw center  ui-widget-content"  style="text-align:left;">' +$("#testname").val()+'</td><td  ondblclick="javascript:xTable.editSV(this);"  class="tdw tdh  ui-widget-content"><pre>' +  that.strip_tags($("#preConditions").val(), '<i><b>') +'</pre></td><td ondblclick="javascript:xTable.editSV(this);" class="tdw tdh  ui-widget-content"><pre>'+ that.strip_tags($("#scenario").val(), '<i><b>') +'</pre></td><td ondblclick="javascript:xTable.editSV(this);" class="tdw tdh  ui-widget-content"><pre>'+ that.strip_tags($("#verification").val(), '<i><b>') + '</pre></td></tr>');	
 									
 $('input#search').quicksearch('#myTable tbody tr');	
 	
@@ -1200,6 +1201,16 @@ bootstrap: function(){
 
 	$("#loading").ajaxStart(function(){	$(this).show(); });			
 	$("#loading").ajaxStop(function(){	$(this).hide(); });	
+	$("#bodyContainer").css("visibility","visible");
+	$("#search").css("display","block");
+	
+	$("#_filterText1").click(function(){ $(this).val(""); }).val("Search...");
+	
+	$("#_filterText1").blur(function(){ $(this).val("Search.."); });
+				
+	$("#welcome").html("Welcome, " + data.firstName );
+	
+	$('#switcher').themeswitcher()
 
 }//end BOOTSTRAP
 
@@ -1212,75 +1223,30 @@ $(document).ready(function(){
 	$('#contactable').contactable();
 	xTable.bootstrap();
 	//$("#myTable").tableDnD( { onDragClass: "dragging"} );
+		
+	document.getElementById("hvertical").value = "<?php  echo $vert;  ?>";
+	document.getElementById("hclient").value = "<?php  echo $client;  ?>";
+	document.getElementById("hproject").value = "<?php  echo $project;  ?>";
 
+	$("#navXTable").attr("href","javascript:void(0)");
+	$("#XTable").css("border","3px solid #ff7777");
+	$("#XTable").css("-webkit-box-shadow","0px 0px 2px 2px #ff7777");
 	
 
 });
 
-////////////////////////////////////////////////////OTHER ELEMENTS EDITING////////////////////////////////////////////////////			
-//END EDIT ELEMENT	
-		
-	
-////////////////////////////////////////////////////END OTHER ELEMENTS EDITING////////////////////////////////////////////////////				
-	
 ////////////////////////////////////////////////////SET SELECTED DROPDOWN OPTIONS////////////////////////////////////////////////////			
-	document.getElementById("vertical").value = "<?php  echo $vert;  ?>";		
+/*	document.getElementById("vertical").value = "<?php  echo $vert;  ?>";		
+
 		
 	document.getElementById("client").value = "<?php  echo $client;  ?>";
 	
 	<?php if($client == ''){ $project = "na";} ?>
 	
 	document.getElementById("project").value = "<?php  echo $project;  ?>";	
-
+ */
 ////////////////////////////////////////////////////END SET SELECTED DROPDOWN OPTIONS////////////////////////////////////////////////////	
-
-	$(document).ready(function() { 							
-				
-
 	//addEdit();	
-
-
-	
-///////////////////////////////////SHOW TABLE IF ALL VCP///////////////////////////////////////////////////////////////////////	
-$("#bodyContainer").css("visibility","visible");
-$("#search").css("display","block");
-	   
-							
-///////////////////////////////////END SHOW TABLE IF ALL VCP///////////////////////////////////////////////////////////////////////
-	
-	
-
-		
-
-		
-		
-		$("#_filterText1").click(function(){ $(this).val(""); });
-		
-		$("#_filterText1").blur(function(){ $(this).val("Search.."); });
-		
-			
-		$("#_filterText1").val("Search...");		
-				
-					
-				$("#welcome").html("Welcome, " + data.firstName );
-				$('#switcher').themeswitcher();
-				
-			document.getElementById("hvertical").value = "<?php  echo $vert;  ?>";
-			document.getElementById("hclient").value = "<?php  echo $client;  ?>";
-			document.getElementById("hproject").value = "<?php  echo $project;  ?>";
-
-
-			$("#navXTable").attr("href","javascript:void(0)");
-			$("#XTable").css("border","3px solid #ff7777");
-			$("#XTable").css("-webkit-box-shadow","0px 0px 2px 2px #ff7777");
-			
-			
-			
-			
-}); //DOM Ready
-	
-							
-		
 	
 
 </script>
