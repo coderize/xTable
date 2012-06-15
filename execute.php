@@ -42,7 +42,7 @@ session_start();
 #executionTable textarea{
 
 	height:150px !important;
-	width:400px !importatnt;
+	width:400px !important;
 	min-width:400px !important;
 	min-height:150px !important;
 	max-width:400px !important;
@@ -51,7 +51,7 @@ session_start();
 }
 
 #executionTable #scenario, #executionTable #verification{
-	text-align:center !imporant;
+	text-align:center !important;
 }
 
 #deviceImage{
@@ -119,30 +119,30 @@ if( $startExec == 'true' ){
 		
 	}
 
-	$qse = mysql_query("SELECT manual_function_name
-																, manual_tcid
-																, priority_name
-																, class_name
-																, manual_name
-																, manual_prereq
-																, manual_steps
-																, manual_expected
-																, devtype_name
-																, devgroup_name
-																, device_name
-																, device_version
-																, exec_create_date
-																, exec_creator_id
+$qse = mysql_query("SELECT manual_function_name
+			, manual_tcid
+			, priority_name
+			, class_name
+			, manual_name
+			, manual_prereq
+			, manual_steps
+			, manual_expected
+			, devtype_name
+			, devgroup_name
+			, device_name
+			, device_version
+			, exec_create_date
+			, exec_creator_id
+			
+			FROM table_manual, table_device, table_manual_exec, table_priority, table_class, table_devtype, table_devgroup
 																 
-																FROM table_manual, table_device, table_manual_exec, table_priority, table_class, table_devtype, table_devgroup
-																 
-																WHERE exec_manual_id = manual_id
-																AND manual_priority_id = priority_id
-																AND manual_class_id = class_id
-																AND exec_device_id = device_id
-																AND devtype_id = device_type_id
-																AND devgroup_id = device_group_id
-																AND exec_id = '{$next}' ") or die("QUERY ERROR");
+			WHERE exec_manual_id = manual_id
+			AND manual_priority_id = priority_id
+			AND manual_class_id = class_id
+			AND exec_device_id = device_id
+			AND devtype_id = device_type_id
+			AND devgroup_id = device_group_id
+			AND exec_id = '{$next}' ") or die("QUERY ERROR");
 
 ?>
 
@@ -236,58 +236,58 @@ if( $startExec == 'true' ){
 
 <script>
 
-	 function next(id, last,result,stime){		
+ function next(id, last,result,stime){		
 		
-		id = parseInt(id);
-		last = parseInt(last);
-		result = parseInt(result);
-		version = $("#dv b").html();
+	id = parseInt(id);
+	last = parseInt(last);
+	result = parseInt(result);
+	version = $("#dv b").html();
 		
-			$.ajax({
-				type: "GET",
-				url: "action.php",
-				cache: false,
-				data: {"insertExec":"true","exec_id": id,"exec_start":stime,"exec_result":result,"exec_device_version":version}									  
-			}).done(function( retTime ) {
+	$.ajax({
+		type: "GET",
+		url: "action.php",
+		cache: false,
+		data: {"insertExec":"true","exec_id": id,"exec_start":stime,"exec_result":result,"exec_device_version":version}								  
+		}).done(function( retTime ) {
 					
-					id = id+1;	
-					if ( id <= last){	
+		id = id + 1;	
+		if ( id <= last ){	
 						
-					$.ajax({
-						type: "GET", 
-						url: "execute.php", 
-						cache: false,
-						data: {"startExecution":"true","curTC": id,"eoa":last,"stime":retTime}
-						}).done(function( msgz ) {
+			$.ajax({
+			type: "GET", 
+			url: "execute.php", 
+			cache: false,
+			data: {"startExecution":"true", "curTC": id, "eoa":last, "stime":retTime}
+				}).done(function( msgz ) {
 										
-							$("#iframeContainer").html(msgz);							
-						});	
-
-					}else{ 
-										
-						$.ajax({
-							type: "GET",
-							url: "exec_results.php",
-							cache: false,
-							data: {"create_date":"<?php echo $create_date; ?>","creator":"<?php echo $creator; ?>"}												  
-							}).done(function( msg ) {
-								
-								if( xTable.is_loggedin(msg) ){	
-											
-									$("#iframeContainer").html(msg); 
-									$( "#iframeContainer" ).dialog({
-										autoOpen: true,
-										height: 580,
-										width: 1010,
-										modal: true,
-										resizable: false
-									});	
-								}
-							});
-											
-					}	 
-						
+					$("#iframeContainer").html(msgz);							
 				});	
+
+		}else{ 
+										
+			$.ajax({
+			type: "GET",
+			url: "exec_results.php",
+			cache: false,
+			data: "create_date=<?php echo $create_date; ?>&creator=<?php echo $creator; ?>",												  		}).done(function( msg ) {
+								
+				if( xTable.is_loggedin(msg) ){	
+						
+					$( "#iframeContainer" ).dialog({
+						autoOpen: true,
+						height: 580,
+						width: 1010,
+						modal: true,
+						resizable: false
+					});	
+					
+					$("#iframeContainer").html(msg); 
+				}
+			});
+											
+		}	 
+						
+		});	
 					
 
 				
@@ -332,11 +332,7 @@ if( $startExec == 'true' ){
 			});
 //////////////////////////////////////////////////// END RE-SET CLASSES AND COLSPANS //////////////////////////////////////////////////////
 	
-		$("#execCancel").click(function(){
-			
-			$("#iframeContainer").dialog( "close" );
-		
-		});
+		$("#execCancel").click(function(){	$("#iframeContainer").dialog( "close" );	});
 
 
 });
