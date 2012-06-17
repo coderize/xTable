@@ -114,7 +114,7 @@ $('#resultsTable').fixheadertable({
 	
 	xTable.resultsEdit();
 
-
+	$("#execCancel").click(function () { 	$( "#iframeContainer" ).dialog("close"); } );
 });
 
 
