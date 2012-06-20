@@ -51,9 +51,11 @@
 			
 			if (noresults) {
 				this.results(false);
+				xTable.footerCount();
 			} else {
 				this.results(true);
 				this.stripe();
+				xTable.footerCount();
 			}
 			
 			this.loader(false);
@@ -148,3 +150,4 @@
 	};
 
 }(jQuery, this, document));
+
