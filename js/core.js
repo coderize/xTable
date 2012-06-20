@@ -352,9 +352,20 @@ editElement : function (ele, obj, type, ml, tbn ){
 
 
 footerCount : function (){
+	
+	var tcCount = $(".mid").length;
+	var tcShownCount = 0;
+	$("#myTable tr").each(function(){
+		
+		if( this.style.display != 'none'){
 
-							
-	$("#pagerText").html("Total number of testcases: " + $(".mid").length ) ;
+			tcShownCount++;
+		}
+ 
+
+	});
+
+	$("#pagerText").html("Showing Testcases: " + tcShownCount + " of " + tcCount ) ;
 
 },
 	
@@ -364,7 +375,7 @@ footerCount : function (){
 
 columnFilter : function(){
 	
-
+	
 	$("#_filterText1, #_filterText2, #_filterText3, #_filterText4, #_filterText5, #_filterText6, #_filterText7, #_filterText8, #_filterText9").keyup(function(){    
 		var that = this;	
 		var position = this.id[this.id.length - 1];
@@ -378,9 +389,11 @@ columnFilter : function(){
 			var patt = new RegExp(""+ reg +"","i");
 			var res = patt.test(""+html+""); 		
 			var matches = ( res ) ?  $(this).parent().css("display","table-row") : $(this).parent().css("display","none");
+			xTable.footerCount();
 		});
 	});
-					
+	
+
 },
 
 createTestcase : function(){
