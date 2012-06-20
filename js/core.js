@@ -410,6 +410,7 @@ createTestcase : function(){
 			type: "POST",
 			url: "action.php",
 			cache: false,
+			async: false,
 			data: {"popFuncs":"true", "rel":data.rel}
 			}).done(function( msg ) {
 
@@ -441,15 +442,14 @@ createTestcase : function(){
 								type: "GET",
 								url: "time.php",
 								cache: false,
+								async: false,
 								data: "test=test"
 							}).done(function( msg ) {
 								
 									$("#sCreateTime").html(msg);
 
 							});
-					$("#add").click(function(){		that.addTestcase("close");	});	
-					$("#addAnother").click(function(){	that.addTestcase("aa");	that.pauser(); 	});	
-					$("#addSimilar").click(function(){	that.addTestcase("as");	that.pauser();  });
+				
 
 				}
 			});				
@@ -841,13 +841,17 @@ bootstrap: function(){
 	$("#bodyContainer").css("visibility","visible");
 	$("#search").css("display","block");
 	
-	$("#_filterText1").click(function(){ $(this).val(""); }).val("Search...");
-	
+	$("#_filterText1").click(function(){ $(this).val(""); }).val("Search...");	
 	$("#_filterText1").blur(function(){ $(this).val("Search.."); });
 				
 	$("#welcome").html("Welcome, " + data.firstName );
 	
-	$('#switcher').themeswitcher()
+	$('#switcher').themeswitcher();
+
+	$("#add").click(function(){		xTable.addTestcase("close");	});	
+	$("#addAnother").click(function(){	xTable.addTestcase("aa");	xTable.pauser(); 	});	
+	$("#addSimilar").click(function(){	xTable.addTestcase("as");	xTable.pauser();  });
+
 
 }//end BOOTSTRAP
 

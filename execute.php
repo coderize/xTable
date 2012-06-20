@@ -269,7 +269,8 @@ $qse = mysql_query("SELECT manual_function_name
 			type: "GET",
 			url: "exec_results.php",
 			cache: false,
-			data: "create_date=<?php echo $create_date; ?>&creator=<?php echo $creator; ?>",												  		}).done(function( msg ) {
+			data: {"create_date":"<?php echo $create_date; ?>","creator":"<?php echo $creator; ?>"}
+			}).done(function( msg ) {
 								
 				if( xTable.is_loggedin(msg) ){	
 						
