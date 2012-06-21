@@ -95,9 +95,7 @@ body,pre{font-family:Verdana,Helvetica,san-serif,Arial;font-size:.6em}*{padding:
 <link rel="stylesheet" type="text/css" href="css/base.css" />
 <link rel="stylesheet" type="text/css" href="css/flick/jquery-ui-1.8.16.custom.css" />
 <link rel="stylesheet" type="text/css" href="css/selectmenu.css" />
-<!-- <link rel="stylesheet" type="text/css" href="css/calendar.css" /> -->
 <link rel="stylesheet" type="text/css" href="css/contactable.css" />
-<!--<script src="js/addEdit.js" charset="UTF-8"></script> -->
 <script src="js/userEdit.js" charset="UTF-8"></script>
 <script src="js/deviceEdit.js" charset="UTF-8"></script>
 <script src="js/jquery.min.js" charset="UTF-8"></script>
@@ -106,9 +104,7 @@ body,pre{font-family:Verdana,Helvetica,san-serif,Arial;font-size:.6em}*{padding:
 <script src="http://jqueryui.com/themeroller/themeswitchertool/" charset="UTF-8"></script>
 <script src="js/jquery.fixheadertable.js" charset="UTF-8"></script>
 <script src="js/jquery.columnfilters.js" charset="UTF-8"></script>
-<!--<script src="js/columnFilters.js" charset="UTF-8"></script> -->
 <script src="js/jquery.js" charset="UTF-8"></script>
-<!-- <script src="js/calendar_db.js" charset="UTF-8"></script> -->
 <script src="js/jquery.contactable.js" charset="UTF-8"></script>
 <!--<script src="js/jquery.tablednd.js" charset="UTF-8"></script>-->
 
@@ -167,7 +163,7 @@ $iq = @mysql_query("SELECT relation_id AS rel
 
 			$iq = mysql_fetch_object($iq);
 			$rel = ($iq->rel) ? $iq->rel : '0';
-			echo " data = {'rel': $rel, 'fisrtName' : '{$_SESSION['fname']}', 'lastName': '{$_SESSION['lname']}' }; "; 
+			echo " data = {\"rel\": $rel, \"firstName\" : \"{$_SESSION['fname']}\", \"lastName\": \"{$_SESSION['lname']}\" }; "; 
 
 			echo "</script>";
 
@@ -350,17 +346,17 @@ $q = @mysql_query("SELECT manual_function_name AS 'FUNCTION'
      <?php  while($query_row = @mysql_fetch_object($q))  {    ?>     
 				
 			<tr>
-			   <td class='mid'><?php echo $query_row->MID; ?></td>
-			   <td class= 'rhw'><?php echo $query_row->FUNCTION; ?></td>
-			   <td class= 'rhw center'><?php echo $query_row->STATUS; ?></td>			   
-			   <td class= 'tdw center'><?php echo $query_row->TCID; ?></td>
-			   <td class= 'tdw center'><?php echo $query_row->PRIORITY; ?></td>
-			   <td class= 'tdw center'><?php echo $query_row->CLASS; ?></td>
-			   <td class= 'tdw center'><?php echo $query_row->NAME; ?></td>
+			   <td class='mid'><?php echo htmlentities($query_row->MID, ENT_QUOTES, "UTF-8"); ?></td>
+			   <td class= 'rhw'><?php echo htmlentities($query_row->FUNCTION, ENT_QUOTES, "UTF-8"); ?></td>
+			   <td class= 'rhw center'><?php echo htmlentities($query_row->STATUS, ENT_QUOTES, "UTF-8"); ?></td>			   
+			   <td class= 'tdw center'><?php echo htmlentities($query_row->TCID, ENT_QUOTES, "UTF-8"); ?></td>
+			   <td class= 'tdw center'><?php echo htmlentities($query_row->PRIORITY, ENT_QUOTES, "UTF-8"); ?></td>
+			   <td class= 'tdw center'><?php echo htmlentities($query_row->CLASS,ENT_QUOTES, "UTF-8"); ?></td>
+			   <td class= 'tdw center'><?php echo htmlentities($query_row->NAME,ENT_QUOTES, "UTF-8"); ?></td>
 			  
-			  <td class= 'tdw tdh'><pre><?php echo strip_tags($query_row->PREREQUISITE); ?></pre></td>			   
-			   <td  class= 'tdw tdh'><pre><?php echo strip_tags($query_row->SCENARIO); ?></pre></td>			   
-			   <td  class= 'tdw tdh'><pre><?php echo strip_tags($query_row->VERIFICATION); ?></pre></td>		
+			  <td class= 'tdw tdh'><pre><?php echo htmlentities($query_row->PREREQUISITE, ENT_QUOTES, "UTF-8"); ?></pre></td>			   
+			   <td  class= 'tdw tdh'><pre><?php echo htmlentities($query_row->SCENARIO, ENT_QUOTES, "UTF-8"); ?></pre></td>			   
+			   <td  class= 'tdw tdh'><pre><?php echo htmlentities($query_row->VERIFICATION, ENT_QUOTES, "UTF-8"); ?></pre></td>		
 			</tr>       
        
 <?php
@@ -411,7 +407,7 @@ $(document).ready(function(){
 	$("#navXTable").attr("href","javascript:void(0)");
 	$("#XTable").css("border","3px solid #ff7777");
 	$("#XTable").css("-webkit-box-shadow","0px 0px 2px 2px #ff7777");
-	
+	$("#welcome").html("Welcome, " + data.firstName);
 
 });
 
