@@ -141,11 +141,10 @@ body,pre{font-family:Verdana,Helvetica,san-serif,Arial;font-size:.6em}*{padding:
 <link rel="stylesheet" type="text/css" href="css/flick/jquery-ui-1.8.16.custom.css" />
 <link rel="stylesheet" type="text/css" href="css/selectmenu.css" />
 <link rel="stylesheet" type="text/css" href="css/contactable.css" />
+<script src="js/jquery.min.js" charset="UTF-8"></script>
 <script	src="js/core.js" charset="UTF-8"></script>
-<script> xTable.bootstrap(); </script>
 <script src="js/userEdit.js" charset="UTF-8"></script>
 <script src="js/deviceEdit.js" charset="UTF-8"></script>
-<script src="js/jquery.min.js" charset="UTF-8"></script>
 <script src="js/jquery.quicksearch.js" charset="UTF-8"></script>
 <script src="js/jqueryUI/js/jqueryui.js" charset="UTF-8"></script>
 <script src="http://jqueryui.com/themeroller/themeswitchertool/" charset="UTF-8"></script>
@@ -421,7 +420,7 @@ if( $_SESSION['role'] < 3 ){
 	<div id="contactable"></div>
 	
 <script charset="UTF-8">
-xTable.bootstrap();
+
 
 ///////////////////////////////////////////////session checker/////////////////////////////////////////////////////
 
@@ -456,7 +455,7 @@ function editAjax(par){
 			url: "action.php",													  
 			cache: false,	
 			async: true,
-			data: "userEdit=true&uid=" + uid + "&firstname=" + firstname + "&lastname=" + lastname + "&email=" + email + "&password=" + password + "&group=" + group + "&userloc=" + userloc + "&status=" + status + "&crypto=<?php echo session_id() . 'zLsX7795d1d5AsCsD3wFGv'; ?>"
+			data: "userEdit=true&uid=" + uid + "&firstname=" + firstname + "&lastname=" + lastname + "&email=" + email + "&password=" + password + "&group=" + group + "&userloc=" + userloc + "&status=" + status
 			}).done(function( msg ) {
 			
 			if( is_loggedin(msg) ){					
