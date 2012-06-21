@@ -5,7 +5,7 @@
 	require "includes/sess.php";
 	session_start();
 
-  if( !$_SESSION['fname'] || $_SESSION['role']  > 2){
+  if( $_SESSION['loggedIn'] !== TRUE || $_SESSION['role']  > 2){
 	header('Refresh: 0; URL=login.php');
 	 exit;
  } 
@@ -140,9 +140,9 @@ body,pre{font-family:Verdana,Helvetica,san-serif,Arial;font-size:.6em}*{padding:
 <link rel="stylesheet" type="text/css" href="css/base.css" />
 <link rel="stylesheet" type="text/css" href="css/flick/jquery-ui-1.8.16.custom.css" />
 <link rel="stylesheet" type="text/css" href="css/selectmenu.css" />
-<!-- <link rel="stylesheet" type="text/css" href="css/calendar.css" /> -->
 <link rel="stylesheet" type="text/css" href="css/contactable.css" />
-
+<script	src="js/core.js" charset="UTF-8"></script>
+<script> xTable.bootstrap(); </script>
 <script src="js/userEdit.js" charset="UTF-8"></script>
 <script src="js/deviceEdit.js" charset="UTF-8"></script>
 <script src="js/jquery.min.js" charset="UTF-8"></script>
@@ -153,7 +153,6 @@ body,pre{font-family:Verdana,Helvetica,san-serif,Arial;font-size:.6em}*{padding:
 <script src="js/jquery.columnfilters.js" charset="UTF-8"></script>
 <script src="js/columnFilters.js" charset="UTF-8"></script>
 <script src="js/jquery.js" charset="UTF-8"></script>
-<!-- <script src="js/calendar_db.js" charset="UTF-8"></script> -->
 <script src="js/jquery.contactable.js" charset="UTF-8"></script>
 
 
@@ -216,26 +215,26 @@ $qstatus = mysql_query("SELECT ustatus_id, ustatus_name FROM  table_ustatus");
 
 
 $q = @mysql_query("SELECT a.user_id AS 'UID'
-								,a.user_firstname AS 'FIRST_NAME'
-								,a.user_lastname AS 'LAST_NAME'
-								,a.user_email AS 'EMAIL'
-								,a.user_password AS 'PASSWORD'
-								,ugroup_name AS 'GROUP'
-								,location_name AS 'LOCATION'
-								,ustatus_name AS 'STATUS'
-								,DATE_FORMAT(FROM_UNIXTIME(a.user_create_dt),'%d-%b-%y %T') AS 'DATE_CREATED'
-								,DATE_FORMAT(FROM_UNIXTIME(a.user_mod_dt),'%d-%b-%y %T') AS 'LAST_MODIFIED'
-								,CONCAT(b.user_firstname, ' ', b.user_lastname) AS 'MODIFIED_BY'
+			,a.user_firstname AS 'FIRST_NAME'
+			,a.user_lastname AS 'LAST_NAME'
+			,a.user_email AS 'EMAIL'
+			,a.user_password AS 'PASSWORD'
+			,ugroup_name AS 'GROUP'
+			,location_name AS 'LOCATION'
+			,ustatus_name AS 'STATUS'
+			,DATE_FORMAT(FROM_UNIXTIME(a.user_create_dt),'%d-%b-%y %T') AS 'DATE_CREATED'
+			,DATE_FORMAT(FROM_UNIXTIME(a.user_mod_dt),'%d-%b-%y %T') AS 'LAST_MODIFIED'
+			,CONCAT(b.user_firstname, ' ', b.user_lastname) AS 'MODIFIED_BY'
 
-								FROM  table_user AS a, table_user AS b, table_ugroup, table_location, table_ustatus
+			FROM  table_user AS a, table_user AS b, table_ugroup, table_location, table_ustatus
+	
+			WHERE ugroup_id = a.user_group_id
+			AND location_id = a.user_location_id
+			AND ustatus_id = a.user_status_id
+			AND a.user_id > 2
+			AND a.user_mod_by = b.user_id
 
-								WHERE ugroup_id = a.user_group_id
-								AND location_id = a.user_location_id
-								AND ustatus_id = a.user_status_id
-								AND a.user_id > 2
-								AND a.user_mod_by = b.user_id
-
-								ORDER BY a.user_status_id, a.user_location_id, a.user_group_id, a.user_email"); //or die ("UNABLE TO GET USERS");
+			ORDER BY a.user_status_id, a.user_location_id, a.user_group_id, a.user_email"); //or die ("UNABLE TO GET USERS");
 ?>
 
 <div id="bodyContainer">
@@ -291,131 +290,119 @@ if( $_SESSION['role'] < 3 ){
                                 <div id='createForm'>
 								
                                                 <table class="form" id="createTable">
-																<tr>
-																	<td style='text-align:center;height:16px;' colspan='3'>
-																		<span id='indicator'>Record inserted succesfully.</span>
-																	</td>
-																</tr>
+								<tr>
+									<td style='text-align:center;height:16px;' colspan='3'>
+										<span id='indicator'>Record inserted succesfully.</span>
+									</td>
+								</tr>
 																
                                                                 <tr>
-																	<td id='fcheck' class='sib'> <img class='error' src='img/denied.gif'/></td>
-																		<td><strong>FIRST NAME:</strong></td>
-																	  
-																			<td style='text-align:left  !important;'>
-																				<input style="text-align:left" name="firstname" id="firstname" class="cf" size="50" maxlength='50' />
-																			</td>
+									<td id='fcheck' class='sib'> <img class='error' src='img/denied.gif'/></td>
+									<td><strong>FIRST NAME:</strong></td>
+									<td style='text-align:left  !important;'>
+										<input style="text-align:left" name="firstname" id="firstname" class="cf" size="50" maxlength='50' />
+									</td>
 																										
-																	</td>
+									
                                                                 </tr>
 																
-																<tr>
-																<td id='tcheck' class='sib'> <img class='error' src='img/denied.gif'/></td>
-																		<td><strong>LAST NAME:</strong></td>
-																			
-																			<td style='text-align:left  !important;'>
-																				<input style="text-align:left" name="lastname" id="lastname" class="cf" size="50" maxlength='50' />
-																			</td>
-																						
-																</tr>
-																
-																<tr>
-																<td id='' class='sib'> <img class='error' src='img/denied.gif'/></td>
-																		<td><strong>EMAIL:</strong></td>
-																			
-																			<td style='text-align:left  !important;'>
-																				<input style="text-align:left" name="email" id="email" class="cf" size="50" maxlength='50' />
-																			</td>
+								<tr>
+									<td id='tcheck' class='sib'> <img class='error' src='img/denied.gif'/></td>
+									<td><strong>LAST NAME:</strong></td>
+									<td style='text-align:left  !important;'>
+										<input style="text-align:left" name="lastname" id="lastname" class="cf" size="50" maxlength='50' />
+									</td>
+								</tr>
+								<tr>
+									<td id='' class='sib'> <img class='error' src='img/denied.gif'/></td>
+									<td><strong>EMAIL:</strong></td>
+									<td style='text-align:left  !important;'>
+										<input style="text-align:left" name="email" id="email" class="cf" size="50" maxlength='50' />
+									</td>
 																								
                                                                 </tr>
 																
                                                                 <tr>
-																<td id='pcheck' class='sib'> <img class='error' src='img/denied.gif'/></td>
-																		<td><strong>PASSWORD:</strong></td>
-
-																			<td style='text-align:left  !important;'>
-																				<input style="text-align:left" name="password" id="password" class="cf" size="50" maxlength='50' />
-																			</td>
-																								
+									<td id='pcheck' class='sib'> <img class='error' src='img/denied.gif'/></td>
+									<td><strong>PASSWORD:</strong></td>
+									<td style='text-align:left  !important;'>
+										<input style="text-align:left" name="password" id="password" class="cf" size="50" maxlength='50' />
+									</td>
+																							
                                                                 </tr>
 																
                                                                 <tr>
-																	<td id='tcheck' class='sib'><img class='error' src='img/denied.gif'/> </td>
-																			<td><strong>SETTINGS:</strong></td>
-																					<td id='stime'>
-																					
-																								   <select id="settings" name="settings" class="cf" style='text-align:left;'>
-																									   <option value="1">Default</option>
-																								   </select>
-																								   
-																					</td>
+									<td id='tcheck' class='sib'><img class='error' src='img/denied.gif'/> </td>
+									<td><strong>SETTINGS:</strong></td>
+									<td id='stime'>
+										<select id="settings" name="settings" class="cf" style='text-align:left;'>
+											<option value="1">Default</option>
+										</select>
+									</td>
 																							
                                                                 </tr>																		
 																
                                                                 <tr>
-																<td id='ccheck' class='sib'> <img class='error' src='img/denied.gif'/></td>
-                                                                                <td><strong>GROUP:</strong></td>
-                                                                                                <td id='etime'>
-																								
-																											<select id="group" name="group" class="cf" style='text-align:left;'>
-																												<option value="na">Select a Group</option>
-																												<option value="3">QA Analyst</option>																												
-																												<option value="4">QA Tester</option>
-																												<option value="5">PM</option>
-																											</select>
+									<td id='ccheck' class='sib'> <img class='error' src='img/denied.gif'/></td>
+                                                                        <td><strong>GROUP:</strong></td>
+									<td id='etime'>
+										<select id="group" name="group" class="cf" style='text-align:left;'>
+											<option value="na">Select a Group</option>
+											<option value="3">QA Analyst</option>							
+											<option value="4">QA Tester</option>
+											<option value="5">PM</option>
+										</select>
 																											
-                                                                                                </td>
+                                                                           </td>
 																								
                                                                 </tr>
 
                                                                 <tr>
-																	<td id='tcheck' class='sib'><img class='error' src='img/denied.gif'/> </td>
-																			<td><strong>LOCATION:</strong></td>
-																					<td id='stime'>
-																					
-																								   <select id="location" name="location" class="cf" style='text-align:left;'>
-																									   <option value="na">Select a Location</option>
-																									   <option value="1">New York</option>
-																									   <option value="2">London</option>
-																									   <option value="3">Dhaka</option>
-																									   <option value="4">Italy</option>
-																								   </select>
-																								   
-																					</td>
+									<td id='tcheck' class='sib'><img class='error' src='img/denied.gif'/> </td>
+									<td><strong>LOCATION:</strong></td>
+									<td id='stime'>
+										<select id="location" name="location" class="cf" style='text-align:left;'>
+											<option value="na">Select a Location</option>
+											<option value="1">New York</option>
+											<option value="2">London</option>
+											<option value="3">Dhaka</option>
+											<option value="4">Italy</option>
+										</select>
+									</td>
 																							
                                                                 </tr>															
 																
 																
                                                                 <tr>
-																<td id='pccheck' class='sib'> <img class='error' src='img/denied.gif'/></td>
-																		<td><strong>STATUS:</strong></td>
-																				<td id='stime'>
-																				
-																							   <select id="status" name="status" class="cf" style='text-align:left;'>
-																								   <option value="na">Select a Status</option>
-																								   <option value="1">Active</option>
-																								   <option value="2">Inactive</option>
-																							   </select>
-																							   
-																				</td>
+									<td id='pccheck' class='sib'> <img class='error' src='img/denied.gif'/></td>
+									<td><strong>STATUS:</strong></td>
+									<td id='stime'>
+										<select id="status" name="status" class="cf" style='text-align:left;'>
+											<option value="na">Select a Status</option>
+											<option value="1">Active</option>
+											<option value="2">Inactive</option>
+										</select>
+									</td>
 																								
                                                                 </tr>
 															
                                                                 <tr>
-																		<td colspan="3" style='padding:3px'>
-																				<input type="reset"  id='cancel' value="Cancel" />
-																				<input type="submit"   id='add' value="Add" />
-																				<input type="submit"  id='addAnother' value="Add Another" />
-																				<input type="submit" id='addSimilar' value="Add Similar" />
-																		</td>
+									<td colspan="3" style='padding:3px'>
+										<input type="reset"  id='cancel' value="Cancel" />
+										<input type="submit"   id='add' value="Add" />
+										<input type="submit"  id='addAnother' value="Add Another" />
+										<input type="submit" id='addSimilar' value="Add Similar" />
+									</td>
                                                                 </tr>
 
                                                 </table>
-                                                
-                                
+                                                                              
                                 </div>
-		<?php
-		}
-		?>
+<?php
+
+}
+
+?>
 	
 	<div id='iframeContainer'></div>						
 
@@ -434,6 +421,8 @@ if( $_SESSION['role'] < 3 ){
 	<div id="contactable"></div>
 	
 <script charset="UTF-8">
+xTable.bootstrap();
+
 ///////////////////////////////////////////////session checker/////////////////////////////////////////////////////
 
 function is_loggedin(a){if(a=="INVALID_SESSION"){$("#logged-out").dialog({height:300,width:400,modal:true,resizable:false});function b(){window.location.href=window.location.href}setTimeout(b,2e3);return false}else{return true}}
@@ -986,9 +975,15 @@ function editAjax(par){
 							
 						$("#welcome").html("Welcome, <?php echo $_SESSION['fname']; ?>");
 						$('#switcher').themeswitcher();
-						
+			
+
+
+	
+
+
 	}); //DOM Ready					
 
 </script>
 </body>
-</html></pre></body></html>
+</html>
+

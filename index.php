@@ -5,7 +5,7 @@ require "includes/config.php";
 require "includes/sess.php";
 session_start();
 
- if( !$_SESSION['fname'] ){
+ if( $_SESSION['loggedIn'] !== TRUE  ){
 	header('Refresh: 0; URL=login.php');
 	exit;
 } 
