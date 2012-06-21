@@ -376,7 +376,8 @@ $q = @mysql_query("SELECT manual_function_name AS 'FUNCTION'
 require("create_testcase_template.html");
 
 ?>
-								
+
+
 <div id='iframeContainer'></div>								
 								
 <div id="logout-confirm" title="Log out?">
@@ -411,6 +412,9 @@ $(document).ready(function(){
 
 });
 
+window.onresize = function(event) {
+	xTable.resize();
+}
 
 </script>
 </body>

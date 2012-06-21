@@ -764,10 +764,20 @@ resultsEdit : function (){
 	      
 },	
 
+
+resize : function (){
+	
+	var hght = ($(".mid").length==0) ? 125 : 157;
+	var finHght = parseInt(window.innerHeight - hght);
+	$(".body").css("height", finHght);
+},
+
+
+
 bootstrap: function(){
 
 	$('#myTable').columnFilters();
-	var hght = ($(".mid").length==0) ? 125 : 157
+	var hght = ($(".mid").length==0) ? 125 : 157;
 	$('#myTable').fixheadertable({ 
 		caption     : ' ', 
 		colratio    : [1,150,80, 65, 78, 140,150, 150, 260, 260],
@@ -844,7 +854,7 @@ bootstrap: function(){
 	$("#_filterText1").click(function(){ $(this).val(""); }).val("Search...");	
 	$("#_filterText1").blur(function(){ $(this).val("Search.."); });
 				
-	$("#welcome").html("Welcome, " + data.firstName );
+
 	
 	$('#switcher').themeswitcher();
 
