@@ -14,7 +14,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>UsableX - User Administration</title>
+<title>xTable - User Administration</title>
 <meta http-equiv="Content-Encoding" content="gzip">
 <meta http-equiv="Accept-Encoding" content="gzip, deflate">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
