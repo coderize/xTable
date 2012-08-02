@@ -5,12 +5,7 @@ require "includes/config.php";
 require "includes/sess.php";
 session_start();
 
- 
-//$crypto = @mysql_real_escape_string($_GET['crypto']);
-//$crypto = substr($crypto, 0, -22);
 
-
-	 //if( $crypto == session_id()  && $_SESSION['user_id']){
 if( $_SESSION['loggedIn'] === TRUE ){
 
 	if( $_POST['cTestcase']=='true' ){
@@ -170,9 +165,9 @@ if ( $_POST['tableEdit'] == 'true' ) {
 	$prereq = mysql_real_escape_string( rawurldecode($_POST['prereq']));
 	$steps = mysql_real_escape_string( rawurldecode($_POST['steps']));
 	$expected = mysql_real_escape_string( rawurldecode($_POST['expected']));
-	$prereq = strip_tags($prereq, '<i><b>'));
-	$steps = strip_tags($steps, '<i><b>'));
-	$expected = strip_tags($expected, '<i><b>'));
+	$prereq = strip_tags($prereq, '<i><b>');
+	$steps = strip_tags($steps, '<i><b>');
+	$expected = strip_tags($expected, '<i><b>');
 
 //TODO: STATUS QUERY CHANGE LIKE CLASS ID AND PRIORITY
 		$q = mysql_query("UPDATE table_manual SET manual_function_name = '{$func}', manual_tcid = '{$tcid}', manual_priority_id = (SELECT priority_id FROM table_priority WHERE priority_name = '{$priority}'), manual_class_id = (SELECT class_id FROM table_class WHERE class_name = '{$clas}'), manual_name = '{$name}', manual_prereq = '{$prereq}', manual_steps = '{$steps}', manual_expected = '{$expected}' , manual_status = (SELECT status_id FROM table_status WHERE status_name = '{$status}') WHERE manual_id = '{$mid}' ") or die(mysql_error());
