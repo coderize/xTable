@@ -33,9 +33,9 @@ if( $_SESSION['loggedIn'] === TRUE ){
 		$expected = strip_tags($expected, '<i><b>');
 		$pc = @mysql_real_escape_string($_POST['pc']);
 		$ptd = @mysql_real_escape_string($_POST['ptd']);
+
 		
-
-
+	
 	$q = mysql_query("INSERT INTO table_manual (manual_tcid, manual_relation_id, manual_function_name, manual_name, manual_priority_id, manual_class_id, manual_prereq, manual_steps, manual_expected, manual_start, manual_end, manual_pauseduration, manual_pausecount, manual_status, manual_author_id)
 	VALUES ('{$tcid}', '{$rel}', UPPER('{$function}'), '{$name}', '{$priority}', '{$class}', '{$prereq}', '{$scenario}', '{$expected}', '{$stime}', '{$etime}', '{$ptd}', '{$pc}', '{$status}', '{$author}')") or die('this is whats wrong-> ' . mysql_error());
 
@@ -158,52 +158,44 @@ if( $_SESSION['loggedIn'] === TRUE ){
 	}
 
 
-	if ( $_POST['tableEdit'] == 'true' ) {
+if ( $_POST['tableEdit'] == 'true' ) {
 
-		$mid = urldecode(mysql_real_escape_string( $_POST['mid'] ) );
-		$func = urldecode(mysql_real_escape_string($_POST['func']));
-		$status = urldecode(mysql_real_escape_string($_POST['status']));
-		$tcid = urldecode(mysql_real_escape_string($_POST['tcid']));
-		$priority = urldecode(mysql_real_escape_string($_POST['priority']));
-		$clas = urldecode(mysql_real_escape_string($_POST['clas']));
-		$name = urldecode( mysql_real_escape_string($_POST['name']) );
-		$prereq = urldecode(mysql_real_escape_string($_POST['prereq']));
-		$steps = urldecode(mysql_real_escape_string($_POST['steps']));
-		$expected = urldecode(mysql_real_escape_string($_POST['expected']));
-		$prereq = strip_tags($prereq, '<i><b>');
-		$steps = strip_tags($steps, '<i><b>');
-		$expected = strip_tags($expected, '<i><b>');
+	$mid = mysql_real_escape_string( rawurldecode($_POST['mid'] ));
+	$func = mysql_real_escape_string( rawurldecode($_POST['func']));
+	$status = mysql_real_escape_string( rawurldecode($_POST['status']));
+	$tcid = mysql_real_escape_string( rawurldecode($_POST['tcid']));
+	$priority = mysql_real_escape_string( rawurldecode($_POST['priority']));
+	$clas = mysql_real_escape_string( rawurldecode($_POST['clas']));
+	$name =  mysql_real_escape_string(rawurldecode($_POST['name']));
+	$prereq = mysql_real_escape_string( rawurldecode($_POST['prereq']));
+	$steps = mysql_real_escape_string( rawurldecode($_POST['steps']));
+	$expected = mysql_real_escape_string( rawurldecode($_POST['expected']));
+	$prereq = strip_tags($prereq, '<i><b>'));
+	$steps = strip_tags($steps, '<i><b>'));
+	$expected = strip_tags($expected, '<i><b>'));
 
-		//TODO: STATUS QUERY CHANGE LIKE CLASS ID AND PRIORITY
-
+//TODO: STATUS QUERY CHANGE LIKE CLASS ID AND PRIORITY
 		$q = mysql_query("UPDATE table_manual SET manual_function_name = '{$func}', manual_tcid = '{$tcid}', manual_priority_id = (SELECT priority_id FROM table_priority WHERE priority_name = '{$priority}'), manual_class_id = (SELECT class_id FROM table_class WHERE class_name = '{$clas}'), manual_name = '{$name}', manual_prereq = '{$prereq}', manual_steps = '{$steps}', manual_expected = '{$expected}' , manual_status = (SELECT status_id FROM table_status WHERE status_name = '{$status}') WHERE manual_id = '{$mid}' ") or die(mysql_error());
 	
+	echo  $xul = ( $q ) ? "200" : "404"; 
 
-		if ($q){
-
-			echo "200";
-
-		}else{
-			echo "404";
-		} 
-
-	}
+}
 
 
-	///////////////////////////////////////////////////// POP FUNCTIONS  /////////////////////////////////////////////////////
+///////////////////////////////////////////////////// POP FUNCTIONS  /////////////////////////////////////////////////////
 	
-	if( $_POST['popFuncs'] == 'true' ){
+if( $_POST['popFuncs'] == 'true' ){
 
-$rel = mysql_real_escape_string($_POST['rel']);
+	$rel = mysql_real_escape_string($_POST['rel']);
 
-$qfunctions = mysql_query("SELECT DISTINCT manual_function_name FROM table_manual WHERE manual_relation_id = {$rel}");
+	$qfunctions = mysql_query("SELECT DISTINCT manual_function_name FROM table_manual WHERE manual_relation_id = {$rel}");
 
-echo  '<option value="na">Select a function</option>';
+	echo  '<option value="na">Select a function</option>';
+	
+	while($fns = mysql_fetch_object($qfunctions)){
 
-while($fns = mysql_fetch_object($qfunctions)){
 
-
-	echo "<option value='{$fns->manual_function_name}'>{$fns->manual_function_name}</option>";
+		echo "<option value='{$fns->manual_function_name}'>{$fns->manual_function_name}</option>";
 	
 	
 	}

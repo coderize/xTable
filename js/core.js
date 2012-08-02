@@ -23,18 +23,16 @@ relCheck : function(error){
 
 strip_tags : function (a,b){b=(((b||"")+"").toLowerCase().match(/<[a-z][a-z0-9]*>/g)||[]).join("");var c=/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi,d=/<!--[\s\S]*?-->|<\?(?:php)?[\s\S]*?\?>/gi;return a.replace(d,"").replace(c,function(a,c){return b.indexOf("<"+c.toLowerCase()+">")>-1?a:""})},
 
-editAjax : function (par, tableName){
+editAjax : function (par){
 	var that = this;
 	var parent = $(par).parent().parent();	 
 	
-	if (tableName == 'execResult'){
 		
-		var eid = $(parent).children("td:nth-child(1)").html();
-		var result = $(parent).children("td:nth-child(6)").html();
-		var dataObj =  {"resultsEdit":"true","eid":eid,"result":result};
-
-	}else{
+	//	var eid = $(parent).children("td:nth-child(1)").html();
+	//	var result = $(parent).children("td:nth-child(6)").html();
+	//	var dataObj =  {"resultsEdit":"true","eid":eid,"result":result};
 	
+		
 		var mid  = encodeURIComponent($(parent).children("td:nth-child(1)").html());
 		var func = encodeURIComponent($(parent).children("td:nth-child(2)").html());
 		var status = encodeURIComponent($(parent).children("td:nth-child(3)").html());
@@ -44,11 +42,11 @@ editAjax : function (par, tableName){
 		var name = encodeURIComponent($(parent).children("td:nth-child(7)").html());
 		var prereq = encodeURIComponent($(parent).children("td:nth-child(8)").children("pre:nth-child(1)").html());
 		var steps = encodeURIComponent($(parent).children("td:nth-child(9)").children("pre:nth-child(1)").html());
+	//	var steps = $(parent).children("td:nth-child(9)").children("pre:nth-child(1)").html();
 		var expected = encodeURIComponent($(parent).children("td:nth-child(10)").children("pre:nth-child(1)").html());
 		var dataObj = {"tableEdit":"true", "mid":mid, "func":func, "status":status,"tcid":tcid, "priority":priority, "clas":clas, "name":name,"prereq":prereq, "steps":steps, "expected":expected}
-}
-
-
+		
+		
 	$.ajax({
 	type: "POST",
 	url: "action.php",
@@ -64,7 +62,7 @@ editAjax : function (par, tableName){
 				$(".editSuccess").css("display","block");
 				$(".editSuccess").fadeOut(3000);
 
-			}else{	alert ("Something went wrong while saving, try again");	}
+			}else{	alert ("Error: Server responded with:" + msg); }
 		}
 							
 	}); 
@@ -248,7 +246,7 @@ editSV : function (ele){
 				buttons: { "Save": function() {
 				
 					ele.childNodes[0].innerHTML = that.strip_tags($("#myTextarea").val(), '<i><b>');
-					that.editAjax(ele.childNodes[0], undefined);
+					that.editAjax(ele.childNodes[0], "editSV");
 					$('input#search').quicksearch('#myTable tbody tr');
 					$("#myTextarea").remove();
 					$(this).dialog("close");
@@ -302,7 +300,7 @@ editElement : function (ele, obj, type, ml, tbn ){
 					  
 						var ms  = $("#mySelect option:selected").text();
 						$(elem).html(ms);																	
-						that.editAjax(elem.childNodes[0], tbn);	
+						that.editAjax(elem.childNodes[0]);	
 						$('input#search').quicksearch('#myTable tbody tr');	
 					}  			
 					
@@ -315,7 +313,7 @@ editElement : function (ele, obj, type, ml, tbn ){
 					 seleEdit.onkeyup = function(){		
 					  	var ms  = $("#mySelect option:selected").text();
 						$(elem).html(ms);																	
-						that.editAjax(elem.childNodes[0], tbn);	
+						that.editAjax(elem.childNodes[0]);	
 						$('input#search').quicksearch('#myTable tbody tr');									
 					}
 
@@ -343,7 +341,7 @@ editElement : function (ele, obj, type, ml, tbn ){
 						inp.onchange = function(){
 							
 							ele.innerHTML = inp.value;
-							that.editAjax(ele.childNodes[0], undefined);
+							that.editAjax(ele.childNodes[0]);
 							$('input#search').quicksearch('#myTable tbody tr');
 						}				
 			}			
@@ -369,9 +367,6 @@ footerCount : function (){
 
 },
 	
-
-
-
 
 columnFilter : function(){
 	

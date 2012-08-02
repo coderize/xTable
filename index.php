@@ -346,17 +346,17 @@ $q = @mysql_query("SELECT manual_function_name AS 'FUNCTION'
      <?php  while($query_row = @mysql_fetch_object($q))  {    ?>     
 				
 			<tr>
-			   <td class='mid'><?php echo htmlentities($query_row->MID, ENT_QUOTES, "UTF-8"); ?></td>
-			   <td class= 'rhw'><?php echo htmlentities($query_row->FUNCTION, ENT_QUOTES, "UTF-8"); ?></td>
-			   <td class= 'rhw center'><?php echo htmlentities($query_row->STATUS, ENT_QUOTES, "UTF-8"); ?></td>			   
-			   <td class= 'tdw center'><?php echo htmlentities($query_row->TCID, ENT_QUOTES, "UTF-8"); ?></td>
-			   <td class= 'tdw center'><?php echo htmlentities($query_row->PRIORITY, ENT_QUOTES, "UTF-8"); ?></td>
-			   <td class= 'tdw center'><?php echo htmlentities($query_row->CLASS,ENT_QUOTES, "UTF-8"); ?></td>
-			   <td class= 'tdw center'><?php echo htmlentities($query_row->NAME,ENT_QUOTES, "UTF-8"); ?></td>
+			   <td class='mid'><?php echo $query_row->MID ?></td>
+			   <td class= 'rhw'><?php echo $query_row->FUNCTION; ?></td>
+			   <td class= 'rhw center'><?php echo $query_row->STATUS; ?></td>			   
+			   <td class= 'tdw center'><?php echo $query_row->TCID; ?></td>
+			   <td class= 'tdw center'><?php echo $query_row->PRIORITY; ?></td>
+			   <td class= 'tdw center'><?php echo $query_row->CLASS; ?></td>
+			   <td class= 'tdw center'><?php echo $query_row->NAME; ?></td>
 			  
-			  <td class= 'tdw tdh'><pre><?php echo htmlentities($query_row->PREREQUISITE, ENT_QUOTES, "UTF-8"); ?></pre></td>			   
-			   <td  class= 'tdw tdh'><pre><?php echo htmlentities($query_row->SCENARIO, ENT_QUOTES, "UTF-8"); ?></pre></td>			   
-			   <td  class= 'tdw tdh'><pre><?php echo htmlentities($query_row->VERIFICATION, ENT_QUOTES, "UTF-8"); ?></pre></td>		
+			  <td class= 'tdw tdh'><pre><?php echo $query_row->PREREQUISITE; ?></pre></td>			   
+			   <td  class= 'tdw tdh'><pre><?php echo $query_row->SCENARIO;  ?></pre></td> 
+			   <td  class= 'tdw tdh'><pre><?php echo $query_row->VERIFICATION; ?></pre></td>		
 			</tr>       
        
 <?php
@@ -390,7 +390,7 @@ Aw Snap, Looks like you have been logged out!
 <br/>
 </div>
 <div id="contactable"></div>
-<script type="text/javascript" src='js/core.js' charset="utf-8"></script>
+<script type="text/javascript" src='js/core.js?<?php echo rand(); ?>' charset="utf-8"></script>
 
 
 <script type="text/javascript" charset="utf-8">
