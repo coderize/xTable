@@ -358,7 +358,7 @@ $.widget("ui.selectmenu", {
 				.appendTo('body')
 				.addClass(self.widgetBaseClass + '-open')
 				.attr('aria-hidden', false)
-				.find('li:not(.'+ self.widgetBaseClass +'-group):eq('+ this._selectedIndex() +') a')[0].focus();	
+				.find('li:not(.'+ self.widgetBaseClass +'-group):eq('+ this._selectedIndex() +') a')[0];	
 			if(this.options.style == "dropdown"){ this.newelement.removeClass('ui-corner-all').addClass('ui-corner-top'); }	
 			this._refreshPosition();
 			this._trigger("open", event, this._uiHash());
