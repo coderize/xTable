@@ -10,25 +10,25 @@ if( $_SESSION['loggedIn'] === TRUE ){
 
 	if( $_POST['cTestcase']=='true' ){
 
-		$tcid = @mysql_real_escape_string($_POST['tcid']);
-		$rel = @mysql_real_escape_string($_POST['rel']);
-		$function = @mysql_real_escape_string($_POST['function']);
-		$name = @mysql_real_escape_string($_POST['name']);
-		$priority = @mysql_real_escape_string($_POST['priority']);
-		$class = @mysql_real_escape_string($_POST['class']);
-		$prereq = @mysql_real_escape_string($_POST['prereq']);
-		$scenario = @mysql_real_escape_string($_POST['scenario']);
-		$expected = @mysql_real_escape_string($_POST['expected']);
-		$stime = @mysql_real_escape_string($_POST['stime']);
-		$etime = @mysql_real_escape_string($_POST['etime']);
-		$status = @mysql_real_escape_string($_POST['status']);
+		$tcid = @mysql_real_escape_string(rawurldecode($_POST['tcid']));
+		$rel = @mysql_real_escape_string( rawurldecode($_POST['rel']));
+		$function = @mysql_real_escape_string( rawurldecode($_POST['function']));
+		$name = @mysql_real_escape_string(rawurldecode($_POST['name']));
+		$priority = @mysql_real_escape_string( rawurldecode($_POST['priority']));
+		$class = @mysql_real_escape_string(rawurldecode($_POST['class']));
+		$prereq = @mysql_real_escape_string(rawurldecode($_POST['prereq']));
+		$scenario = @mysql_real_escape_string(rawurldecode($_POST['scenario']));
+		$expected = @mysql_real_escape_string(rawurldecode($_POST['expected']));
+		$stime = @mysql_real_escape_string(rawurldecode($_POST['stime']));
+		$etime = @mysql_real_escape_string(rawurldecode($_POST['etime']));
+		$status = @mysql_real_escape_string(rawurldecode($_POST['status']));
 		$author = @mysql_real_escape_string($_SESSION['user_id']);
+		$pc = @mysql_real_escape_string(rawurldecode($_POST['pc']));
+		$ptd = @mysql_real_escape_string(rawurldecode($_POST['ptd']));
+		
 		$prereq = strip_tags($prereq, '<i><b>');
 		$scenario = strip_tags($scenario, '<i><b>');
 		$expected = strip_tags($expected, '<i><b>');
-		$pc = @mysql_real_escape_string($_POST['pc']);
-		$ptd = @mysql_real_escape_string($_POST['ptd']);
-
 		
 	
 	$q = mysql_query("INSERT INTO table_manual (manual_tcid, manual_relation_id, manual_function_name, manual_name, manual_priority_id, manual_class_id, manual_prereq, manual_steps, manual_expected, manual_start, manual_end, manual_pauseduration, manual_pausecount, manual_status, manual_author_id)
