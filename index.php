@@ -338,7 +338,7 @@ $q = @mysql_query("SELECT manual_function_name AS 'FUNCTION'
 		<th  class='tblTR'>NAME</th> 
 		<th  class='tblTR'>PREREQUISITE</th>
 		<th  class='tblTR'>SCENARIO</th>
-		<th  class='tblTR'>VERIFICATION</th>
+	<!--	<th  class='tblTR'>VERIFICATION</th> -->
    
        </thead>
 	   <tbody>
@@ -354,9 +354,9 @@ $q = @mysql_query("SELECT manual_function_name AS 'FUNCTION'
 			   <td class= 'tdw center'><?php echo $query_row->CLASS; ?></td>
 			   <td class= 'tdw center'><?php echo $query_row->NAME; ?></td>
 			  
-			  <td class= 'tdw tdh'><pre><?php echo $query_row->PREREQUISITE; ?></pre></td>			   
+			   <td class= 'tdw tdh'><pre><?php echo $query_row->PREREQUISITE; ?></pre></td>			   
 			   <td  class= 'tdw tdh'><pre><?php echo $query_row->SCENARIO;  ?></pre></td> 
-			   <td  class= 'tdw tdh'><pre><?php echo $query_row->VERIFICATION; ?></pre></td>		
+			  <!--  <td  class= 'tdw tdh'><pre><?php //echo $query_row->VERIFICATION; ?></pre></td>-->
 			</tr>       
        
 <?php

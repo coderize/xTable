@@ -571,11 +571,11 @@ cellEdit : function(){
 				that.editSV(this);
 			}
 														
-			this.childNodes[9].className = 'verification ui-widget-content';
+			/*this.childNodes[9].className = 'verification ui-widget-content';
 			this.childNodes[9].ondblclick = function (){
 															
 				that.editSV(this);
-			}
+			}*/
 														
 		});
 
@@ -775,12 +775,12 @@ bootstrap: function(){
 	var hght = ($(".mid").length==0) ? 125 : 157;
 	$('#myTable').fixheadertable({ 
 		caption     : ' ', 
-		colratio    : [1,150,80, 65, 78, 140,150, 150, 260, 260],
+		colratio    : [1, 150, 105, 65, 78, 150, 150, 150, 400],
 		height      : window.innerHeight - hght,
 		zebra       : false,
 		sortable    : true,
 		sortedColId : 2, 
-		sortType    : ['integer','string', 'string', 'integer', 'string', 'string', 'string', 'string', 'string', 'string'],
+		sortType    : ['integer','string', 'string', 'integer', 'string', 'string', 'string', 'string', 'string'],
 		dateFormat  : 'm/d/Y',
 		pager       : false,
 		rowsPerPage : 100, 
