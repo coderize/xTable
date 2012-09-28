@@ -42,7 +42,6 @@ editAjax : function (par){
 		var name = encodeURIComponent($(parent).children("td:nth-child(7)").html());
 		var prereq = encodeURIComponent($(parent).children("td:nth-child(8)").children("pre:nth-child(1)").html());
 		var steps = encodeURIComponent($(parent).children("td:nth-child(9)").children("pre:nth-child(1)").html());
-	//	var steps = $(parent).children("td:nth-child(9)").children("pre:nth-child(1)").html();
 		var expected = encodeURIComponent($(parent).children("td:nth-child(10)").children("pre:nth-child(1)").html());
 		var dataObj = {"tableEdit":"true", "mid":mid, "func":func, "status":status,"tcid":tcid, "priority":priority, "clas":clas, "name":name,"prereq":prereq, "steps":steps, "expected":expected}
 		
@@ -246,7 +245,7 @@ editSV : function (ele){
 				buttons: { "Save": function() {
 				
 					ele.childNodes[0].innerHTML = that.strip_tags($("#myTextarea").val(), '<i><b>');
-					that.editAjax(ele.childNodes[0], "editSV");
+					that.editAjax(ele.childNodes[0]);
 					$('input#search').quicksearch('#myTable tbody tr');
 					$("#myTextarea").remove();
 					$(this).dialog("close");
