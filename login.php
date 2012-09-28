@@ -4,11 +4,9 @@ error_reporting(E_ALL ^ E_NOTICE);
 require "includes/config.php";
 require "includes/sess.php";
 session_start();
-
 if( $_SESSION['loggedIn'] === TRUE ){
 	header('Refresh: 0; URL=home.php');
-	exit;
-} 
+	exit;} 
 ?>
 <!DOCTYPE html>
 <html>
@@ -18,36 +16,16 @@ if( $_SESSION['loggedIn'] === TRUE ){
 <style>
 body{margin:0; padding:0; font:100% Arial, sans-serif;}
 
-#frame{
-	width:300px; height:300px; margin:200px auto 0; 
-	-webkit-perspective:500;
-}
-#rframe{
-	width:300px; height:300px; position:relative; 
-	-webkit-transform-style:preserve-3d;
-	-webkit-animation:spin 10s linear infinite;
-}
-#rframe > div{
-	position:absolute; top:0; left:0;
-	height:300px; width:300px; 
-	-webkit-border-radius:20px; 
-	border-radius:20px;
-	background-color:#09F; opacity:.7;
-	font-size:30px; line-height:300px; text-align:center; color:#000; text-shadow:1px 1px 0 rgba(255, 255, 255, .5); 
-	-webkit-backface-visibility:visible; 
+#wrapper{
+	width: 495px !important;
+	position: absolute;
+	left: 30%;
+	top: 30%;
+	
+	
+
 }
 
-#rframe > div:nth-child(1){-webkit-transform:rotateY(270deg) translateZ(160px);}
-#rframe > div:nth-child(2){-webkit-transform:rotateY(180deg) translateZ(160px);}
-#rframe > div:nth-child(3){-webkit-transform:rotateY(90deg) translateZ(160px);}
-#rframe > div:nth-child(4){-webkit-transform:rotateX(90deg) translateZ(160px);}
-#rframe > div:nth-child(5){-webkit-transform:rotateX(270deg) translateZ(160px);}
-#rframe > div:nth-child(6){-webkit-transform:translateZ(160px);}
-
-@-webkit-keyframes spin{
- 	from{-webkit-transform:rotateX(0deg) rotateY(0deg) rotateZ(0deg);}
- 	to{-webkit-transform:rotateX(360deg) rotateY(360deg) rotateZ(360deg);}
-}
 
 /* LOGIN CSS */
 
@@ -78,10 +56,6 @@ html {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#546673', endColorstr='#1f242a');
 }
 
-        #wrapper {
-		display:none;
-
-        }
         
             /* Form General Style */
     
@@ -136,8 +110,8 @@ html {
 
                     ul#menu li a {
                         display: block;
-                        padding: 15px 0;
-                        font: bold 18px/100% Tahoma, Geneva, sans-serif;
+                        padding: 8px 0;
+                        font: bold 17px/100% Tahoma, Geneva, sans-serif;
                         color: #fff;
                         text-decoration: none;
                         text-align: center;
@@ -267,7 +241,6 @@ html {
             margin: 0;
             padding: 14px 20px 14px 20px !important;
         }
-    }
 
 #modal{
 	position:absolute;
@@ -302,29 +275,6 @@ html {
 	padding-bottom: 15px;
 
 }
-#logout{
-	position:absolute;
-	top:65px;
-	right: 2%;
-	color:#09F;
-	font-weight: bold;
-	font-size: 1.2em;
-
-}
-
-
-#dropdowns{
-	width: 400px;
-	display:none;
-}
-
-
-.vcp{
-	width:400px
-	height:30px;
-	margin-bottom: 10px;
-
-}
 
 #loading{
 	display:none;
@@ -346,19 +296,7 @@ html {
 </head>
 <body>
 
-<div id="frame">
-	<div id="rframe">
-		<div>Quality</div>
-		<div>Quality</div>
-		<div>Quality</div>
-		<div>Quality</div>
-		<div>Quality</div>
-		<div>Quality</div>
-	</div>
-</div>
 
-
-<button name="modal" id="modal">Click to Login</button>
 <?php
 $logout = @mysql_real_escape_string($_GET['logout']);
 
@@ -374,10 +312,7 @@ if($logout == "true"){
     
     <ul id="menu">
        <li><a href="javascript:void(0) return false;" title="Login" id='tabTitle'>Login</a></li>
-       <!--  <li><a href="javascript:void(0) return false;" title="Login">Clients</a></li>
-        <li><a href="javascript:void(0) return false;" title="Login">Visitors</a></li>
-		<li><a href="#">Change Password</a></li>-->
-		<a href='javascript:void(0) return false;' id='close'>Close</a>
+		<li><a href="#">Change Password</a></li>
     </ul>
     
         <div id="formWrapper">
@@ -386,201 +321,92 @@ if($logout == "true"){
 				<div id='msg'></div>
                 <label class="no-placeholder-hide">Username</label><input type="text"  id='username' name="username" autocomplete="off" placeholder="Username" />
                 <label class="no-placeholder-hide">Password</label><input type="password"  id='password' name="password" autocomplete="off" placeholder="Password" />
-                <label class="no-placeholder-hide">Confirm Password</label><input type="password" style="display:none;" id='cnpassword' name="cnpassword" placeholder="Confirm Password" />
-				
+                <label class="no-placeholder-hide">Confirm Password</label><input type="password" style="display:none;" id='cnpassword' name="cnpassword" placeholder="Confirm Password" />				
                 <input type="submit" id='loginBtn' name='loginBtn' value="Login" onclick="return false;" />
 				
-                    <!--<label><p>Keep Login</p><input type="checkbox" name="remember" /></label>-->
+                    
             </div>
 			  </form>
 		</div>
-  <!--
-            <div id="client" class="hide">
-                <label class="no-placeholder-hide">Username</label><input type="text" name="username" placeholder="Username" />
-                <label class="no-placeholder-hide">Password</label><input type="password" name="password" placeholder="Password" />
-                <label class="no-placeholder-hide">PIN</label><input type="text" name="pin" placeholder="Enter PIN Code" />
-                <input type="submit" value="Login" />
-                    <label><p>Keep Login</p><input type="checkbox" name="remember" /></label>
-                
-                <ul id="options">
-                    <li><a href="#account">Request Account</a></li>
-                    <li><a href="#forget">Forgot Password?</a></li>
-                </ul>
-            </div>
-
-                <div id="account" class="hide">
-                    <label class="no-placeholder-hide">Username</label><input type="text" name="username" placeholder="Username" />
-                    <label class="no-placeholder-hide">Password</label><input type="password" name="password" placeholder="Password" />
-                    <label class="no-placeholder-hide">E-Mail</label><input type="text" name="email" placeholder="Email" />
-                    <label class="no-placeholder-hide">Company</label><input type="text" name="company" placeholder="Company" />
-                    <input type="submit" value="Submit Request" />
-                </div>
-                
-                <div id="forget" class="hide">
-                    <label class="no-placeholder-hide">Username or E-mail Address</label><input type="text" name="forgetInput" class="inputForget" placeholder="Enter your Username or Email address">
-                    <input type="submit" value="Send" />
-                </div>
-        
-            <div id="visitor" class="hide">
-                <label class="no-placeholder-hide">Username</label><input type="text" name="username" placeholder="Username" />
-                <label class="no-placeholder-hide">Password</label><input type="password" name="password" placeholder="Password" />
-                <label class="no-placeholder-hide">PIN</label><input type="text" name="pin" placeholder="Enter PIN Code" />
-                <input type="submit" value="Login" />
-            </div>
-            
-   //-->
 </div>
-
-<!-- /////////////////////////////////////////Drop downs////////////////////////////////// -->
-<div id="dropdowns">
-    <form id="form" name="test" action="login.php" method="POST">
-    
-    <ul id="menu">
-       <li><a href="javascript:void(0) return false;" title="Login" id='tabTitle'>Selection</a></li>
-
-		<a href='javascript:void(0) return false;' id='selectionClose'>Close</a>
-    </ul>
-    
-        <div id="formWrapper">
-		
-            <div id="user" >
-				<div id='selectionMsg'></div>
-                <label class="no-placeholder-hide">Vertical</label>
-								
-					<select placeholder="Vertical" name='vertical' id='vertical' class='vcp'>
-						<option value='na'>Select a Vertical</>
-						<option value='1'>Booking</>
-						<option value='2'>Retail</>
-						<option value='3'>Self-Service</>
-						<option value='4'>UK</>
-					
-					</select><br />
-				
-                <label class="no-placeholder-hide">Client</label>
-					<select  id='client' name="client" placeholder="Client" class='vcp'>
-					
-					</select><br />
-					
-					
-                <label class="no-placeholder-hide">Project</label>
-					<select id='project' name="project" placeholder="Project" class='vcp'>
-					
-					</select>
-				
-                 
-            </div>
-			  </form>
-		</div>
-
-</div>
-<!-- /////////////////////////////////////////Drop downs////////////////////////////////// -->
-
-
-
 
 <div id="loading" ><img src='img/3MA_loadingcontent.gif' /></div>
 
 <script>
-	$(document).ready(function() 
-		{ 		
-			$("#modal").button();
-			$("#modal").click(function(){
+$(document).ready(function(){
 
-				$( "#wrapper" ).dialog({
-									
-										width: 445,
-										modal: true,
-										hide: "explode",
-										show: 'slide',
-										draggable: false,										
-										resizable: false										
-									});		
-
-				$( ".ui-dialog-content" ).css("padding","0px");
-				$( ".ui-widget-header" ).css("display","none");
-				$("#username").focus();
+	$("#modal").button();
+	$( ".ui-dialog-content" ).css("padding","0px");
+	$( ".ui-widget-header" ).css("display","none");
+	$("#username").focus();
 				
 			
-				
-		
-			});
-			
-			$("#loginBtn").click(function(){	
+$("#loginBtn").click(function(){
+
+	if( !$("#username").val() || !$("#password").val() ){
+								
+		$("#msg").html("Please provide valid username and password").attr("class","error smallText");
+
+	}else{	
 					
-					if( !$("#username").val() || !$("#password").val() ){
+		$.ajax({
+			type: "POST",
+			url: "login_mod.php",
+			cache: false,
+			async: true,
+			data: "username="+ $("#username").val() +"&password="+ $("#password").val()
+			}).done(function( msg ) {			
+						
+			$("#msg").html(msg);
+			
+			if( msg == "Password Change Required!"){
+				
+				$("#msg").fadeOut(1500, function(){
 							
-							$("#msg").html("Please provide valid username and password").attr("class","error smallText");
-					}else{	
-					
-						$.ajax({
-						type: "POST",
-						url: "login_mod.php",
-						cache: false,
-						async: true,
-						data: "username="+ $("#username").val() +"&password="+ $("#password").val()
-						}).done(function( msg ) {			
+					window.location = 'change_pw.php'
 						
-								$("#msg").html(msg);
-										
-									if( msg == "Password Change Required!"){
-									
-										$("#msg").fadeOut(1500, function(){
-											
-											window.location = 'change_pw.php'
-						
-										});	
+				});	
 
-									}						
+			}						
 	
-								if( msg == 'Login Successful.'){
+			if( msg == 'Login Successful.'){
+											
+				window.location.href = 'home.php';
 									
-									window.location.href = 'home.php';
-									
-									
-			
-													
-								}else{
+			}else{
 								
-										$("#msg").attr("class","error");
-								}
-								
-															  
-						});				
-					}
+				$("#msg").attr("class","error");
+			}
+														  
+		});					
+	}
 					
-					
+});					
 			
-				});//LOGIN BUTTON
 				
-				$("#logout").fadeOut(4000);
-			
+$("#logout").fadeOut(4000);
 
 			
-				$("#close").click(function(){
+$("#close").click(function(){
+	
+	$( "#wrapper" ).dialog("close");
 				
-					$( "#wrapper" ).dialog("close");
-				
-				});
+});
 			
-				
-
+$("#loading").ajaxStart(function(){
+	
+	$(this).show();
+});
 			
-				$("#loading").ajaxStart(function(){
-				
-				$(this).show();
-				
-			});
-			
-			$("#loading").ajaxStop(function(){
-			
-				$(this).hide();
-				
-			});
+$("#loading").ajaxStop(function(){
+		
+	$(this).hide();
+});
 			
 			
 				
 
-		});
+});
 
 </script>
 </body>
