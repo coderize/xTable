@@ -52,14 +52,13 @@ if( $_SESSION['loggedIn'] === TRUE ){
 
 	if($_POST['newtcid'] == "true" ){
 
-		$funcname = $_POST['funcname'];
+		$funcname = rawurldecode($_POST['funcname']);
 		$rel =  mysql_real_escape_string($_POST['rel']);
 
 		$q = mysql_query("SELECT MAX(manual_tcid) +.01 AS 'NEW_TCID'
 					FROM table_manual
 					WHERE manual_relation_id = {$rel}
 					AND manual_function_name  = '{$funcname}'");
-												
 
 		$newTCID = mysql_fetch_object($q);
 		echo $newTCID->NEW_TCID;

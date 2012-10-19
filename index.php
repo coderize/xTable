@@ -101,7 +101,6 @@ body,pre{font-family:Verdana,Helvetica,san-serif,Arial;font-size:.6em}*{padding:
 <script src="js/jquery.min.js" charset="UTF-8"></script>
 <script src="js/jquery.quicksearch.js" charset="UTF-8"></script>
 <script src="js/jqueryUI/js/jqueryui.js" charset="UTF-8"></script>
-<script src="http://jqueryui.com/themeroller/themeswitchertool/" charset="UTF-8"></script>
 <script src="js/jquery.fixheadertable.js" charset="UTF-8"></script>
 <script src="js/jquery.columnfilters.js" charset="UTF-8"></script>
 <script src="js/jquery.js" charset="UTF-8"></script>
@@ -113,17 +112,20 @@ body,pre{font-family:Verdana,Helvetica,san-serif,Arial;font-size:.6em}*{padding:
 $qpriority = mysql_query("SELECT priority_id, priority_name FROM table_priority");
 			
 			echo "<script charset='UTF-8'>";
-			echo "priorityObj = {";
-			while($qpri = mysql_fetch_object($qpriority)){
+			
+
+			
+			echo "priorityObj = {";	
+			
+				while($qpri = mysql_fetch_object($qpriority)){
 				
-				$obj .=  "'". $qpri->priority_id . "'" . ":" . "'". $qpri->priority_name . "'" . ",";
+					$obj .=  "'". $qpri->priority_id . "'" . ":" . "'". $qpri->priority_name . "'" . ",";
 
-			}
+				}
 			echo substr($obj,0,-1);
-			echo  "};";
-			
+			echo  "};"; 
 
-			
+		
 $qclass = mysql_query("SELECT class_id, class_name FROM table_class");
 				
 		
@@ -245,7 +247,7 @@ $iq = @mysql_query("SELECT relation_id AS rel
 				while($qprojects = mysql_fetch_object($projects)){
 ?>			
 					
-				<option value="<?php echo $qprojects->project_id; ?>"><?php echo $qprojects->project_name; ?></option>
+					<option value="<?php echo $qprojects->project_id; ?>"><?php echo $qprojects->project_name; ?></option>
 				
 				
 <?php
@@ -390,7 +392,7 @@ Aw Snap, Looks like you have been logged out!
 <br/>
 </div>
 <div id="contactable"></div>
-<script type="text/javascript" src='js/core.js?<?php echo rand(); ?>' charset="utf-8"></script>
+<script type="text/javascript" src='js/core.js?v=1' charset="utf-8"></script>
 
 
 <script type="text/javascript" charset="utf-8">

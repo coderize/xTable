@@ -5,8 +5,10 @@ require "includes/config.php";
 require "includes/sess.php";
 session_start();
 if( $_SESSION['loggedIn'] === TRUE ){
+	
 	header('Refresh: 0; URL=home.php');
-	exit;} 
+	exit;
+} 
 ?>
 <!DOCTYPE html>
 <html>
@@ -21,11 +23,7 @@ body{margin:0; padding:0; font:100% Arial, sans-serif;}
 	position: absolute;
 	left: 30%;
 	top: 30%;
-	
-	
-
 }
-
 
 /* LOGIN CSS */
 
@@ -298,7 +296,8 @@ html {
 
 
 <?php
-$logout = @mysql_real_escape_string($_GET['logout']);
+
+$logout = $_GET['logout'];
 
 if($logout == "true"){
 	
@@ -354,7 +353,7 @@ $("#loginBtn").click(function(){
 			url: "login_mod.php",
 			cache: false,
 			async: true,
-			data: "username="+ $("#username").val() +"&password="+ $("#password").val()
+			data: {username: $("#username").val(), password: $("#password").val()}
 			}).done(function( msg ) {			
 						
 			$("#msg").html(msg);

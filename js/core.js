@@ -603,13 +603,13 @@ createFunc : function(){
 		}); 
 											
  }else{
+	
 	$("#newfunction").remove();
 	this.validCreate();
+	
  }
 
 },
-
-
 
 addTestcase : function (action){
 
@@ -771,7 +771,9 @@ resize : function (){
 bootstrap: function(){
 
 	$('#myTable').columnFilters();
+	
 	var hght = ($(".mid").length==0) ? 125 : 157;
+	
 	$('#myTable').fixheadertable({ 
 		caption     : ' ', 
 		colratio    : [1, 150, 105, 65, 78, 150, 150, 150, 400],
@@ -850,14 +852,14 @@ bootstrap: function(){
 				
 
 	
-	$('#switcher').themeswitcher();
+	//$('#switcher').themeswitcher();
 
 	$("#add").click(function(){		xTable.addTestcase("close");	});	
 	$("#addAnother").click(function(){	xTable.addTestcase("aa");	xTable.pauser(); 	});	
 	$("#addSimilar").click(function(){	xTable.addTestcase("as");	xTable.pauser();  });
 
 
-}//end BOOTSTRAP
+}
 
 
 
