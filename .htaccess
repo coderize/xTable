@@ -21,7 +21,3 @@ AddOutputFilterByType DEFLATE application/rss+xml
 AddOutputFilterByType DEFLATE application/javascript
 AddOutputFilterByType DEFLATE application/x-javascript
 
-# Or, compress certain file types by extension:
-<files *.html>
-SetOutputFilter DEFLATE
-</files>

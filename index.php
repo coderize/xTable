@@ -6,6 +6,7 @@ require "includes/sess.php";
 session_start();
 
  if( $_SESSION['loggedIn'] !== TRUE  ){
+	
 	header('Refresh: 0; URL=login.php');
 	exit;
 } 
@@ -164,6 +165,7 @@ $iq = @mysql_query("SELECT relation_id AS rel
 			LIMIT 1");
 
 			$iq = mysql_fetch_object($iq);
+			
 			$rel = ($iq->rel) ? $iq->rel : '0';
 			echo " data = {\"rel\": $rel, \"firstName\" : \"{$_SESSION['fname']}\", \"lastName\": \"{$_SESSION['lname']}\" }; "; 
 
