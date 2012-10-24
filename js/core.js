@@ -768,6 +768,22 @@ resize : function (){
 
 
 
+automate: function(){
+
+
+	
+
+
+
+
+
+},
+
+
+
+
+
+
 bootstrap: function(){
 
 	$('#myTable').columnFilters();
@@ -799,7 +815,7 @@ bootstrap: function(){
 	$(".t_fixed_header_caption").prepend( "<div id='hnav'><select name='hvertical' id='hvertical' onchange='javascript:xTable.reload();'>" + $("#vertical").html() + "</select> <select name='hclient' id='hclient' onchange='javascript:xTable.reload();'>"+$("#client").html()+"</select>"+" <select name='hproject' id='hproject' onchange='javascript:xTable.reload();'>" + $("#project").html() + "</select></div>" );	$("#hnav").css("float","left");
 
 	//adds CT and Execute buttons
-	$(".t_fixed_header_caption").append("<div id='hNavBtn'><button id='addBtn'>Create Testcase</button><button id='execBtn'>Execute</button></div>");
+	$(".t_fixed_header_caption").append("<div id='hNavBtn'><button id='AutomateBtn'>Automation</button><button id='addBtn'>Create Testcase</button><button id='execBtn'>Execute</button></div>");
 	$("#hNavBtn").css("float","right");
 
 
