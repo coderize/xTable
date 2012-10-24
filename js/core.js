@@ -770,17 +770,33 @@ resize : function (){
 
 automate: function(){
 
+	$.ajax({
+	 type: "GET",
+	 url: "jenkins-api.php",
+	 cache: false,
+	 data: {"projList":"true","rel":data.rel}
+	}).done(function( msg ) {
+		
+		$("body").append(msg);
 
-	
+		$("#auto-container").dialog({
+		autoOpen: true,
+		height: 580,
+		width: 1010,
+		modal: true,
+		resizable: false,
+		close: function(){
+			
+			$("#auto-container").remove();
+		}
+	});	
 
+	});
 
 
 
 
 },
-
-
-
 
 
 
@@ -815,7 +831,7 @@ bootstrap: function(){
 	$(".t_fixed_header_caption").prepend( "<div id='hnav'><select name='hvertical' id='hvertical' onchange='javascript:xTable.reload();'>" + $("#vertical").html() + "</select> <select name='hclient' id='hclient' onchange='javascript:xTable.reload();'>"+$("#client").html()+"</select>"+" <select name='hproject' id='hproject' onchange='javascript:xTable.reload();'>" + $("#project").html() + "</select></div>" );	$("#hnav").css("float","left");
 
 	//adds CT and Execute buttons
-	$(".t_fixed_header_caption").append("<div id='hNavBtn'><button id='AutomateBtn'>Automation</button><button id='addBtn'>Create Testcase</button><button id='execBtn'>Execute</button></div>");
+	$(".t_fixed_header_caption").append("<div id='hNavBtn'><button id='automateBtn'>Automation</button><button id='addBtn'>Create Testcase</button><button id='execBtn'>Execute</button></div>");
 	$("#hNavBtn").css("float","right");
 
 
@@ -871,9 +887,9 @@ bootstrap: function(){
 	//$('#switcher').themeswitcher();
 
 	$("#add").click(function(){		xTable.addTestcase("close");	});	
-	$("#addAnother").click(function(){	xTable.addTestcase("aa");	xTable.pauser(); 	});	
+	$("#addAnother").click(function(){	xTable.addTestcase("aa");	xTable.pauser();  });	
 	$("#addSimilar").click(function(){	xTable.addTestcase("as");	xTable.pauser();  });
-
+	$("#automateBtn").click(function() { xTable.automate(); });
 
 }
 

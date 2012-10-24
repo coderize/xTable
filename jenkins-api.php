@@ -16,7 +16,7 @@ require_once("vendor/jenkins-php-api/Jenkins.php");
 
 $jenkins = new Jenkins("http://10.0.90.82:8080");
 
-if ( $_GET['projList'] === "true" ){
+if ( $_GET['jenkinsProjList'] === "true" ){
 
 	if( $jenkins->isAvailable() ){
 		
@@ -34,18 +34,9 @@ $jobName = rawurldecode($_GET['jobName']);
  if( $jenkins->isAvailable() ){
 
 	if( isset($jobName) && $jobName != "" ){
-
 	
 
-		if( $jenkins->launchJob($jobName) === TRUE ){
-
-			echo json_encode(array("success"=>"true"));
-
-		}else{
-
-		
-			echo json_encode(array("success"=>"false"));
-		}
+		 $jenkins->launchJob($jobName);
 		
 
 	}else{
@@ -58,7 +49,32 @@ $jobName = rawurldecode($_GET['jobName']);
  }
 
 }
+
+
+if ( $_GET['projList'] === "true" ){
+
+	$rel = mysql_real_escape_string($_GET['rel']);
+
+	if( isset($rel) && $rel != "") {
+		
+		$rel_project_list = mysql_query("select relation_id AS rel, auto_name AS name From table_automation WHERE relation_id = '{$rel}'") or die("Can't get DB builds"); 
+
+		if( $rel_project_list ){
+			
+			while ($projects = mysql_fetch_object($rel_project_list)){
+				
+				echo "<div id='auto-container'>";
+				echo "<div class='related-builds'>{$projects->name} <button id='' value='{$projects->name}'>Execute</button></div>";
+				echo "</div>";	
+
+			}
+
+		}
+
+	}else{ echo "Rel was not provided"; }
+
 	
+}
 
 
 
