@@ -95,7 +95,8 @@ include "includes/config.php";
 <?php
 				}
 
-		}		
+	
+	}		
 		
 ?>
 
