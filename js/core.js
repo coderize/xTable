@@ -798,6 +798,23 @@ automate: function(){
 
 },
 
+launchJob : function (job){
+
+	var job = encodeURIComponent(job);
+
+	$.ajax({
+	 type: "GET",
+	 url: "jenkins-api.php",
+	 cache: false,
+	 data: {"buildJob":"true","jobName":job}
+	}).done(function( msg ) {
+		
+		console.log( msg );
+
+	});
+},
+
+
 
 
 bootstrap: function(){

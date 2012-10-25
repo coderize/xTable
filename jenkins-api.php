@@ -64,7 +64,7 @@ if ( $_GET['projList'] === "true" ){
 			while ($projects = mysql_fetch_object($rel_project_list)){
 				
 				echo "<div id='auto-container'>";
-				echo "<div class='related-builds'>{$projects->name} <button id='' value='{$projects->name}'>Execute</button></div>";
+				echo "<div class='related-builds'>{$projects->name} <button onclick='javascript:xTable.launchJob(this.value)' id='' value='{$projects->name}'>Execute</button></div>";
 				echo "</div>";	
 
 			}

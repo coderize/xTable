@@ -394,7 +394,7 @@ Aw Snap, Looks like you have been logged out!
 <br/>
 </div>
 <div id="contactable"></div>
-<script type="text/javascript" src='js/core.js?v=3' charset="utf-8"></script>
+<script type="text/javascript" src='js/core.js?v=4' charset="utf-8"></script>
 
 
 <script type="text/javascript" charset="utf-8">
