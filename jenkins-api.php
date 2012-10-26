@@ -27,17 +27,16 @@ if ( $_GET['jenkinsProjList'] === "true" ){
 }
 
 
-if( $_GET['buildJob'] === "true" ){
+if( $_POST['buildJob'] === "true" ){
 
-$jobName = rawurldecode($_GET['jobName']);
+$jobName = rawurldecode($_POST['jobName']);
 
  if( $jenkins->isAvailable() ){
 
 	if( isset($jobName) && $jobName != "" ){
 	
 
-		 $jenkins->launchJob($jobName);
-		
+		 $jenkins->launchJob($jobName);		
 
 	}else{
 
@@ -53,9 +52,9 @@ $jobName = rawurldecode($_GET['jobName']);
 
 if ( $_GET['projList'] === "true" ){
 
-	$rel = mysql_real_escape_string($_GET['rel']);
+	$rel = mysql_real_escape_string((integer)$_GET['rel']);
 
-	if( isset($rel) && $rel != "") {
+	if( isset($rel) && $rel != "" && $rel != 0 ) {
 		
 		$rel_project_list = mysql_query("select relation_id AS rel, auto_name AS name From table_automation WHERE relation_id = '{$rel}'") or die("Can't get DB builds"); 
 
@@ -64,7 +63,7 @@ if ( $_GET['projList'] === "true" ){
 			while ($projects = mysql_fetch_object($rel_project_list)){
 				
 				echo "<div id='auto-container'>";
-				echo "<div class='related-builds'>{$projects->name} <button onclick='javascript:xTable.launchJob(this.value)' id='' value='{$projects->name}'>Execute</button></div>";
+				echo "<div class='related-builds'>{$projects->name} <button onclick='xTable.launchJob(this.value)' id='' value='{$projects->name}'>Execute</button></div>";
 				echo "</div>";	
 
 			}

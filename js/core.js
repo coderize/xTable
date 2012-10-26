@@ -769,7 +769,13 @@ resize : function (){
 
 
 automate: function(){
-
+		
+	if( this.relCheck("Select a component first!") ){
+		
+		return;
+	}
+	
+		  
 	$.ajax({
 	 type: "GET",
 	 url: "jenkins-api.php",
@@ -803,7 +809,7 @@ launchJob : function (job){
 	var job = encodeURIComponent(job);
 
 	$.ajax({
-	 type: "GET",
+	 type: "POST",
 	 url: "jenkins-api.php",
 	 cache: false,
 	 data: {"buildJob":"true","jobName":job}
