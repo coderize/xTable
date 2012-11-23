@@ -267,34 +267,7 @@ $iq = @mysql_query("SELECT relation_id AS rel
 <?php 
 									
 
-if( $_SESSION['role'] != 5 && $_SESSION['role'] != 4  ){
 											
-/////////////////////////////////////////////////////NOT SE AND PM/////////////////////////////////////////////////
-$q = @mysql_query("SELECT manual_function_name AS 'FUNCTION'			
-									, manual_id as 'MID'	
-									, status_name as 'STATUS'
-									, manual_tcid AS 'TCID'
-									, priority_name AS 'PRIORITY'
-									, class_name AS 'CLASS'
-									, manual_name AS 'NAME'
-									, manual_prereq AS 'PREREQUISITE'
-									, manual_steps AS 'SCENARIO'
-									, manual_expected AS 'VERIFICATION'
-									 
-									FROM table_manual, table_class, table_relation, table_priority, table_status
-									 
-									WHERE manual_relation_id = {$iq->rel}
-									AND manual_relation_id = relation_id
-									AND manual_class_id = class_id
-									AND manual_priority_id = priority_id
-									AND manual_status = status_id
-									AND manual_status <>  4
-									
-									ORDER BY status_name, manual_tcid
-								
-									");//or die ("UNABLE TO GET TESTCASES");
-/////////////////////////////////////////////////////NOT SE AND PM/////////////////////////////////////////////////
-}else{
 /////////////////////////////////////////////////////GET ALL TYPES OF TESTCASES/////////////////////////////////////////////////
 $q = @mysql_query("SELECT manual_function_name AS 'FUNCTION'			
 									, manual_id as 'MID'	
@@ -321,7 +294,6 @@ $q = @mysql_query("SELECT manual_function_name AS 'FUNCTION'
 								
 									");//or die ("UNABLE TO GET TESTCASES");
 /////////////////////////////////////////////////////GET ALL TYPES OF TESTCASES/////////////////////////////////////////////////
-}
 
 
 ?>
