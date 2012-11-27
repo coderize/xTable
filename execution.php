@@ -370,7 +370,7 @@ $er = @mysql_query("SELECT manual_function_name AS 'FUNCTION'
 
 		echo "INVALID_SESSION";  
 		session_destroy();	
-		setcookie("PHPSESSID", "", time()-3600, "/", "10.10.40.16", 0,TRUE);
+		setcookie("PHPSESSID", "", time()-3600);
 		exit;
 		
 }
