@@ -33,8 +33,7 @@ $jobName = rawurldecode($_POST['jobName']);
 
  if( $jenkins->isAvailable() ){
 
-	if( isset($jobName) && $jobName != "" ){
-	
+	if( isset($jobName) && $jobName != "" ){	
 
 		 $jenkins->launchJob($jobName);		
 
@@ -63,7 +62,7 @@ if ( $_GET['projList'] === "true" ){
 			while ($projects = mysql_fetch_object($rel_project_list)){
 				
 				echo "<div id='auto-container'>";
-				echo "<div class='related-builds'>{$projects->name} <button onclick='xTable.launchJob(this.value)' id='' value='{$projects->name}'>Execute</button></div>";
+				echo "<div class='related-builds'>{$projects->name} <button class='related-builds-btn' onclick='xTable.launchJob(this.value)' id='' value='{$projects->name}'>Execute</button></div>";
 				echo "</div>";	
 
 			}
