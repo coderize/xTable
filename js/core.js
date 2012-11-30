@@ -795,7 +795,7 @@ automate: function(){
 			$("#auto-container").remove();
 		}
 	});	
-
+			$(".related-builds-btn").blur();
 	});
 },
 

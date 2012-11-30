@@ -90,6 +90,18 @@ body,pre{font-family:Verdana,Helvetica,san-serif,Arial;font-size:.6em}*{padding:
 	margin-left:10px !important;
 }
 
+.related-builds{
+	padding: 10px;
+	border: 1px solid #000;
+	
+}
+
+.related-builds-btn{
+	float: right;
+	top: -5px;
+	
+}
+
 </style>
 <link rel="stylesheet" type="text/css" href="css/base.css" />
 <link rel="stylesheet" type="text/css" href="css/flick/jquery-ui-1.8.16.custom.css" />
@@ -351,9 +363,7 @@ require("create_testcase_template.html");
 
 ?>
 
-
 <div id='iframeContainer'></div>								
-								
 <div id="logout-confirm" title="Log out?">
 	<p>You will be logged out. Are you sure?</p>
 </div>								
@@ -364,8 +374,7 @@ Aw Snap, Looks like you have been logged out!
 <br/>
 </div>
 <div id="contactable"></div>
-<script type="text/javascript" src='js/core.js?v=7' charset="utf-8"></script>
-
+<script type="text/javascript" src='js/core.js?v=8' charset="utf-8"></script>
 
 <script type="text/javascript" charset="utf-8">
 	
@@ -373,7 +382,6 @@ $(document).ready(function(){
 	
 	$('#contactable').contactable();
 	xTable.bootstrap();
-	//$("#myTable").tableDnD( { onDragClass: "dragging"} );
 		
 	document.getElementById("hvertical").value = "<?php  echo $vert;  ?>";
 	document.getElementById("hclient").value = "<?php  echo $client;  ?>";

@@ -76,7 +76,7 @@ $er = @mysql_query("SELECT manual_function_name AS 'FUNCTION'
 											FROM table_manual
 											
 											WHERE manual_relation_id = '{$rel}'
-											AND manual_status < {$pmse}
+											AND manual_status < 3
 
 											
 											GROUP BY manual_function_name
@@ -112,7 +112,7 @@ $er = @mysql_query("SELECT manual_function_name AS 'FUNCTION'
 												AND manual_priority_id = priority_id
 												AND manual_status = status_id
 												AND manual_function_name = '{$query_row->FUNCTION}'
-												AND manual_status < {$pmse}
+												AND manual_status < 3
 
 												 
 												ORDER BY manual_tcid ") or die("UNABLE TO DISPLAY FUNCTIONS");
