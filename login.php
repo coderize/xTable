@@ -310,7 +310,7 @@ if($logout == "true"){
     <form id="form" name="test" action="login.php" method="POST">
     
     <ul id="menu">
-       <li><a href="javascript:void(0) return false;" title="Login" id='tabTitle'>Login</a></li>
+       <li><a href="javascript:void(0);" title="Login" id='tabTitle'>Login</a></li>
 		<li><a href="#">Change Password</a></li>
     </ul>
     
@@ -321,7 +321,7 @@ if($logout == "true"){
                 <label class="no-placeholder-hide">Username</label><input type="text"  id='username' name="username" autocomplete="off" placeholder="Username" />
                 <label class="no-placeholder-hide">Password</label><input type="password"  id='password' name="password" autocomplete="off" placeholder="Password" />
                 <label class="no-placeholder-hide">Confirm Password</label><input type="password" style="display:none;" id='cnpassword' name="cnpassword" placeholder="Confirm Password" />				
-                <input type="submit" id='loginBtn' name='loginBtn' value="Login" onclick="return false;" />
+                <input type="submit" id='loginBtn' name='loginBtn' value="Login"  />
 				
                     
             </div>

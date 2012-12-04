@@ -766,8 +766,6 @@ resize : function (){
 	$(".body").css("height", finHght);
 },
 
-
-
 automate: function(){
 		
 	if( this.relCheck("Select a component first!") ){
@@ -784,11 +782,12 @@ automate: function(){
 	}).done(function( msg ) {
 		
 		$("body").append(msg);
+		$( ".related-builds-btn" ).button();	
 
 		$("#auto-container").dialog({
 		autoOpen: true,
-		height: 580,
-		width: 1010,
+		height: 600,
+		width: 600,
 		modal: true,
 		resizable: false,
 		close: function(){
@@ -796,12 +795,8 @@ automate: function(){
 			$("#auto-container").remove();
 		}
 	});	
-
+			$(".related-builds-btn").blur();
 	});
-
-
-
-
 },
 
 launchJob : function (job){
@@ -819,8 +814,6 @@ launchJob : function (job){
 
 	});
 },
-
-
 
 
 bootstrap: function(){
@@ -848,7 +841,6 @@ bootstrap: function(){
 		}); 
 	//remove enter key from textfields
 	$('#search, .filterText').keypress(function() { return event.keyCode != 13; });
-
 
 	//adds header select menus
 	$(".t_fixed_header_caption").prepend( "<div id='hnav'><select name='hvertical' id='hvertical' onchange='javascript:xTable.reload();'>" + $("#vertical").html() + "</select> <select name='hclient' id='hclient' onchange='javascript:xTable.reload();'>"+$("#client").html()+"</select>"+" <select name='hproject' id='hproject' onchange='javascript:xTable.reload();'>" + $("#project").html() + "</select></div>" );	$("#hnav").css("float","left");
