@@ -50,8 +50,6 @@ html {
     background-image: -moz-radial-gradient(50% 50%, farthest-side, #546673, #1f242a);
     background-image: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 700, from(#546673), to(#1f242a));
     background-image: -o-linear-gradient(#1f242a, #546673);
-                      -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#546673', endColorstr='#1f242a')";
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#546673', endColorstr='#1f242a');
 }
 
         
@@ -340,10 +338,12 @@ $(document).ready(function(){
 	$("#username").focus();
 				
 			
-$("#loginBtn").click(function(){
+$("#loginBtn").click(function(event){
 
 	if( !$("#username").val() || !$("#password").val() ){
-								
+
+		event.preventDefault();							
+
 		$("#msg").html("Please provide valid username and password").attr("class","error smallText");
 
 	}else{	
