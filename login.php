@@ -327,7 +327,7 @@ if($logout == "true"){
 		</div>
 </div>
 
-<div id="loading" ><img src='img/3MA_loadingcontent.gif' /></div>
+<div id="loading" style="display:none;" ><img src='img/3MA_loadingcontent.gif' /></div>
 
 <script>
 $(document).ready(function(){
@@ -336,6 +336,10 @@ $(document).ready(function(){
 	$( ".ui-dialog-content" ).css("padding","0px");
 	$( ".ui-widget-header" ).css("display","none");
 	$("#username").focus();
+
+$("#form").submit(function(){
+return false;
+})
 				
 			
 $("#loginBtn").click(function(event){
@@ -353,20 +357,11 @@ $("#loginBtn").click(function(event){
 			url: "login_mod.php",
 			cache: false,
 			async: true,
-			data: {username: $("#username").val(), password: $("#password").val()}
+			data: {"username": $("#username").val(), "password": $("#password").val()}
 			}).done(function( msg ) {			
 						
-			$("#msg").html(msg);
-			
-			if( msg == "Password Change Required!"){
-				
-				$("#msg").fadeOut(1500, function(){
-							
-					window.location = 'change_pw.php'
-						
-				});	
-
-			}						
+				$("#msg").html(msg);
+									
 	
 			if( msg == 'Login Successful.'){
 											
@@ -392,7 +387,7 @@ $("#close").click(function(){
 				
 });
 			
-$("#loading").ajaxStart(function(){
+/*$("#loading").ajaxStart(function(){
 	
 	$(this).show();
 });
@@ -401,7 +396,7 @@ $("#loading").ajaxStop(function(){
 		
 	$(this).hide();
 });
-			
+*/			
 			
 				
 
