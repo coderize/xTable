@@ -55,7 +55,7 @@ html {
         
             /* Form General Style */
     
-            #form {
+            #login-form {
                 width: 100%;
                 float: left;
                 background: #fff;
@@ -273,18 +273,18 @@ html {
 }
 
 #loading{
-	display:none;
 	position:absolute;
 	top:41%;
 	left:44%;
 	z-index: 10000;
+	display:none;
 	
 }
 
 </style>
 <link rel="stylesheet" type="text/css" href="css/base.css" />
 <link rel="stylesheet" type="text/css" href="css/redmond/jquery-ui-1.8.16.custom.css" />
-<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="js/jquery-latest.js"></script>
 <script src="js/jqueryUI/js/jqueryui.js"></script>
 
 
@@ -295,9 +295,8 @@ html {
 
 <?php
 
-$logout = $_GET['logout'];
 
-if($logout == "true"){
+if( $_GET['logout'] ){
 	
 	echo "<div id='logout'>You have been logged out!</div>";
 } 
@@ -305,7 +304,7 @@ if($logout == "true"){
 ?>
 
 <div id="wrapper">
-    <form id="form" name="test" action="login.php" method="POST">
+    <form id="login-form" name="test"  method="POST">
     
     <ul id="menu">
        <li><a href="javascript:void(0);" title="Login" id='tabTitle'>Login</a></li>
@@ -327,7 +326,6 @@ if($logout == "true"){
 		</div>
 </div>
 
-<div id="loading" ><img src='img/3MA_loadingcontent.gif' /></div>
 
 <script>
 $(document).ready(function(){
@@ -337,47 +335,35 @@ $(document).ready(function(){
 	$( ".ui-widget-header" ).css("display","none");
 	$("#username").focus();
 				
-			
+
+$("#login-form").submit(function(e){
+	
+return false;
+
+});
+
+
+	
 $("#loginBtn").click(function(event){
+
 
 	if( !$("#username").val() || !$("#password").val() ){
 
-		event.preventDefault();							
+		event.preventDefault();	
 
 		$("#msg").html("Please provide valid username and password").attr("class","error smallText");
 
-	}else{	
-					
-		$.ajax({
-			type: "POST",
-			url: "login_mod.php",
-			cache: false,
-			async: true,
-			data: {username: $("#username").val(), password: $("#password").val()}
-			}).done(function( msg ) {			
-						
-			$("#msg").html(msg);
-			
-			if( msg == "Password Change Required!"){
-				
-				$("#msg").fadeOut(1500, function(){
-							
-					window.location = 'change_pw.php'
-						
-				});	
+	}else{
 
-			}						
-	
-			if( msg == 'Login Successful.'){
-											
-				window.location.href = 'home.php';
-									
-			}else{
-								
-				$("#msg").attr("class","error");
-			}
-														  
-		});					
+		$.ajax({
+  			type: "POST",
+  			url: "login_mod.php",
+  			data: {"username": $("#username").val(), "password" : $("#password").val()}
+			}).done(function( msg ) {
+
+ 				 alert( "Data Saved: " + msg );
+			});	
+
 	}
 					
 });					
@@ -385,7 +371,8 @@ $("#loginBtn").click(function(event){
 				
 $("#logout").fadeOut(4000);
 
-			
+
+/*			
 $("#close").click(function(){
 	
 	$( "#wrapper" ).dialog("close");
@@ -403,6 +390,8 @@ $("#loading").ajaxStop(function(){
 });
 			
 			
+*/
+
 				
 
 });
