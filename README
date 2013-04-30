@@ -1,20 +1,3 @@
 TODO:
 
-COVERTING THIS PROJECT TO KOHANA
-
-1. add sql schema files
-2. fix js to be fully unobtrusive
-3. remove built in rights management and move to db
-4. remove dependency of wkhtmltox
-5. bring jQuery dependency to 5%
-6. remove dependency of theme switcher and make local
-7. merge js files
-8. optimize images for file size
-9. bring inline css to 5%
-10. build reporting page
-11. make  compatible with firefox
-12. clean up css 
-13. integrate with boost web driver framework 
-14. add unit tests with phantom js
-note: @jl added sql folder to put in sql schema file with basic dummy data. 
-
+Convert->MVC();
