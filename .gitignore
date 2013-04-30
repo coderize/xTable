@@ -1,3 +1,4 @@
-includes/config.php
-includes/.htaccess
-includes/sess.php
+.gitignore
+.log
+.htaccess
+includes/
