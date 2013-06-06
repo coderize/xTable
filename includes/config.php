@@ -1,7 +1,13 @@
 <?php
 
-$db = mysql_connect("localhost", "root", "testing") or die("Could not connect to DB");
-$sdb = mysql_select_db("xtable") or die ("Could not select database");
+$dbhost = 'localhost';
+$dbusr  = 'root';
+$dbpassword = 'testing';
+$dbtable = 'xtable';
+
+
+$db = mysql_connect($dbhost, $dbusr, $dbpassword) or die("DB Connection: Failed");
+$sdb = mysql_select_db($dbtable) or die ("DB Table Selection: Failed");
 
 mysql_set_charset('utf8');
 
